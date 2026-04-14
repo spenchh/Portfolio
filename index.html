@@ -58,11 +58,11 @@
     .nav-tab {
       position: relative;
       z-index: 2;
-      padding: 6px 16px;
+      padding: 6px 18px;
       font-family: 'DM Mono', monospace;
       font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       color: #9ca3af;
       cursor: pointer;
       transition: color 0.3s ease;
@@ -78,7 +78,7 @@
       z-index: 1;
       background: #000000;
       border-radius: 9999px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /* Hero Layout */
@@ -95,19 +95,27 @@
       border-radius: 2.5rem;
       overflow: hidden;
       background: #f9fafb;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
-      height: 650px;
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+      height: 700px;
+      transition: box-shadow 0.6s ease, transform 0.6s ease;
     }
 
     .headshot-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: grayscale(1) brightness(1.05) contrast(1.1);
-      transition: filter 0.6s ease;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .headshot-img:hover { filter: grayscale(0) brightness(1); }
+    /* New Hover Effect: Subtle Zoom and Shadow Depth */
+    .headshot-container:hover {
+      box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.1);
+      transform: translateY(-4px);
+    }
+
+    .headshot-container:hover .headshot-img {
+      transform: scale(1.05);
+    }
 
     .blur-accent {
       position: absolute;
@@ -116,7 +124,7 @@
       border-radius: 50%;
       background: #f8b3c4;
       filter: blur(100px);
-      opacity: 0.1;
+      opacity: 0.12;
       z-index: -1;
     }
 
@@ -126,11 +134,11 @@
       top: 120px;
       background: white;
       border: 1px solid var(--border);
-      border-radius: 2rem;
-      padding: 3.5rem;
-      margin-bottom: 4rem;
+      border-radius: 2.5rem;
+      padding: 4rem;
+      margin-bottom: 5rem;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
-      height: 400px;
+      height: 420px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -138,14 +146,19 @@
 
     .pursuit-card {
       border: 1px solid var(--border);
-      border-radius: 2rem;
-      padding: 3rem;
+      border-radius: 2.5rem;
+      padding: 3.5rem;
       background: white;
       text-align: left;
+      transition: border-color 0.3s ease;
+    }
+
+    .pursuit-card:hover {
+      border-color: #000;
     }
   </style>
 </head>
-<body>
+<body class="selection:bg-indigo-50">
 
 <nav>
   <div class="container-full h-20 flex items-center justify-between">
@@ -178,38 +191,38 @@
       </div>
       
       <div class="max-w-md pt-20">
-        <p class="text-lg text-stone-700 leading-relaxed tracking-tight">
+        <p class="text-xl text-stone-800 font-medium leading-relaxed tracking-tight">
           "I’m Spencer, a Computer Engineering and Violin Performance student at Northwestern University interested in FPGA Engineering, Electric Vehicles, and Embedded Systems! Feel free to reach out!"
         </p>
       </div>
     </div>
 
     <div class="relative">
-      <div class="blur-accent -top-10 -right-10"></div>
+      <div class="blur-accent -top-12 -right-12"></div>
       <div class="headshot-container">
-        <img src="headshot.jpg" alt="Spencer Kogoma" class="headshot-img" />
+        <img src="headshot.jpg" alt="Spencer Kogoma Headshot" class="headshot-img" />
       </div>
     </div>
   </section>
 
   <section id="education" class="py-32 border-t border-stone-100">
     <div class="grid md:grid-cols-3 gap-20">
-      <div>
+      <div class="col-span-1">
         <h2 class="lato font-bold text-4xl mb-4">Northwestern <br />University</h2>
-        <p class="mono text-[10px] uppercase tracking-widest text-blue-600 font-medium">Class of 2029 • Evanston, IL</p>
+        <p class="mono text-[10px] uppercase tracking-widest text-blue-600 font-medium tracking-widest">Class of 2029 • Evanston, IL</p>
       </div>
-      <div class="col-span-2 space-y-10">
-        <p class="text-xl text-stone-600 leading-relaxed max-w-2xl">
-          I study at the McCormick School of Engineering and the Bienen School of Music. I bridge technical rigor with creative performance.
+      <div class="col-span-2 space-y-12">
+        <p class="text-2xl text-stone-600 leading-relaxed max-w-2xl font-light">
+          I am a dual-degree student at the McCormick School of Engineering and the Bienen School of Music, bridging technical systems with high-level performance.
         </p>
-        <div class="grid md:grid-cols-2 gap-6">
-          <div class="p-10 bg-stone-50 rounded-[2rem] border border-stone-100">
-            <h4 class="font-bold text-sm mb-4">NUSolar Team</h4>
-            <p class="text-xs text-stone-500 leading-relaxed">Low Voltage Lead. I architect power distribution and communication systems for solar competition vehicles.</p>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="p-10 bg-stone-50 rounded-[2.5rem] border border-stone-100">
+            <h4 class="font-bold text-sm mb-4 uppercase tracking-widest">NUSolar Team</h4>
+            <p class="text-xs text-stone-500 leading-relaxed">Low Voltage Lead. I oversee the electronic architecture and power distribution for our 2026 American Solar Challenge car.</p>
           </div>
-          <div class="p-10 bg-stone-50 rounded-[2rem] border border-stone-100">
-            <h4 class="font-bold text-sm mb-4">Hardware Research</h4>
-            <p class="text-xs text-stone-500 leading-relaxed">I focus on FPGA-accelerated motor control to optimize real-time efficiency in lightweight electric motors.</p>
+          <div class="p-10 bg-stone-50 rounded-[2.5rem] border border-stone-100">
+            <h4 class="font-bold text-sm mb-4 uppercase tracking-widest">Hardware Research</h4>
+            <p class="text-xs text-stone-500 leading-relaxed">I research FPGA-based Field-Oriented Control (FOC) to achieve maximum efficiency and real-time response in motor systems.</p>
           </div>
         </div>
       </div>
@@ -219,15 +232,15 @@
   <section id="engineering" class="py-32 grid lg:grid-cols-2 gap-20">
     <div class="md:sticky md:top-32 h-fit">
       <h2 class="lato font-bold text-5xl mb-6 tracking-tighter">Engineering</h2>
-      <p class="text-stone-500 max-w-xs mb-10 leading-relaxed">Hardware optimization for real-time performance and safety-critical applications.</p>
+      <p class="text-stone-500 max-w-xs mb-10 leading-relaxed">Developing low-latency hardware and software at the architecture level.</p>
     </div>
     
-    <div class="space-y-6">
+    <div class="space-y-8">
       <div class="card-stack-item">
         <div>
           <span class="mono text-[10px] text-blue-600 uppercase tracking-widest">Project 01</span>
           <h3 class="lato font-bold text-4xl mt-6 mb-4 tracking-tighter">Rear-Vision Camera</h3>
-          <p class="text-stone-500 text-sm leading-relaxed mb-10">I architected a real-time system with sub-40ms glass-to-glass latency for the NUSolar vehicle.</p>
+          <p class="text-stone-500 text-sm leading-relaxed">Architected a real-time system with sub-40ms glass-to-glass latency, specifically for solar competition environments.</p>
         </div>
         <div class="flex gap-2">
           <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">Raspberry Pi</span>
@@ -239,7 +252,7 @@
         <div>
           <span class="mono text-[10px] text-blue-600 uppercase tracking-widest">Project 02</span>
           <h3 class="lato font-bold text-4xl mt-6 mb-4 tracking-tighter">FPGA FOC Control</h3>
-          <p class="text-stone-500 text-sm leading-relaxed mb-10">Implemented motor control logic in Verilog to reduce current ripple. Benchmarked acceleration against microcontrollers.</p>
+          <p class="text-stone-500 text-sm leading-relaxed">Implemented motor control logic in Verilog to eliminate current ripple, benchmarking acceleration performance against commercial MCUs.</p>
         </div>
         <div class="flex gap-2">
           <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">Verilog HDL</span>
@@ -249,21 +262,21 @@
     </div>
   </section>
 
-  <section id="pursuits" class="py-32">
+  <section id="pursuits" class="py-32 border-t border-stone-100">
     <div class="text-center mb-20">
       <h2 class="lato font-bold text-4xl mb-4">Other Pursuits</h2>
-      <p class="text-stone-400 text-sm">Discipline applied across multiple domains.</p>
+      <p class="mono text-[10px] text-stone-400 uppercase tracking-[0.2em]">High-discipline outside the lab</p>
     </div>
     <div class="grid md:grid-cols-2 gap-8">
       <div class="pursuit-card">
         <span class="mono text-[10px] text-stone-400 uppercase tracking-widest block mb-4">Athletics</span>
         <h3 class="lato font-bold text-3xl mb-4">Pole Vaulting</h3>
-        <p class="text-stone-600 leading-relaxed text-sm">I apply explosive energy and technical discipline to clear new heights. Success depends on the intersection of physics and physical performance.</p>
+        <p class="text-stone-600 leading-relaxed text-sm">I apply technical discipline and explosive energy to clear new heights. Success is the precise intersection of physics and physical performance.</p>
       </div>
       <div class="pursuit-card">
         <span class="mono text-[10px] text-stone-400 uppercase tracking-widest block mb-4">Culinary</span>
         <h3 class="lato font-bold text-3xl mb-4">Italian Cuisine</h3>
-        <p class="text-stone-600 leading-relaxed text-sm">I explore authentic Italian culinary arts. I focus on genuine techniques and high-quality ingredients to understand cultural heritage.</p>
+        <p class="text-stone-600 leading-relaxed text-sm">Exploring authentic Italian culinary arts. I focus on genuine techniques and high-quality ingredients to understand cultural heritage.</p>
       </div>
     </div>
   </section>
@@ -283,7 +296,7 @@
 <footer class="py-20 border-t border-stone-100 bg-white">
   <div class="container-full flex flex-col md:flex-row justify-between items-center gap-4">
     <p class="text-[10px] text-stone-300 uppercase tracking-[0.4em]">© 2026 Spencer Chiharu Kogoma</p>
-    <p class="text-[10px] text-stone-300 uppercase tracking-[0.4em]">Northwestern Engineering & Music</p>
+    <p class="text-[10px] text-stone-300 uppercase tracking-[0.4em]">Evanston, IL • Applied Technical Discipline</p>
   </div>
 </footer>
 
@@ -312,18 +325,20 @@
   window.onload = () => {
     const activeTab = document.querySelector('.nav-tab.active');
     const indicator = document.getElementById('nav-indicator');
-    indicator.style.width = activeTab.offsetWidth + 'px';
-    indicator.style.left = activeTab.offsetLeft + 'px';
+    if(activeTab && indicator) {
+      indicator.style.width = activeTab.offsetWidth + 'px';
+      indicator.style.left = activeTab.offsetLeft + 'px';
+    }
   };
 
-  // Update nav on scroll
+  // Update nav highlight on scroll
   window.addEventListener('scroll', () => {
     const sections = ['home', 'education', 'engineering', 'pursuits', 'contact'];
-    const scrollPos = window.scrollY + 200;
+    const scrollPos = window.scrollY + 250;
 
     sections.forEach(id => {
       const el = document.getElementById(id);
-      if (el.offsetTop <= scrollPos && (el.offsetTop + el.offsetHeight) > scrollPos) {
+      if (el && el.offsetTop <= scrollPos && (el.offsetTop + el.offsetHeight) > scrollPos) {
         const tab = document.querySelector(`.nav-tab[data-target="${id}"]`);
         if (tab && !tab.classList.contains('active')) {
           const indicator = document.getElementById('nav-indicator');
