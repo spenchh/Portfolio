@@ -3,407 +3,275 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Spencer Kogoma | Computer Engineering & Violin</title>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <title>Spencer Kogoma | Computer Engineering</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #ffffff;
-      --text-main: #1c1917;
-      --text-sub: #57534e;
-      --text-muted: #a8a29e;
-      --border: #e7e5e4;
-      --accent: #6366f1;
-      --serif: 'Instrument Serif', serif;
-      --mono: 'DM Mono', monospace;
-      --sans: 'DM Sans', sans-serif;
+      --text-main: #000000;
+      --text-sub: #4b5563;
+      --border: #f3f4f6;
+      --accent: #2563eb;
     }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      background-color: var(--bg);
       color: var(--text-main);
-      font-family: var(--sans);
-      font-weight: 300;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
       line-height: 1.6;
-      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    ::selection {
-      background: var(--text-main);
-      color: var(--bg);
-    }
+    .lato { font-family: 'Lato', sans-serif; }
+    .mono { font-family: 'DM Mono', monospace; }
 
-    .container {
-      max-width: 1100px;
+    .container-wide {
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 0 40px;
+      padding: 0 2rem;
     }
 
-    /* Navigation */
+    /* Sticky Card Logic */
+    .sticky-card {
+      position: sticky;
+      top: 120px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      padding: 3.5rem;
+      margin-bottom: 4rem;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+    }
+
     nav {
       position: fixed;
       top: 0;
       width: 100%;
       z-index: 100;
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
 
-    nav .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 72px;
+    .code-block {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      color: #374151;
     }
 
-    .nav-logo {
-      font-family: var(--serif);
-      font-size: 24px;
-      letter-spacing: -0.02em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 40px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: var(--mono);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      text-decoration: none;
-      color: var(--text-muted);
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--text-main); }
-
-    /* Hero */
-    .hero {
-      padding: 200px 0 100px;
-    }
-
-    .hero-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--text-muted);
-      margin-bottom: 24px;
-    }
-
-    .hero h1 {
-      font-family: var(--serif);
-      font-size: clamp(64px, 10vw, 120px);
-      line-height: 0.9;
-      font-weight: 400;
-      letter-spacing: -0.04em;
-      margin-bottom: 40px;
-    }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--text-muted);
-    }
-
-    .hero-description {
-      max-width: 600px;
-      font-size: 20px;
-      color: var(--text-sub);
-      margin-bottom: 48px;
-    }
-
-    /* Sticky Stack Section */
-    .stack-section {
-      padding: 100px 0;
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 80px;
-      align-items: start;
-    }
-
-    .stack-info {
-      position: sticky;
-      top: 150px;
-    }
-
-    .stack-info h2 {
-      font-family: var(--serif);
-      font-size: 48px;
-      font-weight: 400;
-      margin-bottom: 24px;
-    }
-
-    .stack-info p {
-      color: var(--text-sub);
-      font-size: 16px;
-    }
-
-    .stack-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 10vh; /* Space between cards in scroll */
-      padding-bottom: 20vh;
-    }
-
-    .card {
-      position: sticky;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 48px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.02);
-      height: 400px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .card-index {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--accent);
-    }
-
-    .card-title {
-      font-family: var(--serif);
-      font-size: 32px;
-      margin-top: 12px;
-    }
-
-    .card-content {
-      color: var(--text-sub);
-      font-size: 15px;
-      margin-top: 16px;
-    }
-
-    .card-footer {
-      margin-top: auto;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .tag {
-      font-family: var(--mono);
-      font-size: 10px;
-      padding: 4px 12px;
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      color: var(--text-muted);
-    }
-
-    /* Experience List */
-    .exp-list {
-      border-top: 1px solid var(--border);
-    }
-
-    .exp-row {
-      display: grid;
-      grid-template-columns: 200px 1fr 150px;
-      padding: 40px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .exp-row .date { font-family: var(--mono); font-size: 12px; color: var(--text-muted); }
-    .exp-row .role { font-family: var(--serif); font-size: 24px; }
-    .exp-row .company { font-size: 14px; color: var(--text-sub); margin-top: 4px; }
-
-    /* Awards Grid */
-    .awards-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-      margin-top: 48px;
-    }
-
-    .award-item {
-      padding: 32px;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-    }
-
-    .award-item h4 { font-family: var(--serif); font-size: 22px; margin-bottom: 8px; }
-    .award-item p { font-family: var(--mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
-
-    /* Footer */
-    footer {
-      padding: 100px 0;
-      border-top: 1px solid var(--border);
-    }
-
-    .footer-flex {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-
-    .footer-flex h3 { font-family: var(--serif); font-size: 40px; margin-bottom: 16px; }
-    .footer-links { display: flex; gap: 32px; font-family: var(--mono); font-size: 12px; }
-    .footer-links a { text-decoration: none; color: var(--text-main); }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      .stack-section { grid-template-columns: 1fr; }
-      .stack-info { position: static; margin-bottom: 40px; }
-      .exp-row { grid-template-columns: 1fr; gap: 12px; }
-      .awards-grid { grid-template-columns: 1fr; }
+    .tab-btn.active {
+      background: #000;
+      color: #fff;
     }
   </style>
 </head>
 <body>
 
 <nav>
-  <div class="container">
-    <div class="nav-logo">SK</div>
-    <ul class="nav-links">
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#music">Music</a></li>
-    </ul>
+  <div class="container-wide h-16 flex items-center justify-between">
+    <span class="lato font-black text-xl tracking-tighter">SK</span>
+    <div class="flex gap-10 mono text-[10px] uppercase tracking-[0.2em] text-stone-400">
+      <a href="#education" class="hover:text-black transition-colors">Education</a>
+      <a href="#engineering" class="hover:text-black transition-colors">Engineering</a>
+      <a href="#integration" class="hover:text-black transition-colors">Standards</a>
+    </div>
   </div>
 </nav>
 
-<main class="container">
-  <section class="hero">
-    <div class="hero-label">Computer Engineering + Violin</div>
-    <h1>Spencer <br><em>Kogoma</em></h1>
-    <p class="hero-description">
-      I engineer real-time embedded systems for electric vehicles and perform as a violinist at Northwestern University. My work bridges the gap between digital logic design and high-performance hardware.
-    </p>
+<main>
+  <section class="container-wide pt-48 pb-32">
+    <p class="mono text-[11px] uppercase tracking-[0.4em] text-stone-400 mb-6">Northwestern University</p>
+    <h1 class="lato font-black text-[clamp(60px,12vw,140px)] leading-[0.85] tracking-tighter mb-12">
+      SPENCER <br>KOGOMA
+    </h1>
+    <div class="flex flex-col md:flex-row justify-between items-start gap-8">
+      <p class="max-w-xl text-2xl text-stone-500 font-light leading-snug">
+        I develop real-time embedded systems and digital logic. My work focuses on sub-40ms latency hardware for high-performance electric vehicles.
+      </p>
+      <div class="flex gap-4">
+        <a href="mailto:kogomaspencer@gmail.com" class="bg-black text-white px-8 py-4 rounded-full text-sm font-medium hover:bg-stone-800 transition-all">Email Me</a>
+      </div>
+    </div>
   </section>
 
-  <section id="projects" class="stack-section">
-    <div class="stack-info">
-      <h2>Engineering<br>Projects</h2>
-      <p>Building low-latency hardware and software solutions for complex technical challenges.</p>
-    </div>
-    <div class="stack-cards" id="project-stack">
-      <div class="card" style="top: 100px;">
+  <section id="education" class="py-32 bg-stone-50/50">
+    <div class="container-wide">
+      <div class="grid md:grid-cols-2 gap-20">
         <div>
-          <span class="card-index">01</span>
-          <h3 class="card-title">Rear-Vision Camera System</h3>
-          <p class="card-content">Designed a real-time system for the NUSolar vehicle using Pi Camera 3 Wide. Achieved sub-40ms latency at 60 fps for the 2026 American Solar Challenge.</p>
+          <h2 class="lato font-bold text-4xl mb-6">Education</h2>
+          <p class="text-stone-500 mb-8 max-w-sm">I attend the McCormick School of Engineering, focusing on the intersection of hardware and software co-design.</p>
         </div>
-        <div class="card-footer">
-          <span class="tag">Raspberry Pi</span>
-          <span class="tag">CSI/HDMI</span>
-          <span class="tag">GMSL2</span>
-        </div>
-      </div>
-      <div class="card" style="top: 140px;">
-        <div>
-          <span class="card-index">02</span>
-          <h3 class="card-title">FPGA Field-Oriented Control</h3>
-          <p class="card-content">Implementing FOC logic in Verilog to maximize PWM switching frequency. Designed custom PCBs to integrate FPGAs with Mitsuba motor drivers.</p>
-        </div>
-        <div class="card-footer">
-          <span class="tag">Verilog HDL</span>
-          <span class="tag">Altium</span>
-          <span class="tag">FPGA</span>
-        </div>
-      </div>
-      <div class="card" style="top: 180px;">
-        <div>
-          <span class="card-index">03</span>
-          <h3 class="card-title">Beamforming Microphone Array</h3>
-          <p class="card-content">Developed an array that uses camera-based face tracking to focus audio capture. Hardware acceleration on FPGA manages per-channel delay and phase summing.</p>
-        </div>
-        <div class="card-footer">
-          <span class="tag">DSP</span>
-          <span class="tag">Computer Vision</span>
-          <span class="tag">SystemVerilog</span>
+        <div class="space-y-12">
+          <div>
+            <h3 class="text-3xl font-bold mb-2">Northwestern University</h3>
+            <p class="mono text-xs text-blue-600 uppercase tracking-widest mb-4">Class of 2029 • Evanston, IL</p>
+            <p class="text-stone-600 mb-6">I am pursuing a Bachelor of Science in Computer Engineering. I serve as the Low Voltage Lead for the Northwestern Solar Car Team (NUSolar).</p>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="p-6 bg-white border border-stone-100 rounded-2xl">
+                <span class="block font-bold text-lg mb-1">NUSolar</span>
+                <p class="text-xs text-stone-400">Architecting power systems for the ASC 2026 competition car.</p>
+              </div>
+              <div class="p-6 bg-white border border-stone-100 rounded-2xl">
+                <span class="block font-bold text-lg mb-1">FPGAs</span>
+                <p class="text-xs text-stone-400">Conducting research on FPGA-based motor control acceleration.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="experience" style="padding: 100px 0;">
-    <h2 style="font-family: var(--serif); font-size: 40px; margin-bottom: 48px;">Experience</h2>
-    <div class="exp-list">
-      <div class="exp-row">
-        <div class="date">2025 — Present</div>
-        <div>
-          <div class="role">Low Voltage Lead</div>
-          <div class="company">Northwestern Solar Car Team (NUSolar)</div>
+  <section id="engineering" class="container-wide py-32">
+    <div class="grid md:grid-cols-2 gap-20">
+      <div class="md:sticky md:top-32 h-fit">
+        <h2 class="lato font-bold text-5xl mb-6">Engineering</h2>
+        <p class="text-stone-500 max-w-xs mb-10">Hardware-level optimization for real-time performance and safety-critical applications.</p>
+        <div class="space-y-4">
+          <div class="flex items-center gap-4 text-sm text-stone-400">
+            <span class="w-2 h-2 bg-blue-600 rounded-full"></span>
+            <span>Verilog & SystemVerilog</span>
+          </div>
+          <div class="flex items-center gap-4 text-sm text-stone-400">
+            <span class="w-2 h-2 bg-blue-600 rounded-full"></span>
+            <span>Embedded Linux</span>
+          </div>
+          <div class="flex items-center gap-4 text-sm text-stone-400">
+            <span class="w-2 h-2 bg-blue-600 rounded-full"></span>
+            <span>PCB Design & Altium</span>
+          </div>
         </div>
       </div>
-      <div class="exp-row">
-        <div class="date">2024 — 2025</div>
-        <div>
-          <div class="role">First Violinist</div>
-          <div class="company">San Francisco Symphony Youth Orchestra</div>
+      
+      <div class="space-y-6">
+        <div class="sticky-card">
+          <span class="mono text-[10px] text-blue-600 uppercase tracking-widest">Project 01</span>
+          <h3 class="lato font-bold text-3xl mt-4 mb-4">Rear-Vision Camera</h3>
+          <p class="text-stone-500 text-sm leading-relaxed mb-10">Architected a real-time system using Pi Camera 3 Wide. Optimized glass-to-glass latency to sub-40ms for solar car racing visibility.</p>
+          <div class="flex gap-2">
+            <span class="mono text-[10px] border border-stone-200 px-3 py-1 rounded-full text-stone-400">GMSL2</span>
+            <span class="mono text-[10px] border border-stone-200 px-3 py-1 rounded-full text-stone-400">CSI/HDMI</span>
+          </div>
         </div>
-      </div>
-      <div class="exp-row">
-        <div class="date">2021 — Present</div>
-        <div>
-          <div class="role">Violin Teacher</div>
-          <div class="company">Private Studio</div>
+
+        <div class="sticky-card">
+          <span class="mono text-[10px] text-blue-600 uppercase tracking-widest">Project 02</span>
+          <h3 class="lato font-bold text-3xl mt-4 mb-4">FPGA FOC Control</h3>
+          <p class="text-stone-500 text-sm leading-relaxed mb-10">Implementing Field-Oriented Control in Verilog to minimize current ripple. I am benchmarking hardware acceleration against commercial microcontrollers.</p>
+          <div class="flex gap-2">
+            <span class="mono text-[10px] border border-stone-200 px-3 py-1 rounded-full text-stone-400">Verilog</span>
+            <span class="mono text-[10px] border border-stone-200 px-3 py-1 rounded-full text-stone-400">DSP</span>
+          </div>
+        </div>
+
+        <div class="sticky-card">
+          <span class="mono text-[10px] text-blue-600 uppercase tracking-widest">Project 03</span>
+          <h3 class="lato font-bold text-3xl mt-4 mb-4">Beamforming Array</h3>
+          <p class="text-stone-500 text-sm leading-relaxed mb-10">Developed a microphone array using camera face-tracking to isolate audio. Used FPGA signal processing for per-channel delay and phase adjustments.</p>
+          <div class="flex gap-2">
+            <span class="mono text-[10px] border border-stone-200 px-3 py-1 rounded-full text-stone-400">SystemVerilog</span>
+            <span class="mono text-[10px] border border-stone-200 px-3 py-1 rounded-full text-stone-400">Computer Vision</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="music" style="padding: 100px 0;">
-    <h2 style="font-family: var(--serif); font-size: 40px; margin-bottom: 16px;">Music & Performance</h2>
-    <p style="color: var(--text-sub); margin-bottom: 40px;">Recognized for excellence in violin performance and competition.</p>
-    
-    <div class="awards-grid">
-      <div class="award-item">
-        <h4>1st Place</h4>
-        <p>U.S. International Music Competition</p>
+  <section class="py-32 bg-stone-50">
+    <div class="container-wide text-center">
+      <h2 class="lato font-bold text-4xl mb-12">Interests</h2>
+      <div class="flex flex-col items-center gap-10">
+        <div class="bg-white border border-stone-200 rounded-full p-2 flex gap-2 mono text-[11px] uppercase tracking-widest">
+          <button onclick="showInterest('vault')" id="btn-vault" class="tab-btn active px-6 py-2 rounded-full transition-all">Pole Vaulting</button>
+          <button onclick="showInterest('cube')" id="btn-cube" class="tab-btn px-6 py-2 rounded-full transition-all">Speedcubing</button>
+          <button onclick="showInterest('food')" id="btn-food" class="tab-btn px-6 py-2 rounded-full transition-all">Italian Cuisine</button>
+        </div>
+        <p id="interest-text" class="max-w-xl text-stone-500 text-lg italic">
+          I am a pole vaulter. I apply technical discipline and explosive energy to clear new heights.
+        </p>
       </div>
-      <div class="award-item">
-        <h4>Concerto Winner</h4>
-        <p>Nova Vista Symphony Orchestra</p>
-      </div>
-      <div class="award-item">
-        <h4>1st Place</h4>
-        <p>DVC String Competition</p>
-      </div>
-      <div class="award-item">
-        <h4>Selected Performer</h4>
-        <p>Junior Bach Festival</p>
+    </div>
+  </section>
+
+  <section id="integration" class="container-wide py-32">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="lato font-bold text-4xl mb-6">Integration Standards</h2>
+      <p class="text-stone-500 mb-12">I maintain a strict protocol for integrating React components into technical codebases. This ensures architectural integrity and rapid scalability.</p>
+      
+      <div class="space-y-12">
+        <div class="border-l-2 border-blue-600 pl-8">
+          <h4 class="mono text-[10px] text-blue-600 uppercase tracking-widest mb-2">Environment Requirements</h4>
+          <ul class="text-sm text-stone-600 space-y-2">
+            <li>• Shadcn project structure</li>
+            <li>• Tailwind CSS for utility-first styling</li>
+            <li>• TypeScript for type-safe development</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="mono text-[10px] text-stone-400 uppercase tracking-widest mb-4">01 Setup Procedure</h4>
+          <p class="text-sm text-stone-600 mb-4">If the environment is not initialized, utilize the Shadcn CLI to establish the project root. This command configures the global CSS and component aliasing.</p>
+          <div class="code-block">npx shadcn@latest init</div>
+        </div>
+
+        <div>
+          <h4 class="mono text-[10px] text-stone-400 uppercase tracking-widest mb-4">02 Component Architecture</h4>
+          <p class="text-sm text-stone-600 mb-4">I enforce a central repository for reusable primitives at <code class="bg-stone-100 px-1">/components/ui</code>. This prevents circular dependencies and ensures that UI logic remains isolated from feature implementation.</p>
+          <div class="code-block">
+// animated-tabs.tsx integration example
+"use client"
+import * as React from "react"
+import { useEffect, useRef, useState } from "react";
+
+export function AnimatedTabs({ tabs }: AnimatedTabsProps) {
+  const [activeTab, setActiveTab] = useState(tabs[0].label);
+  // Implementation logic follows...
+}</div>
+        </div>
       </div>
     </div>
   </section>
 </main>
 
-<footer>
-  <div class="container">
-    <div class="footer-flex">
-      <div>
-        <h3>Let's build.</h3>
-        <p style="color: var(--text-muted); font-size: 14px;">kogomaspencer@gmail.com</p>
-      </div>
-      <div class="footer-links">
-        <a href="https://linkedin.com/in/spencer-kogoma">LinkedIn</a>
-        <a href="https://github.com/spencer-kogoma">GitHub</a>
-      </div>
+<footer class="border-t border-stone-100 py-20 bg-white">
+  <div class="container-wide flex flex-col md:flex-row justify-between items-end gap-10">
+    <div>
+      <h3 class="lato font-black text-3xl mb-4">Let's connect.</h3>
+      <p class="text-stone-400 text-sm">Spencer Chiharu Kogoma • Northwestern University</p>
+      <p class="text-stone-400 text-sm underline mt-1">kogomaspencer@gmail.com</p>
+    </div>
+    <div class="flex gap-8 mono text-[10px] uppercase tracking-widest">
+      <a href="https://linkedin.com/in/spencer-kogoma" target="_blank" class="hover:text-blue-600 transition-colors">LinkedIn</a>
+      <a href="https://github.com/spencer-kogoma" target="_blank" class="hover:text-blue-600 transition-colors">GitHub</a>
     </div>
   </div>
 </footer>
 
 <script>
-  // Simple rotation logic for the card stack as you scroll
-  window.addEventListener('scroll', () => {
-    const cards = document.querySelectorAll('.card');
-    cards.forEach((card, i) => {
-      const rect = card.getBoundingClientRect();
-      if (rect.top <= 200) {
-        // Subtle tilt for realism
-        card.style.transform = `scale(${1 - (i * 0.02)})`;
-      } else {
-        card.style.transform = `scale(1)`;
-      }
-    });
-  });
+  function showInterest(type) {
+    const text = document.getElementById('interest-text');
+    const btns = document.querySelectorAll('.tab-btn');
+    btns.forEach(b => b.classList.remove('active'));
+    
+    if(type === 'vault') {
+      text.innerText = "I am a pole vaulter. I apply technical discipline and explosive energy to clear new heights.";
+      document.getElementById('btn-vault').classList.add('active');
+    } else if(type === 'cube') {
+      text.innerText = "I am a speedcuber. I focus on pattern recognition and manual execution to solve complex puzzles in seconds.";
+      document.getElementById('btn-cube').classList.add('active');
+    } else if(type === 'food') {
+      text.innerText = "I explore Italian cuisine. I focus on authentic techniques, high-quality ingredients, and culinary history.";
+      document.getElementById('btn-food').classList.add('active');
+    }
+  }
 </script>
 
 </body>
