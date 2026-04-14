@@ -12,9 +12,10 @@
       --text-main: #000000;
       --text-sub: #4b5563;
       --border: #f3f4f6;
-      --accent-soft: #f9fafb;
-      --accent-deep: #f3f4f6;
     }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       background-color: var(--bg);
@@ -22,21 +23,19 @@
       font-family: 'DM Sans', sans-serif;
       font-weight: 300;
       line-height: 1.6;
-      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
     .lato { font-family: 'Lato', sans-serif; }
     .mono { font-family: 'DM Mono', monospace; }
 
-    /* Utilization of whole page */
     .container-full {
       max-width: 1600px;
       margin: 0 auto;
       padding: 0 4rem;
     }
 
-    /* Navbar styling */
+    /* Navigation with Animated Tabs */
     nav {
       position: fixed;
       top: 0;
@@ -47,126 +46,170 @@
       border-bottom: 1px solid var(--border);
     }
 
-    /* Sticky Card Logic */
+    .nav-tabs-container {
+      position: relative;
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      display: flex;
+      border-radius: 9999px;
+      padding: 4px;
+    }
+
+    .nav-tab {
+      position: relative;
+      z-index: 2;
+      padding: 6px 16px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #9ca3af;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .nav-tab.active { color: #ffffff; }
+
+    .nav-indicator {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 4px;
+      z-index: 1;
+      background: #000000;
+      border-radius: 9999px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Hero Layout */
+    .hero-section {
+      display: grid;
+      lg:grid-cols-2;
+      gap: 5rem;
+      align-items: center;
+      min-height: 90vh;
+    }
+
+    .headshot-container {
+      position: relative;
+      border-radius: 2.5rem;
+      overflow: hidden;
+      background: #f9fafb;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
+      height: 650px;
+    }
+
+    .headshot-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) brightness(1.05) contrast(1.1);
+      transition: filter 0.6s ease;
+    }
+
+    .headshot-img:hover { filter: grayscale(0) brightness(1); }
+
+    .blur-accent {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: #f8b3c4;
+      filter: blur(100px);
+      opacity: 0.1;
+      z-index: -1;
+    }
+
+    /* Card Stacks */
     .card-stack-item {
       position: sticky;
       top: 120px;
       background: white;
       border: 1px solid var(--border);
       border-radius: 2rem;
-      padding: 4rem;
-      margin-bottom: 5rem;
+      padding: 3.5rem;
+      margin-bottom: 4rem;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
-      height: 450px;
+      height: 400px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
-    /* Headshot Styling (Kokonut Style) */
-    .headshot-container {
-      position: relative;
-      border-radius: 2.5rem;
-      overflow: hidden;
-      background: var(--accent-soft);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
-    }
-
-    .headshot-img {
-      width: 100%;
-      height: 700px;
-      object-cover: cover;
-      filter: grayscale(1) brightness(1.05) contrast(1.1);
-      transition: filter 0.5s ease;
-    }
-
-    .headshot-img:hover {
-      filter: grayscale(0) brightness(1);
-    }
-
-    .blur-accent {
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: #f8b3c4;
-      filter: blur(80px);
-      opacity: 0.15;
-      z-index: -1;
-    }
-
-    .tab-btn.active {
-      background: #000;
-      color: #fff;
+    .pursuit-card {
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      padding: 3rem;
+      background: white;
+      text-align: left;
     }
   </style>
 </head>
-<body class="selection:bg-indigo-50">
+<body>
 
 <nav>
-  <div class="container-full h-16 flex items-center justify-between">
+  <div class="container-full h-20 flex items-center justify-between">
     <span class="lato font-black text-2xl tracking-tighter">SK</span>
-    <div class="hidden md:flex gap-12 mono text-[10px] uppercase tracking-[0.3em] text-stone-400">
-      <a href="#education" class="hover:text-black transition-colors">Education</a>
-      <a href="#engineering" class="hover:text-black transition-colors">Engineering</a>
-      <a href="#pursuits" class="hover:text-black transition-colors">Pursuits</a>
-      <a href="#contact" class="hover:text-black transition-colors">Contact</a>
+    
+    <div class="nav-tabs-container" id="nav-container">
+      <div class="nav-indicator" id="nav-indicator"></div>
+      <div class="nav-tab active" data-target="home" onclick="scrollToSection('home', this)">Home</div>
+      <div class="nav-tab" data-target="education" onclick="scrollToSection('education', this)">Education</div>
+      <div class="nav-tab" data-target="engineering" onclick="scrollToSection('engineering', this)">Engineering</div>
+      <div class="nav-tab" data-target="pursuits" onclick="scrollToSection('pursuits', this)">Pursuits</div>
+      <div class="nav-tab" data-target="contact" onclick="scrollToSection('contact', this)">Contact</div>
     </div>
   </div>
 </nav>
 
-<main class="container-full pb-32 pt-40">
-  <section class="grid lg:grid-cols-2 gap-20 items-center mb-40">
-    <div class="flex flex-col h-full justify-between py-10">
+<main class="container-full" id="home">
+  <section class="hero-section grid lg:grid-cols-2 gap-20 pt-40 pb-32">
+    <div class="flex flex-col h-full justify-between py-12">
       <div>
         <h1 class="lato font-black text-8xl tracking-tight leading-none mb-12">
           Spencer <br /><span class="text-stone-300">Kogoma.</span>
         </h1>
-        <ul class="space-y-3 mono text-xs uppercase tracking-widest text-stone-400 mb-16">
-          <li class="hover:text-black transition-colors cursor-default">FPGA Engineering</li>
+        <ul class="space-y-3 mono text-[11px] uppercase tracking-[0.3em] text-stone-400">
           <li class="hover:text-black transition-colors cursor-default">Full Stack FPGA Development</li>
           <li class="hover:text-black transition-colors cursor-default">Electric Vehicles</li>
           <li class="hover:text-black transition-colors cursor-default">Embedded Systems</li>
+          <li class="hover:text-black transition-colors cursor-default">Violin Performance</li>
         </ul>
       </div>
       
-      <div class="max-w-md">
-        <h2 class="text-2xl font-bold mb-6">NORTHWESTERN '29</h2>
-        <p class="text-lg text-stone-600 leading-relaxed tracking-tight italic">
+      <div class="max-w-md pt-20">
+        <p class="text-lg text-stone-700 leading-relaxed tracking-tight">
           "I’m Spencer, a Computer Engineering and Violin Performance student at Northwestern University interested in FPGA Engineering, Electric Vehicles, and Embedded Systems! Feel free to reach out!"
         </p>
       </div>
     </div>
 
     <div class="relative">
-      <div class="blur-accent -top-10 -left-10"></div>
+      <div class="blur-accent -top-10 -right-10"></div>
       <div class="headshot-container">
-        <img src="1000056965.jpg" alt="Spencer Kogoma Headshot" class="headshot-img" />
+        <img src="headshot.jpg" alt="Spencer Kogoma" class="headshot-img" />
       </div>
     </div>
   </section>
 
-  <section id="education" class="py-32 border-y border-stone-100">
-    <div class="grid md:grid-cols-3 gap-16">
-      <div class="col-span-1">
-        <h2 class="lato font-bold text-4xl mb-4">Education</h2>
-        <p class="mono text-[11px] uppercase tracking-widest text-blue-600 font-medium">McCormick School of Engineering</p>
+  <section id="education" class="py-32 border-t border-stone-100">
+    <div class="grid md:grid-cols-3 gap-20">
+      <div>
+        <h2 class="lato font-bold text-4xl mb-4">Northwestern <br />University</h2>
+        <p class="mono text-[10px] uppercase tracking-widest text-blue-600 font-medium">Class of 2029 • Evanston, IL</p>
       </div>
-      <div class="col-span-2 grid md:grid-cols-2 gap-12">
-        <div>
-          <h3 class="text-2xl font-bold mb-4">Computer Engineering & Violin Performance</h3>
-          <p class="text-stone-500 mb-6 leading-relaxed">
-            Pursuing a dual degree at Northwestern University. My curriculum focuses on digital logic, computer architecture, and high-level performance.
-          </p>
-        </div>
-        <div class="space-y-6">
-          <div class="p-8 bg-stone-50 rounded-3xl border border-stone-100">
-            <h4 class="font-bold text-sm mb-2">NUSolar Team</h4>
-            <p class="text-xs text-stone-400 leading-relaxed">Low Voltage Lead. Responsible for the power distribution and communication architecture for the 2026 competition car.</p>
+      <div class="col-span-2 space-y-10">
+        <p class="text-xl text-stone-600 leading-relaxed max-w-2xl">
+          I study at the McCormick School of Engineering and the Bienen School of Music. I bridge technical rigor with creative performance.
+        </p>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="p-10 bg-stone-50 rounded-[2rem] border border-stone-100">
+            <h4 class="font-bold text-sm mb-4">NUSolar Team</h4>
+            <p class="text-xs text-stone-500 leading-relaxed">Low Voltage Lead. I architect power distribution and communication systems for solar competition vehicles.</p>
           </div>
-          <div class="p-8 bg-stone-50 rounded-3xl border border-stone-100">
-            <h4 class="font-bold text-sm mb-2">Research</h4>
-            <p class="text-xs text-stone-400 leading-relaxed">FPGA-accelerated motor control research aiming to maximize efficiency and response times in lightweight EV motors.</p>
+          <div class="p-10 bg-stone-50 rounded-[2rem] border border-stone-100">
+            <h4 class="font-bold text-sm mb-4">Hardware Research</h4>
+            <p class="text-xs text-stone-500 leading-relaxed">I focus on FPGA-accelerated motor control to optimize real-time efficiency in lightweight electric motors.</p>
           </div>
         </div>
       </div>
@@ -175,20 +218,16 @@
 
   <section id="engineering" class="py-32 grid lg:grid-cols-2 gap-20">
     <div class="md:sticky md:top-32 h-fit">
-      <h2 class="lato font-bold text-5xl mb-6">Engineering</h2>
-      <p class="text-stone-500 max-w-xs mb-10 leading-relaxed">Hardware-level optimization for real-time performance and safety-critical applications.</p>
-      <div class="flex gap-3">
-        <div class="w-12 h-[1px] bg-stone-200 mt-3"></div>
-        <p class="mono text-[10px] text-stone-400 uppercase tracking-widest">Selected Works 2025-2026</p>
-      </div>
+      <h2 class="lato font-bold text-5xl mb-6 tracking-tighter">Engineering</h2>
+      <p class="text-stone-500 max-w-xs mb-10 leading-relaxed">Hardware optimization for real-time performance and safety-critical applications.</p>
     </div>
     
-    <div class="space-y-12">
+    <div class="space-y-6">
       <div class="card-stack-item">
         <div>
           <span class="mono text-[10px] text-blue-600 uppercase tracking-widest">Project 01</span>
           <h3 class="lato font-bold text-4xl mt-6 mb-4 tracking-tighter">Rear-Vision Camera</h3>
-          <p class="text-stone-500 text-sm leading-relaxed">Architected a real-time system with sub-40ms glass-to-glass latency. Optimized for the 2026 American Solar Challenge car.</p>
+          <p class="text-stone-500 text-sm leading-relaxed mb-10">I architected a real-time system with sub-40ms glass-to-glass latency for the NUSolar vehicle.</p>
         </div>
         <div class="flex gap-2">
           <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">Raspberry Pi</span>
@@ -200,49 +239,42 @@
         <div>
           <span class="mono text-[10px] text-blue-600 uppercase tracking-widest">Project 02</span>
           <h3 class="lato font-bold text-4xl mt-6 mb-4 tracking-tighter">FPGA FOC Control</h3>
-          <p class="text-stone-500 text-sm leading-relaxed">Implementing Field-Oriented Control in Verilog to minimize current ripple. Benchmarking acceleration against commercial microcontrollers.</p>
+          <p class="text-stone-500 text-sm leading-relaxed mb-10">Implemented motor control logic in Verilog to reduce current ripple. Benchmarked acceleration against microcontrollers.</p>
         </div>
         <div class="flex gap-2">
           <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">Verilog HDL</span>
           <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">Full Stack FPGA</span>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="card-stack-item">
-        <div>
-          <span class="mono text-[10px] text-blue-600 uppercase tracking-widest">Project 03</span>
-          <h3 class="lato font-bold text-4xl mt-6 mb-4 tracking-tighter">Beamforming Array</h3>
-          <p class="text-stone-500 text-sm leading-relaxed">Used camera-based face tracking combined with FPGA signal processing to isolate audio sound sources in real time.</p>
-        </div>
-        <div class="flex gap-2">
-          <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">SystemVerilog</span>
-          <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">DSP</span>
-        </div>
+  <section id="pursuits" class="py-32">
+    <div class="text-center mb-20">
+      <h2 class="lato font-bold text-4xl mb-4">Other Pursuits</h2>
+      <p class="text-stone-400 text-sm">Discipline applied across multiple domains.</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="pursuit-card">
+        <span class="mono text-[10px] text-stone-400 uppercase tracking-widest block mb-4">Athletics</span>
+        <h3 class="lato font-bold text-3xl mb-4">Pole Vaulting</h3>
+        <p class="text-stone-600 leading-relaxed text-sm">I apply explosive energy and technical discipline to clear new heights. Success depends on the intersection of physics and physical performance.</p>
+      </div>
+      <div class="pursuit-card">
+        <span class="mono text-[10px] text-stone-400 uppercase tracking-widest block mb-4">Culinary</span>
+        <h3 class="lato font-bold text-3xl mb-4">Italian Cuisine</h3>
+        <p class="text-stone-600 leading-relaxed text-sm">I explore authentic Italian culinary arts. I focus on genuine techniques and high-quality ingredients to understand cultural heritage.</p>
       </div>
     </div>
   </section>
 
-  <section id="pursuits" class="py-32 bg-stone-50 -mx-16 px-16 rounded-[3rem] text-center">
-    <h2 class="lato font-bold text-4xl mb-12">Other Pursuits</h2>
-    <div class="flex flex-col items-center gap-10">
-        <div class="bg-white border border-stone-200 rounded-full p-2 flex gap-2 mono text-[11px] uppercase tracking-widest shadow-sm">
-          <button onclick="showInterest('vault')" id="btn-vault" class="tab-btn active px-8 py-2 rounded-full transition-all">Pole Vaulting</button>
-          <button onclick="showInterest('cube')" id="btn-cube" class="tab-btn px-8 py-2 rounded-full transition-all">Speedcubing</button>
-          <button onclick="showInterest('food')" id="btn-food" class="tab-btn px-8 py-2 rounded-full transition-all">Italian Cuisine</button>
-        </div>
-        <div class="max-w-xl mx-auto min-h-[60px] flex items-center justify-center">
-            <p id="interest-text" class="text-stone-600 text-lg italic">I apply explosive energy and technical discipline to clear new heights.</p>
-        </div>
-    </div>
-  </section>
-
-  <section id="contact" class="pt-40 text-center">
-    <h2 class="lato font-black text-6xl md:text-8xl tracking-tighter mb-12 uppercase">Let's Connect</h2>
-    <div class="flex flex-col md:flex-row justify-center items-center gap-12">
-      <a href="mailto:kogomaspencer@gmail.com" class="mono text-xs uppercase tracking-[0.3em] border-b border-black pb-1 hover:text-stone-400 hover:border-stone-400 transition-all">kogomaspencer@gmail.com</a>
-      <div class="flex gap-8">
-        <a href="https://linkedin.com/in/spencer-kogoma" target="_blank" class="mono text-xs uppercase tracking-[0.3em] hover:text-stone-400 transition-all">LinkedIn</a>
-        <a href="https://github.com/spencer-kogoma" target="_blank" class="mono text-xs uppercase tracking-[0.3em] hover:text-stone-400 transition-all">GitHub</a>
+  <section id="contact" class="pt-48 pb-32 text-center">
+    <h2 class="lato font-black text-6xl md:text-9xl tracking-tighter mb-16 uppercase">Connect</h2>
+    <div class="flex flex-col md:flex-row justify-center items-center gap-16">
+      <a href="mailto:kogomaspencer@gmail.com" class="mono text-xs uppercase tracking-[0.4em] border-b border-black pb-1 hover:text-stone-400 hover:border-stone-400 transition-all">kogomaspencer@gmail.com</a>
+      <div class="flex gap-12">
+        <a href="https://linkedin.com/in/spencer-kogoma" target="_blank" class="mono text-xs uppercase tracking-[0.4em] hover:text-stone-400 transition-all">LinkedIn</a>
+        <a href="https://github.com/spencer-kogoma" target="_blank" class="mono text-xs uppercase tracking-[0.4em] hover:text-stone-400 transition-all">GitHub</a>
       </div>
     </div>
   </section>
@@ -251,27 +283,59 @@
 <footer class="py-20 border-t border-stone-100 bg-white">
   <div class="container-full flex flex-col md:flex-row justify-between items-center gap-4">
     <p class="text-[10px] text-stone-300 uppercase tracking-[0.4em]">© 2026 Spencer Chiharu Kogoma</p>
-    <p class="text-[10px] text-stone-300 uppercase tracking-[0.4em]">Evanston, IL • Northwestern University</p>
+    <p class="text-[10px] text-stone-300 uppercase tracking-[0.4em]">Northwestern Engineering & Music</p>
   </div>
 </footer>
 
 <script>
-  function showInterest(type) {
-    const text = document.getElementById('interest-text');
-    const btns = document.querySelectorAll('.tab-btn');
-    btns.forEach(b => b.classList.remove('active'));
+  function scrollToSection(id, element) {
+    const section = document.getElementById(id);
+    const indicator = document.getElementById('nav-indicator');
+    const tabs = document.querySelectorAll('.nav-tab');
     
-    if(type === 'vault') {
-      text.innerText = "I apply explosive energy and technical discipline to clear new heights.";
-      document.getElementById('btn-vault').classList.add('active');
-    } else if(type === 'cube') {
-      text.innerText = "I solve Rubik’s cubes, applying pattern recognition and rapid hand execution.";
-      document.getElementById('btn-cube').classList.add('active');
-    } else if(type === 'food') {
-      text.innerText = "I explore authentic Italian culinary arts, focusing on genuine techniques and high-quality ingredients.";
-      document.getElementById('btn-food').classList.add('active');
-    }
+    // Smooth Scroll
+    window.scrollTo({
+      top: section.offsetTop - 100,
+      behavior: 'smooth'
+    });
+
+    // Update Tabs
+    tabs.forEach(tab => tab.classList.remove('active'));
+    element.classList.add('active');
+    
+    // Update Indicator
+    indicator.style.width = element.offsetWidth + 'px';
+    indicator.style.left = element.offsetLeft + 'px';
   }
+
+  // Initialize indicator position
+  window.onload = () => {
+    const activeTab = document.querySelector('.nav-tab.active');
+    const indicator = document.getElementById('nav-indicator');
+    indicator.style.width = activeTab.offsetWidth + 'px';
+    indicator.style.left = activeTab.offsetLeft + 'px';
+  };
+
+  // Update nav on scroll
+  window.addEventListener('scroll', () => {
+    const sections = ['home', 'education', 'engineering', 'pursuits', 'contact'];
+    const scrollPos = window.scrollY + 200;
+
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el.offsetTop <= scrollPos && (el.offsetTop + el.offsetHeight) > scrollPos) {
+        const tab = document.querySelector(`.nav-tab[data-target="${id}"]`);
+        if (tab && !tab.classList.contains('active')) {
+          const indicator = document.getElementById('nav-indicator');
+          const tabs = document.querySelectorAll('.nav-tab');
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          indicator.style.width = tab.offsetWidth + 'px';
+          indicator.style.left = tab.offsetLeft + 'px';
+        }
+      }
+    });
+  });
 </script>
 
 </body>
