@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spencer Kogoma</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #1e1e1e;
+  --border-hover: #2a2a2a;
+  --text-primary: #e8e8e8;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent: #c4b5a0;
+  --accent-dim: rgba(196, 181, 160, 0.08);
+  --serif: 'Instrument Serif', serif;
+  --mono: 'DM Mono', monospace;
+  --sans: 'DM Sans', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* Noise overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Subtle grid */
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Spotlight glow */
+.spotlight {
+  position: fixed;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(196,181,160,0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Layout */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 32px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Nav */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 24px 0;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(10,10,10,0.7);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s;
+}
+
+nav.scrolled {
+  border-bottom-color: var(--border);
+}
+
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-name {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--text-primary);
+}
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 80px;
+}
+
+.hero-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 0.4s;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-sub {
+  font-family: var(--sans);
+  font-size: 17px;
+  color: var(--text-secondary);
+  max-width: 520px;
+  margin-top: 32px;
+  line-height: 1.8;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 0.6s;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 40px;
+  margin-top: 48px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 0.8s;
+}
+
+.hero-meta a {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-meta a:hover {
+  color: var(--accent);
+}
+
+.hero-meta a::before {
+  content: '';
+  width: 16px;
+  height: 1px;
+  background: var(--text-muted);
+  transition: background 0.3s, width 0.3s;
+}
+
+.hero-meta a:hover::before {
+  background: var(--accent);
+  width: 24px;
+}
+
+/* Sections */
+section {
+  padding: 120px 0;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 64px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.section-count {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+/* Project cards */
+.project-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 40px;
+  margin-bottom: 24px;
+  background: var(--bg-card);
+  transition: background 0.4s, border-color 0.4s, transform 0.4s;
+  cursor: default;
+}
+
+.project-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+.project-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--accent-dim);
+  border-radius: 4px;
+}
+
+.project-title {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.project-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  max-width: 640px;
+}
+
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.project-tech span {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.project-card:hover .project-tech span {
+  border-color: var(--border-hover);
+}
+
+/* Experience */
+.exp-item {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 40px;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.exp-item:last-child {
+  border-bottom: none;
+}
+
+.exp-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  padding-top: 4px;
+}
+
+.exp-role {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.exp-company {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.exp-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+/* Skills */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 48px;
+}
+
+.skill-group-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-list span {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.skill-list span:hover {
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}
+
+/* Music section */
+.music-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 40px;
+  background: var(--bg-card);
+}
+
+.music-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.music-item:last-child {
+  border-bottom: none;
+}
+
+.music-title {
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--text-primary);
+  font-weight: 400;
+}
+
+.music-detail {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* Footer */
+footer {
+  padding: 80px 0;
+  border-top: 1px solid var(--border);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.footer-left h3 {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.footer-left p {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-links a {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+/* Scroll animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container { padding: 0 20px; }
+  .nav-links { gap: 20px; }
+  .nav-links a { font-size: 11px; }
+  .exp-item { grid-template-columns: 1fr; gap: 8px; }
+  .skills-grid { grid-template-columns: 1fr; gap: 32px; }
+  .hero-meta { flex-direction: column; gap: 16px; }
+  .footer-content { flex-direction: column; gap: 32px; align-items: flex-start; }
+  .music-item { flex-direction: column; gap: 4px; }
+  .music-detail { text-align: left; }
+  section { padding: 80px 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="spotlight"></div>
+
+<nav id="nav">
+  <div class="container">
+    <span class="nav-name">SK</span>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#music">Music</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-label">Computer Engineering + Violin Performance</div>
+      <h1>Spencer<br><em>Kogoma</em></h1>
+      <p class="hero-sub">
+        FPGA engineer and violinist at Northwestern University. Building real-time embedded systems for electric vehicles and researching hardware-accelerated motor control.
+      </p>
+      <div class="hero-meta">
+        <a href="mailto:kogomaspencer@gmail.com">kogomaspencer@gmail.com</a>
+        <a href="https://linkedin.com/in/spencer-kogoma" target="_blank">LinkedIn</a>
+        <a href="https://github.com/spencer-kogoma" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 class="section-title">Projects</h2>
+        <span class="section-count">03 entries</span>
+      </div>
+
+      <div class="project-card reveal">
+        <span class="project-tag">NUSolar / ASC 2026</span>
+        <h3 class="project-title">Rear-Vision Camera System</h3>
+        <p class="project-desc">
+          Leading the design of a real-time rear-vision system for NUSolar's solar car. Architected the system using Pi Camera 3 Wide with CSI-to-HDMI serial extension, achieving sub-40ms glass-to-glass latency at 60 fps over a 3-meter shielded cable run. Evaluated six camera platforms against automotive-grade GMSL2 and FPD-Link III SerDes.
+        </p>
+        <div class="project-tech">
+          <span>Raspberry Pi</span>
+          <span>CSI/HDMI</span>
+          <span>Chart.js</span>
+          <span>GitHub Pages</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <span class="project-tag">SURG Research / Summer 2026</span>
+        <h3 class="project-title">FPGA-Based Field-Oriented Control</h3>
+        <p class="project-desc">
+          Implementing FOC in Verilog HDL on an FPGA to maximize PWM switching frequency and reduce current ripple in lightweight motors. Benchmarking FPGA-accelerated motor control against commercial controllers and designing a custom PCB integrating FPGA, microcontroller, and motor driver for the NUSolar Mitsuba M2096.
+        </p>
+        <div class="project-tech">
+          <span>Verilog HDL</span>
+          <span>FPGA</span>
+          <span>Altium</span>
+          <span>FOC</span>
+          <span>PCB Design</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <span class="project-tag">Personal Project</span>
+        <h3 class="project-title">FPGA Beamforming Array with Vision-Based Spatial Tracking</h3>
+        <p class="project-desc">
+          Building a beamforming microphone array that combines camera-based face tracking with FPGA signal processing to locate and follow a sound source in real time. The FPGA computes per-channel delay and phase adjustments across the array, coherently summing inputs into a spatially focused audio output.
+        </p>
+        <div class="project-tech">
+          <span>FPGA</span>
+          <span>DSP</span>
+          <span>Computer Vision</span>
+          <span>Beamforming</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 class="section-title">Experience</h2>
+        <span class="section-count">03 roles</span>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-date">Sep 2025 - Present</div>
+        <div>
+          <h3 class="exp-role">Low Voltage Lead / Electrical Subteam</h3>
+          <div class="exp-company">Northwestern Solar Car Team (NUSolar), Evanston, IL</div>
+          <p class="exp-desc">
+            Overseeing low voltage electrical systems for ASC 2026. Previously contributed to relay board FPGA implementation, Raspberry Pi board PCB design, CAN/SPI bus debugging, and solar array MPPT controller characterization.
+          </p>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-date">Aug 2021 - Present</div>
+        <div>
+          <h3 class="exp-role">Violin Teacher</h3>
+          <div class="exp-company">Private Studio, Remote</div>
+          <p class="exp-desc">
+            Designing personalized lessons tailored to each student's technique and learning style. Mentoring students through rigorous audition and competition preparation, resulting in top-tier prizes and merits.
+          </p>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-date">Jan 2014 - Jun 2025</div>
+        <div>
+          <h3 class="exp-role">Eagle Scout</h3>
+          <div class="exp-company">Scouting America, Union City, CA</div>
+          <p class="exp-desc">
+            Directed fellow scouts as Senior Patrol Leader. Planned and led community projects managing logistics, volunteers, and cross-team coordination. Earned Eagle Scout rank, attained by roughly 6% of all Scouts.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 class="section-title">Skills</h2>
+      </div>
+
+      <div class="skills-grid reveal">
+        <div>
+          <div class="skill-group-title">Hardware / HDL</div>
+          <div class="skill-list">
+            <span>FPGA Architecture</span>
+            <span>SystemVerilog</span>
+            <span>Verilog HDL</span>
+            <span>Digital Logic</span>
+            <span>FOC</span>
+            <span>PCB Design</span>
+            <span>Altium</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-group-title">Software</div>
+          <div class="skill-list">
+            <span>Python</span>
+            <span>Java</span>
+            <span>MATLAB</span>
+            <span>LaTeX</span>
+            <span>HTML/CSS/JS</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-group-title">Interests</div>
+          <div class="skill-list">
+            <span>RTL Design</span>
+            <span>HW-SW Co-design</span>
+            <span>Electric Vehicles</span>
+            <span>Embedded Systems</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-group-title">Other</div>
+          <div class="skill-list">
+            <span>Japanese (Fluent)</span>
+            <span>Violin Performance</span>
+            <span>Speedcubing</span>
+            <span>Pole Vaulting</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Music -->
+  <section id="music">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 class="section-title">Music</h2>
+        <span class="section-count">Violin</span>
+      </div>
+
+      <div class="reveal">
+        <div class="exp-item">
+          <div class="exp-date">Sep 2024 - May 2025</div>
+          <div>
+            <h3 class="exp-role">First Violinist</h3>
+            <div class="exp-company">San Francisco Symphony Youth Orchestra</div>
+            <p class="exp-desc">
+              Performed major concerts at Davies Symphony Hall for audiences of over 2,500 at a pre-professional standard. Selected through highly competitive audition.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="music-card reveal" style="margin-top: 24px;">
+        <div class="skill-group-title" style="margin-bottom: 24px;">Awards & Distinctions</div>
+        <div class="music-item">
+          <span class="music-title">U.S. International Music Competition</span>
+          <span class="music-detail">1st Place / 256 competitors</span>
+        </div>
+        <div class="music-item">
+          <span class="music-title">Nova Vista Symphony Orchestra</span>
+          <span class="music-detail">Concerto Competition Winner / Soloist</span>
+        </div>
+        <div class="music-item">
+          <span class="music-title">From the Top (NPR)</span>
+          <span class="music-detail">Named Alternate</span>
+        </div>
+        <div class="music-item">
+          <span class="music-title">DVC String Competition</span>
+          <span class="music-detail">1st Place / Collegiate Division</span>
+        </div>
+        <div class="music-item">
+          <span class="music-title">U.S. International Open Music Competition</span>
+          <span class="music-detail">2nd Place / Violin Division</span>
+        </div>
+        <div class="music-item">
+          <span class="music-title">CASMEC All-State Orchestra</span>
+          <span class="music-detail">Selected via Statewide Audition</span>
+        </div>
+        <div class="music-item">
+          <span class="music-title">Junior Bach Festival</span>
+          <span class="music-detail">Selected Performer</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-left">
+        <h3>Let's connect.</h3>
+        <p>kogomaspencer@gmail.com / (341) 221-0193 / Evanston, IL</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://linkedin.com/in/spencer-kogoma" target="_blank">LinkedIn</a>
+        <a href="https://github.com/spencer-kogoma" target="_blank">GitHub</a>
+        <a href="mailto:kogomaspencer@gmail.com">Email</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Reveal on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
