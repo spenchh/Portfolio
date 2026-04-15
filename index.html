@@ -3,784 +3,345 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Spencer Kogoma | FPGA Engineer & Northwestern Student</title>
+  <title>Spencer Kogoma | Computer Engineering</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #ffffff;
-      /* Hunter Green Palette - text & borders */
-      --primary-green: #1a331a; /* Dark Hunter Green */
-      --mid-green: #3d5c3d;
-      --light-green: #759475;
-      
-      /* Text Colors derived from green */
-      --text-main: #1a331a;
-      --text-sub: #3d5c3d;
-      --text-muted: #759475;
-      --border: #c2d6c2;
-
-      /* Accent/Highlight Greens */
-      --accent: #3d5c3d;
-      --accent-dim: #e8f0e8;
-      --accent-mid: #a3c2a3;
-
-      /* Typography */
-      --serif: 'Instrument Serif', serif; /* Use Instrument Serif for name contrast as requested previously */
-      --mono: 'DM Mono', monospace;
-      --sans: 'DM Sans', sans-serif;
+      --hunter-green: #1a331a;
+      --hunter-green-mid: #3d5c3d;
+      --hunter-green-light: #e8f0e8;
+      --border: #f3f4f6;
+      --text-main: #000000;
+      --text-sub: #4b5563;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      background-color: var(--bg);
       color: var(--text-main);
-      font-family: var(--sans);
+      font-family: 'DM Sans', sans-serif;
       font-weight: 300;
-      line-height: 1.7;
-      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    ::selection {
-      background: var(--primary-green);
-      color: var(--bg);
-    }
+    .lato { font-family: 'Lato', sans-serif; }
+    .mono { font-family: 'DM Mono', monospace; }
+    .serif { font-family: 'Instrument Serif', serif; }
 
-    /* Noise overlay - very subtle green tint */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      filter: sepia(1) hue-rotate(90deg) opacity(0.05); /* very subtle green shift */
-    }
-
-    /* Layout */
-    .container {
-      max-width: 900px;
+    .container-full {
+      max-width: 1600px;
       margin: 0 auto;
-      padding: 0 32px;
-      position: relative;
-      z-index: 1;
+      padding: 0 4rem;
     }
 
-    /* Nav */
+    /* Navbar with Animated Indicator */
     nav {
       position: fixed;
       top: 0;
-      left: 0;
-      right: 0;
+      width: 100%;
       z-index: 100;
-      padding: 24px 0;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      background: rgba(255,255,255,0.7);
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
     }
 
-    nav.scrolled {
-      border-bottom-color: var(--primary-green);
-    }
-
-    nav .container {
+    .nav-tabs-container {
+      position: relative;
+      background: #f9fafb;
+      border: 1px solid var(--border);
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      border-radius: 9999px;
+      padding: 4px;
     }
 
-    .nav-name {
-      font-family: var(--serif);
-      font-size: 20px;
-      color: var(--primary-green);
-      letter-spacing: -0.02em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--text-muted);
-      text-decoration: none;
-      letter-spacing: 0.05em;
+    .nav-tab {
+      position: relative;
+      z-index: 2;
+      padding: 6px 18px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
       text-transform: uppercase;
-      transition: color 0.3s;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+      cursor: pointer;
+      transition: color 0.3s ease;
     }
 
-    .nav-links a:hover {
-      color: var(--primary-green);
+    .nav-tab.active { color: #ffffff; }
+
+    .nav-indicator {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 4px;
+      z-index: 1;
+      background: var(--hunter-green);
+      border-radius: 9999px;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Hero */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-top: 80px;
-    }
-
-    .hero-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards;
-      animation-delay: 0.2s;
-    }
-
-    .hero h1 {
-      font-family: var(--serif);
-      font-size: clamp(48px, 8vw, 96px);
-      font-weight: 400;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      color: var(--primary-green);
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards;
-      animation-delay: 0.4s;
-    }
-
-    .lato-name { font-family: 'Lato', sans-serif; }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--mid-green);
-    }
-
-    .hero-sub {
-      font-family: var(--sans);
-      font-size: 17px;
-      color: var(--text-sub);
-      max-width: 520px;
-      margin-top: 32px;
-      line-height: 1.8;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards;
-      animation-delay: 0.6s;
-    }
-
-    .hero-meta {
-      display: flex;
-      gap: 40px;
-      margin-top: 48px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards;
-      animation-delay: 0.8s;
-    }
-
-    .hero-meta a {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--text-muted);
-      text-decoration: none;
-      letter-spacing: 0.05em;
-      transition: color 0.3s;
-      display: flex;
+    /* Hero Section Side-by-Side */
+    .hero-grid {
+      display: grid;
+      lg:grid-cols-2;
+      gap: 5rem;
       align-items: center;
-      gap: 6px;
+      min-height: 90vh;
+      padding-top: 100px;
     }
 
-    .hero-meta a:hover {
-      color: var(--primary-green);
-    }
-
-    .hero-meta a::before {
-      content: '';
-      width: 16px;
-      height: 1px;
-      background: var(--text-muted);
-      transition: background 0.3s, width 0.3s;
-    }
-
-    .hero-meta a:hover::before {
-      background: var(--primary-green);
-      width: 24px;
-    }
-
-    /* Headshot container - revert back to a simple normal photo */
     .headshot-container {
-      margin-top: 60px;
-      max-width: 100%;
+      position: relative;
       border-radius: 2.5rem;
       overflow: hidden;
-      border: 1px solid var(--border);
-      animation: fadeUp 0.8s ease forwards;
-      animation-delay: 1s;
-      opacity: 0;
+      background: var(--hunter-green-light);
+      height: 700px;
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.6s ease;
     }
 
     .headshot-img {
       width: 100%;
-      height: 600px;
+      height: 100%;
       object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Sections */
-    section {
-      padding: 120px 0;
-    }
+    .headshot-container:hover { transform: translateY(-4px); }
+    .headshot-container:hover .headshot-img { transform: scale(1.03); }
 
-    .section-header {
+    /* Sticky Card Stacks */
+    .card-stack-item {
+      position: sticky;
+      top: 120px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 2.5rem;
+      padding: 4rem;
+      margin-bottom: 5rem;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+      height: 420px;
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 64px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border);
     }
 
-    .section-title {
-      font-family: var(--serif);
-      font-size: 36px;
-      font-weight: 400;
-      letter-spacing: -0.02em;
+    /* Button and Tab Switcher */
+    .tab-btn.active {
+      background: var(--hunter-green);
+      color: #fff;
     }
 
-    .section-count {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-    }
-
-    /* Project cards */
-    .project-card {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 40px;
-      margin-bottom: 24px;
-      background: #e8f0e8; /* light green accent */
-      transition: background 0.4s, border-color 0.4s, transform 0.4s;
-      cursor: default;
-    }
-
-    .project-card:hover {
-      background: #a3c2a3; /* mid green hover */
-      border-color: var(--mid-green);
-      transform: translateY(-2px);
-    }
-
-    .project-tag {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--primary-green);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-      display: inline-block;
-      padding: 4px 10px;
-      background: rgba(255,255,255,0.7);
-      border-radius: 4px;
-    }
-
-    .project-title {
-      font-family: var(--serif);
-      font-size: 28px;
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      margin-bottom: 12px;
-      color: var(--text-main);
-    }
-
-    .project-desc {
-      font-size: 15px;
-      color: var(--text-sub);
-      line-height: 1.8;
-      max-width: 640px;
-    }
-
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 24px;
-    }
-
-    .project-tech span {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--text-sub);
-      padding: 4px 12px;
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      transition: border-color 0.3s, color 0.3s;
-      background: #ffffff;
-    }
-
-    .project-card:hover .project-tech span {
-      border-color: var(--mid-green);
-      color: var(--text-main);
-    }
-
-    /* Experience */
-    .exp-item {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 40px;
-      padding: 40px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .exp-item:last-child {
-      border-bottom: none;
-    }
-
-    .exp-date {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--text-muted);
-      letter-spacing: 0.05em;
-      padding-top: 4px;
-    }
-
-    .exp-role {
-      font-family: var(--serif);
-      font-size: 22px;
-      font-weight: 400;
-      margin-bottom: 4px;
-      color: var(--text-main);
-    }
-
-    .exp-company {
-      font-family: var(--sans);
-      font-size: 14px;
-      color: var(--text-sub);
-      margin-bottom: 16px;
-    }
-
-    .exp-desc {
-      font-size: 14px;
-      color: var(--text-sub);
-      line-height: 1.8;
-    }
-
-    /* Skills */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 48px;
-    }
-
-    .skill-group-title {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--primary-green);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-    }
-
-    .skill-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .skill-list span {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--text-sub);
-      padding: 6px 14px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      transition: border-color 0.3s, color 0.3s;
-    }
-
-    .skill-list span:hover {
-      border-color: var(--mid-green);
-      color: var(--primary-green);
-    }
-
-    /* Integration Section */
-    .code-block {
-      background: #e8f0e8;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 24px;
-      font-family: var(--mono);
-      font-size: 13px;
-      overflow-x: auto;
-      margin-top: 16px;
-      color: var(--text-sub);
-    }
-
-    .code-block pre {
-      margin: 0;
-    }
-
-    .guide-step {
-      margin-bottom: 32px;
-    }
-
-    .step-title {
-      font-weight: 500;
-      color: var(--primary-green);
-      margin-bottom: 8px;
-    }
-
-    /* Footer */
-    footer {
-      padding: 80px 0;
-      border-top: 1px solid var(--border);
-      background: #e8f0e8;
-    }
-
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-
-    .footer-left h3 {
-      font-family: var(--serif);
-      font-size: 28px;
-      font-weight: 400;
-      margin-bottom: 12px;
-      color: var(--primary-green);
-    }
-
-    .footer-left p {
-      font-size: 14px;
-      color: var(--text-sub);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 24px;
-    }
-
-    .footer-links a {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--text-muted);
-      text-decoration: none;
-      letter-spacing: 0.05em;
-      transition: color 0.3s;
-    }
-
-    .footer-links a:hover {
-      color: var(--primary-green);
-    }
-
-    /* Scroll animations */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .container { padding: 0 20px; }
-      .nav-links { gap: 20px; }
-      .nav-links a { font-size: 11px; }
-      .exp-item { grid-template-columns: 1fr; gap: 8px; }
-      .skills-grid { grid-template-columns: 1fr; gap: 32px; }
-      .hero-meta { flex-direction: column; gap: 16px; }
-      .footer-content { flex-direction: column; gap: 32px; align-items: flex-start; }
-      section { padding: 80px 0; }
+    .hunter-green-text {
+      color: var(--hunter-green);
     }
   </style>
 </head>
-<body>
+<body class="selection:bg-stone-100">
 
-<nav id="nav">
-  <div class="container">
-    <span class="nav-name">SK</span>
-    <ul class="nav-links">
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#integration">Integration</a></li>
-    </ul>
+<nav>
+  <div class="container-full h-20 flex items-center justify-between">
+    <span class="lato font-black text-2xl tracking-tighter hunter-green-text">SK</span>
+    
+    <div class="nav-tabs-container">
+      <div class="nav-indicator" id="nav-indicator"></div>
+      <div class="nav-tab active" data-target="home" onclick="scrollToSection('home', this)">Home</div>
+      <div class="nav-tab" data-target="projects" onclick="scrollToSection('projects', this)">Projects</div>
+      <div class="nav-tab" data-target="education" onclick="scrollToSection('education', this)">Education</div>
+      <div class="nav-tab" data-target="pursuits" onclick="scrollToSection('pursuits', this)">Pursuits</div>
+      <div class="nav-tab" data-target="contact" onclick="scrollToSection('contact', this)">Contact</div>
+    </div>
   </div>
 </nav>
 
-<main>
-  <section class="hero" id="home">
-    <div class="container">
-      <div class="hero-label">Computer Engineering | FPGA Systems</div>
-      <h1>
-        <span class="lato-name">SPENCER</span> <br />
-        <span class="lato-name font-black">KOGOMA.</span>
+<main class="container-full" id="home">
+  <section class="hero-grid pb-32">
+    <div class="flex flex-col h-full justify-center">
+      <p class="mono text-[11px] uppercase tracking-[0.4em] text-stone-400 mb-8">Computer Engineering | FPGA Systems</p>
+      <h1 class="lato font-black text-8xl tracking-tight leading-[0.85] mb-12 hunter-green-text uppercase">
+        Spencer <br /><span class="text-stone-300">Kogoma.</span>
       </h1>
-      <p class="hero-sub">
-        Spencer Chiharu Kogoma, FPGA Engineer and Northwestern University student. Specializing in low-latency embedded systems, digital logic design, and the intersection of hardware and electric vehicle technology.
+      <p class="text-xl text-stone-600 leading-relaxed max-w-xl mb-12 font-light">
+        I am Spencer, a Computer Engineering and Violin Performance student at Northwestern University interested in FPGA Engineering, Electric Vehicles, and Embedded Systems. I focus on Full Stack FPGA Development.
       </p>
-      <div class="hero-meta">
-        <a href="mailto:kogomaspencer@gmail.com">kogomaspencer@gmail.com</a>
-        <a href="https://linkedin.com/in/spencer-kogoma" target="_blank">LinkedIn</a>
-        <a href="https://github.com/spencer-kogoma" target="_blank">GitHub</a>
+      <div class="flex gap-12 pt-12 border-t border-stone-100">
+        <div>
+          <span class="mono text-[10px] uppercase text-stone-400 block mb-2">Email</span>
+          <a href="mailto:kogomaspencer@gmail.com" class="text-sm font-medium hover:text-[var(--hunter-green-mid)] transition-colors">kogomaspencer@gmail.com</a>
+        </div>
+        <div>
+          <span class="mono text-[10px] uppercase text-stone-400 block mb-2">LinkedIn</span>
+          <a href="https://linkedin.com/in/spencer-kogoma" target="_blank" class="text-sm font-medium hover:text-[var(--hunter-green-mid)] transition-colors">/spencer-kogoma</a>
+        </div>
       </div>
+    </div>
+
+    <div class="relative">
       <div class="headshot-container">
-        <img src="headshot.jpg" alt="Spencer Kogoma Headshot" class="headshot-img">
+        <img src="headshot.jpg" alt="Spencer Kogoma Headshot" class="headshot-img" />
       </div>
     </div>
   </section>
 
-  <section id="projects">
-    <div class="container">
-      <div class="section-header reveal">
-        <h2 class="section-title">Projects</h2>
-        <span class="section-count">03 entries</span>
+  <section id="projects" class="py-32 grid lg:grid-cols-2 gap-20">
+    <div class="md:sticky md:top-32 h-fit">
+      <h2 class="lato font-bold text-5xl mb-6 tracking-tighter hunter-green-text uppercase">Engineering</h2>
+      <p class="text-stone-500 max-w-xs mb-10 leading-relaxed">Hardware optimization for real-time performance and safety-critical applications.</p>
+    </div>
+    
+    <div class="space-y-8">
+      <div class="card-stack-item">
+        <div>
+          <span class="mono text-[10px] hunter-green-text uppercase tracking-widest font-bold">Project 01</span>
+          <h3 class="lato font-bold text-4xl mt-6 mb-4 tracking-tighter uppercase">Rear-Vision Camera</h3>
+          <p class="text-stone-500 text-sm leading-relaxed">I architected a real-time system with sub-40ms glass-to-glass latency for the NUSolar vehicle using Pi Camera 3 Wide.</p>
+        </div>
+        <div class="flex gap-2">
+          <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">Raspberry Pi</span>
+          <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">CSI/HDMI</span>
+        </div>
       </div>
 
-      <div class="project-card reveal">
-        <span class="project-tag">NUSolar / Electrical Subteam</span>
-        <h3 class="project-title">Rear-Vision Camera System</h3>
-        <p class="project-desc">
-          Designing a real-time system with sub-40ms glass-to-glass latency at 60 fps for solar car competitions, utilizing Pi Camera 3 Wide with serial extension over shielded cable.
+      <div class="card-stack-item">
+        <div>
+          <span class="mono text-[10px] hunter-green-text uppercase tracking-widest font-bold">Project 02</span>
+          <h3 class="lato font-bold text-4xl mt-6 mb-4 tracking-tighter uppercase">FPGA FOC Control</h3>
+          <p class="text-stone-500 text-sm leading-relaxed">Implementing motor control logic in Verilog to eliminate current ripple, benchmarking acceleration against commercial MCUs.</p>
+        </div>
+        <div class="flex gap-2">
+          <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">Verilog HDL</span>
+          <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">Full Stack FPGA</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" class="py-32 border-t border-stone-100">
+    <div class="grid md:grid-cols-3 gap-20">
+      <div>
+        <h2 class="lato font-bold text-4xl mb-4 hunter-green-text uppercase">Education</h2>
+        <p class="mono text-[10px] uppercase tracking-widest text-stone-400">McCormick School of Engineering</p>
+      </div>
+      <div class="col-span-2 space-y-12">
+        <h3 class="text-3xl font-bold mb-4">Northwestern University <span class="text-stone-300 font-light">/ Class of 2029</span></h3>
+        <p class="text-2xl text-stone-600 leading-relaxed max-w-2xl font-light">
+          Pursuing a dual degree in Computer Engineering and Violin Performance. I bridge technical systems with high-level artistic performance.
         </p>
-        <div class="project-tech">
-          <span>Raspberry Pi</span>
-          <span>CSI/HDMI</span>
-          <span>Embedded Linux</span>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <span class="project-tag">Technical Research / FPGA Acceleration</span>
-        <h3 class="project-title">FPGA Field-Oriented Control</h3>
-        <p class="project-desc">
-          Implementing motor control logic in Verilog HDL on an FPGA to maximize PWM switching frequency and reduce current ripple, benchmarking performance against commercial controllers.
-        </p>
-        <div class="project-tech">
-          <span>Verilog HDL</span>
-          <span>DSP</span>
-          <span>FOC</span>
-          <span>Embedded Systems</span>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <span class="project-tag">Northwestern Univ / Digital Logic</span>
-        <h3 class="project-title">FPGA Beamforming Array</h3>
-        <p class="project-desc">
-          Combined camera face tracking with FPGA signal processing to develop a microphone array that coherently sums inputs to spatially focus audio output.
-        </p>
-        <div class="project-tech">
-          <span>SystemVerilog</span>
-          <span>Digital Design</span>
-          <span>FPGA</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="education">
-    <div class="container">
-      <div class="section-header reveal">
-        <h2 class="section-title">Education</h2>
-      </div>
-
-      <div class="exp-item reveal">
-        <div class="exp-date">Class of 2029</div>
-        <div>
-          <h3 class="exp-role">Bachelor of Science, Computer Engineering</h3>
-          <div class="exp-company">Northwestern University, McCormick School of Engineering</div>
-          <p class="exp-desc">
-            Focused on the intersection of digital logic design, computer architecture, and embedded systems, with a particular interest in accelerating algorithms through custom hardware.
-          </p>
-        </div>
-      </div>
-
-      <div class="exp-item reveal">
-        <div class="exp-date">Sep 2025 - Present</div>
-        <div>
-          <h3 class="exp-role">McCormick School of Engineering</h3>
-          <p class="exp-desc">
-            Conducting specific university details, with core focus on embedded systems and FPGA implementation for next-generation technology.
-          </p>
-        </div>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-8 reveal" style="margin-top: 40px;">
-        <div class="skill-group-title">Key Involvement</div>
-        <div class="exp-desc">
-          Low Voltage Lead, Electrical Subteam, Northwestern Solar Car Team (NUSolar)
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <section id="experience">
-    <div class="container">
-      <div class="section-header reveal">
-        <h2 class="section-title">Experience</h2>
-        <span class="section-count">03 roles</span>
-      </div>
-
-      <div class="exp-item reveal">
-        <div class="exp-date">Sep 2025 - Present</div>
-        <div>
-          <h3 class="exp-role">Low Voltage Lead | Electrical Subteam</h3>
-          <div class="exp-company">Northwestern Solar Car Team (NUSolar), Evanston, IL</div>
-          <p class="exp-desc">
-            Overseeing low voltage electrical systems. Previously contributed to relay board implementation, Raspberry Pi board design, and CAN/SPI bus debugging.
-          </p>
-        </div>
-      </div>
-
-      <div class="exp-item reveal">
-        <div class="exp-date">Aug 2021 - Present</div>
-        <div>
-          <h3 class="exp-role">Japanese Translator (Fluent)</h3>
-          <div class="exp-company">Private Studio, Remote</div>
-          <p class="exp-desc">
-            Designing personalised translation solutions tailored to each client's specific context, ensuring natural language flow and cultural nuance. Mentoring peers in advanced linguistic techniques.
-          </p>
-        </div>
-      </div>
-
-      <div class="exp-item reveal">
-        <div class="exp-date">Jan 2014 - Jun 2025</div>
-        <div>
-          <h3 class="exp-role">Eagle Scout</h3>
-          <div class="exp-company">Scouting America, Union City, CA</div>
-          <p class="exp-desc">
-            Directed fellow scouts as Senior Patrol Leader. Planned and led community projects managing logistics, volunteers, and cross-team coordination.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="pursuits">
-    <div class="container">
-      <div class="section-header reveal">
-        <h2 class="section-title">Other Pursuits</h2>
-        <span class="section-count">Interests</span>
-      </div>
-
-      <div class="skills-grid reveal">
-        <div>
-          <div class="skill-group-title">Athletics</div>
-          <div class="skill-list">
-            <span>Pole Vaulting</span>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="p-10 bg-stone-50 rounded-[2.5rem] border border-stone-100">
+            <h4 class="font-bold text-sm mb-4 uppercase tracking-widest hunter-green-text">NUSolar Team</h4>
+            <p class="text-xs text-stone-500 leading-relaxed">Low Voltage Lead. Overseeing electronic architecture and power distribution for the 2026 American Solar Challenge.</p>
+          </div>
+          <div class="p-10 bg-stone-50 rounded-[2.5rem] border border-stone-100">
+            <h4 class="font-bold text-sm mb-4 uppercase tracking-widest hunter-green-text">Hardware Research</h4>
+            <p class="text-xs text-stone-500 leading-relaxed">Focusing on FPGA-based Field-Oriented Control (FOC) to achieve maximum efficiency in motor systems.</p>
           </div>
         </div>
-        <div>
-          <div class="skill-group-title">Culinary Arts</div>
-          <div class="skill-list">
-            <span>Italian Cuisine</span>
-          </div>
-        </div>
-        <div style="margin-top: 40px;">
-          <p class="exp-desc" style="font-style: italic;">Discipline applied across multiple domains. A spartan approach to performance.</p>
-        </div>
       </div>
     </div>
   </section>
 
-  <section id="integration">
-    <div class="container">
-      <div class="section-header reveal">
-        <h2 class="section-title">Integration Guide</h2>
-      </div>
-
-      <div class="guide-step reveal">
-        <h4 class="step-title">1. analyze the component structure</h4>
-        <p class="exp-desc">Review the `animated-tabs.tsx` and `demo.tsx` provided above. Identify all required context providers or hooks and install external dependencies as needed.</p>
-      </div>
-
-      <div class="guide-step reveal">
-        <h4 class="step-title">2. project structure: /components/ui</h4>
-        <p class="exp-desc">If your default path is not `/components/ui`, create this folder. Centralizing primitives prevents circular dependencies and provides a clean separation of concerns, which is unambiguous. Place `animated-tabs.tsx` here.</p>
-        <div class="code-block">
-<pre><code>// animated-tabs.tsx
-"use client" 
-
-import * as React from "react"
-import { useEffect, useRef, useState } from "react";
-
-export function AnimatedTabs({ tabs }: AnimatedTabsProps) {
-  const [activeTab, setActiveTab] = useState(tabs[0].label);
-  // Implementation logic follows...
-}</code></pre>
+  <section id="pursuits" class="py-32 border-t border-stone-100">
+    <div class="text-center mb-20">
+      <h2 class="lato font-bold text-4xl mb-4 hunter-green-text uppercase">Pursuits</h2>
+      <p class="mono text-[10px] text-stone-400 uppercase tracking-[0.2em]">High-discipline outside the lab</p>
+    </div>
+    <div class="flex flex-col items-center gap-12">
+        <div class="bg-stone-50 border border-stone-200 rounded-full p-2 flex gap-2 mono text-[11px] uppercase tracking-widest shadow-sm">
+          <button onclick="showInterest('vault')" id="btn-vault" class="tab-btn active px-10 py-3 rounded-full transition-all">Pole Vaulting</button>
+          <button onclick="showInterest('food')" id="btn-food" class="tab-btn px-10 py-3 rounded-full transition-all">Italian Cuisine</button>
         </div>
-      </div>
-
-      <div class="guide-step reveal">
-        <h4 class="step-title">3. usage in demopage</h4>
-        <p class="exp-desc">Implement the component in your app. In `demo.tsx` (or your page), import the component and pass the required `tabs` prop. Keep the overall professional and minimalistic look.</p>
-        <div class="code-block">
-<pre><code>// demo.tsx
-import { AnimatedTabs } from "@/components/ui/animated-tabs"
-
-const Demo = () => {
-    return (
-        &lt;AnimatedTabs
-            tabs={[
-                { label: "Home" },
-                { label: "About" },
-                { label: "Resources" }
-            ]}
-        /&gt;
-    )
-}</code></pre>
+        <div class="max-w-xl mx-auto min-h-[80px] flex items-center justify-center text-center">
+            <p id="interest-text" class="text-stone-600 text-lg italic">I apply explosive energy and technical discipline to clear new heights.</p>
         </div>
-      </div>
+    </div>
+  </section>
 
+  <section id="contact" class="pt-48 pb-32 text-center">
+    <h2 class="lato font-black text-6xl md:text-9xl tracking-tighter mb-16 uppercase hunter-green-text">Connect</h2>
+    <div class="flex flex-col md:flex-row justify-center items-center gap-16">
+      <a href="mailto:kogomaspencer@gmail.com" class="mono text-xs uppercase tracking-[0.4em] border-b border-black pb-1 hover:text-stone-400 hover:border-stone-400 transition-all">kogomaspencer@gmail.com</a>
+      <div class="flex gap-12">
+        <a href="https://linkedin.com/in/spencer-kogoma" target="_blank" class="mono text-xs uppercase tracking-[0.4em] hover:text-stone-400 transition-all">LinkedIn</a>
+        <a href="https://github.com/spencer-kogoma" target="_blank" class="mono text-xs uppercase tracking-[0.4em] hover:text-stone-400 transition-all">GitHub</a>
+      </div>
     </div>
   </section>
 </main>
 
-<footer>
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-left">
-        <h3>Connect.</h3>
-        <p>kogomaspencer@gmail.com / Evanston, IL</p>
-      </div>
-      <div class="footer-links">
-        <a href="https://linkedin.com/in/spencer-kogoma" target="_blank">LinkedIn</a>
-        <a href="https://github.com/spencer-kogoma" target="_blank">GitHub</a>
-      </div>
-    </div>
+<footer class="py-20 border-t border-stone-100 bg-white">
+  <div class="container-full flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="text-[10px] text-stone-300 uppercase tracking-[0.4em]">© 2026 Spencer Chiharu Kogoma</p>
+    <p class="text-[10px] text-stone-300 uppercase tracking-[0.4em]">Northwestern Engineering & Music</p>
   </div>
 </footer>
 
 <script>
-// Nav scroll effect
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 50);
-});
+  function scrollToSection(id, element) {
+    const section = document.getElementById(id);
+    const indicator = document.getElementById('nav-indicator');
+    const tabs = document.querySelectorAll('.nav-tab');
+    
+    window.scrollTo({
+      top: section.offsetTop - 100,
+      behavior: 'smooth'
+    });
 
-// Reveal on scroll
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    element.classList.add('active');
+    
+    indicator.style.width = element.offsetWidth + 'px';
+    indicator.style.left = element.offsetLeft + 'px';
+  }
+
+  function showInterest(type) {
+    const text = document.getElementById('interest-text');
+    const btns = document.querySelectorAll('.tab-btn');
+    btns.forEach(b => b.classList.remove('active'));
+    
+    if(type === 'vault') {
+      text.innerText = "I apply explosive energy and technical discipline to clear new heights. Success is the precise intersection of physics and physical performance.";
+      document.getElementById('btn-vault').classList.add('active');
+    } else if(type === 'food') {
+      text.innerText = "Exploring authentic Italian culinary arts. I focus on genuine techniques and high-quality ingredients to understand cultural heritage.";
+      document.getElementById('btn-food').classList.add('active');
     }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  }
 
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  window.onload = () => {
+    const activeTab = document.querySelector('.nav-tab.active');
+    const indicator = document.getElementById('nav-indicator');
+    if(activeTab && indicator) {
+      indicator.style.width = activeTab.offsetWidth + 'px';
+      indicator.style.left = activeTab.offsetLeft + 'px';
+    }
+  };
+
+  // Nav scroll listener
+  window.addEventListener('scroll', () => {
+    const sections = ['home', 'projects', 'education', 'pursuits', 'contact'];
+    const scrollPos = window.scrollY + 250;
+
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.offsetTop <= scrollPos && (el.offsetTop + el.offsetHeight) > scrollPos) {
+        const tab = document.querySelector(`.nav-tab[data-target="${id}"]`);
+        if (tab && !tab.classList.contains('active')) {
+          const indicator = document.getElementById('nav-indicator');
+          const tabs = document.querySelectorAll('.nav-tab');
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          indicator.style.width = tab.offsetWidth + 'px';
+          indicator.style.left = tab.offsetLeft + 'px';
+        }
+      }
+    });
+  });
 </script>
 
 </body>
