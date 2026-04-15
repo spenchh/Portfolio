@@ -39,7 +39,7 @@
       padding: 0 4rem;
     }
 
-    /* Navbar with Animated Indicator */
+    /* Navbar with Top-Right Tabs */
     nav {
       position: fixed;
       top: 0;
@@ -85,35 +85,49 @@
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Hero Section Side-by-Side */
-    .hero-grid {
-      display: grid;
-      lg:grid-cols-2;
-      gap: 5rem;
+    /* Hero Section - Matching Fashion Layout Dimensions */
+    .hero-container {
+      min-height: 100vh;
+      display: flex;
       align-items: center;
-      min-height: 90vh;
-      padding-top: 100px;
+      padding-top: 80px;
     }
 
-    .headshot-container {
+    .hero-grid {
+      display: grid;
+      md:grid-cols-2;
+      gap: 4rem;
+      width: 100%;
+      align-items: center;
+    }
+
+    .headshot-wrapper {
       position: relative;
-      border-radius: 2.5rem;
-      overflow: hidden;
-      background: var(--hunter-green-light);
-      height: 700px;
-      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
-      transition: transform 0.6s ease;
+      order: 2;
     }
 
     .headshot-img {
       width: 100%;
-      height: 100%;
       object-fit: cover;
-      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 1.5rem; /* rounded-2xl */
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); /* shadow-2xl */
+      transition: transform 0.6s ease;
     }
 
-    .headshot-container:hover { transform: translateY(-4px); }
-    .headshot-container:hover .headshot-img { transform: scale(1.03); }
+    .headshot-img:hover { transform: scale(1.02); }
+
+    .blur-accent {
+      position: absolute;
+      width: 18rem; /* w-72 */
+      height: 18rem; /* h-72 */
+      border-radius: 9999px;
+      background: var(--hunter-green-mid);
+      filter: blur(64px); /* blur-3xl */
+      opacity: 0.1;
+      top: -2.5rem;
+      left: -2.5rem;
+      z-index: -1;
+    }
 
     /* Sticky Card Stacks */
     .card-stack-item {
@@ -131,15 +145,14 @@
       justify-content: space-between;
     }
 
-    /* Button and Tab Switcher */
     .tab-btn.active {
       background: var(--hunter-green);
       color: #fff;
     }
 
-    .hunter-green-text {
-      color: var(--hunter-green);
-    }
+    .hunter-green-text { color: var(--hunter-green); }
+    .bold-accent { font-weight: 700; color: var(--hunter-green); }
+
   </style>
 </head>
 <body class="selection:bg-stone-100">
@@ -160,38 +173,41 @@
 </nav>
 
 <main class="container-full" id="home">
-  <section class="hero-grid pb-32">
-    <div class="flex flex-col h-full justify-center">
-      <p class="mono text-[11px] uppercase tracking-[0.4em] text-stone-400 mb-8">Computer Engineering | FPGA Systems</p>
-      <h1 class="lato font-black text-8xl tracking-tight leading-[0.85] mb-12 hunter-green-text uppercase">
-        Spencer <br /><span class="text-stone-300">Kogoma.</span>
-      </h1>
-      <p class="text-xl text-stone-600 leading-relaxed max-w-xl mb-12 font-light">
-        I am Spencer, a Computer Engineering and Violin Performance student at Northwestern University interested in FPGA Engineering, Electric Vehicles, and Embedded Systems. I focus on Full Stack FPGA Development.
-      </p>
-      <div class="flex gap-12 pt-12 border-t border-stone-100">
-        <div>
-          <span class="mono text-[10px] uppercase text-stone-400 block mb-2">Email</span>
-          <a href="mailto:kogomaspencer@gmail.com" class="text-sm font-medium hover:text-[var(--hunter-green-mid)] transition-colors">kogomaspencer@gmail.com</a>
-        </div>
-        <div>
-          <span class="mono text-[10px] uppercase text-stone-400 block mb-2">LinkedIn</span>
-          <a href="https://linkedin.com/in/spencer-kogoma" target="_blank" class="text-sm font-medium hover:text-[var(--hunter-green-mid)] transition-colors">/spencer-kogoma</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="relative">
-      <div class="headshot-container">
+  <section class="hero-container pb-32">
+    <div class="hero-grid">
+      <div class="headshot-wrapper">
+        <div class="blur-accent"></div>
         <img src="headshot.jpg" alt="Spencer Kogoma Headshot" class="headshot-img" />
+      </div>
+
+      <div class="flex flex-col h-full justify-between py-8 order-1">
+        <div>
+          <p class="mono text-[10px] uppercase tracking-[0.4em] text-stone-400 mb-8">Computer Engineering | FPGA Systems</p>
+          <h1 class="lato font-black text-7xl lg:text-8xl tracking-tighter leading-none mb-12 hunter-green-text uppercase">
+            Spencer <br /><span class="text-stone-300">Kogoma.</span>
+          </h1>
+          <ul class="space-y-3 mono text-[11px] uppercase tracking-[0.2em] text-stone-400 mb-12">
+            <li class="hover:text-[var(--hunter-green)] transition-colors cursor-default">Full Stack FPGA Development</li>
+            <li class="hover:text-[var(--hunter-green)] transition-colors cursor-default">Electric Vehicles</li>
+            <li class="hover:text-[var(--hunter-green)] transition-colors cursor-default">Embedded Systems</li>
+            <li class="hover:text-[var(--hunter-green)] transition-colors cursor-default">Violin Performance</li>
+          </ul>
+        </div>
+        
+        <div class="max-w-md pt-12 border-t border-stone-100">
+          <h2 class="text-2xl font-medium text-black mb-6">SUMMER 2026</h2>
+          <p class="text-lg text-stone-600 leading-relaxed tracking-tight">
+            I’m Spencer, a <span class="bold-accent">Computer Engineering</span> and <span class="bold-accent">Violin Performance</span> student at <span class="underline decoration-stone-200">Northwestern University</span>. I build technical systems for EVs and research hardware-accelerated motor control.
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="projects" class="py-32 grid lg:grid-cols-2 gap-20">
+  <section id="projects" class="py-32 grid lg:grid-cols-2 gap-20 border-t border-stone-100">
     <div class="md:sticky md:top-32 h-fit">
       <h2 class="lato font-bold text-5xl mb-6 tracking-tighter hunter-green-text uppercase">Engineering</h2>
-      <p class="text-stone-500 max-w-xs mb-10 leading-relaxed">Hardware optimization for real-time performance and safety-critical applications.</p>
+      <p class="text-stone-500 max-w-xs mb-10 leading-relaxed font-light">Precision hardware optimization and real-time algorithmic acceleration.</p>
     </div>
     
     <div class="space-y-8">
@@ -199,7 +215,7 @@
         <div>
           <span class="mono text-[10px] hunter-green-text uppercase tracking-widest font-bold">Project 01</span>
           <h3 class="lato font-bold text-4xl mt-6 mb-4 tracking-tighter uppercase">Rear-Vision Camera</h3>
-          <p class="text-stone-500 text-sm leading-relaxed">I architected a real-time system with sub-40ms glass-to-glass latency for the NUSolar vehicle using Pi Camera 3 Wide.</p>
+          <p class="text-stone-500 text-sm leading-relaxed font-light">Architected a real-time system with <span class="hunter-green-text font-medium">sub-40ms latency</span> for the NUSolar competition car, utilizing Pi Camera 3 Wide.</p>
         </div>
         <div class="flex gap-2">
           <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">Raspberry Pi</span>
@@ -211,7 +227,7 @@
         <div>
           <span class="mono text-[10px] hunter-green-text uppercase tracking-widest font-bold">Project 02</span>
           <h3 class="lato font-bold text-4xl mt-6 mb-4 tracking-tighter uppercase">FPGA FOC Control</h3>
-          <p class="text-stone-500 text-sm leading-relaxed">Implementing motor control logic in Verilog to eliminate current ripple, benchmarking acceleration against commercial MCUs.</p>
+          <p class="text-stone-500 text-sm leading-relaxed font-light">Implementing Field-Oriented Control in Verilog to reduce current ripple, achieving <span class="hunter-green-text font-medium">real-time hardware acceleration</span> across electric motors.</p>
         </div>
         <div class="flex gap-2">
           <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">Verilog HDL</span>
@@ -225,44 +241,29 @@
     <div class="grid md:grid-cols-3 gap-20">
       <div>
         <h2 class="lato font-bold text-4xl mb-4 hunter-green-text uppercase">Education</h2>
-        <p class="mono text-[10px] uppercase tracking-widest text-stone-400">McCormick School of Engineering</p>
+        <p class="mono text-[10px] uppercase tracking-widest text-stone-400">Northwestern University</p>
       </div>
-      <div class="col-span-2 space-y-12">
-        <h3 class="text-3xl font-bold mb-4">Northwestern University <span class="text-stone-300 font-light">/ Class of 2029</span></h3>
+      <div class="col-span-2 space-y-10">
+        <h3 class="text-3xl font-bold mb-4">McCormick School of Engineering <span class="text-stone-200 font-light">/ 2029</span></h3>
         <p class="text-2xl text-stone-600 leading-relaxed max-w-2xl font-light">
-          Pursuing a dual degree in Computer Engineering and Violin Performance. I bridge technical systems with high-level artistic performance.
+          I apply technical discipline to <span class="bold-accent">low-voltage systems</span> as the Lead for the NUSolar Team and conduct research on <span class="bold-accent">FPGA motor control</span>.
         </p>
-        <div class="grid md:grid-cols-2 gap-8">
-          <div class="p-10 bg-stone-50 rounded-[2.5rem] border border-stone-100">
-            <h4 class="font-bold text-sm mb-4 uppercase tracking-widest hunter-green-text">NUSolar Team</h4>
-            <p class="text-xs text-stone-500 leading-relaxed">Low Voltage Lead. Overseeing electronic architecture and power distribution for the 2026 American Solar Challenge.</p>
-          </div>
-          <div class="p-10 bg-stone-50 rounded-[2.5rem] border border-stone-100">
-            <h4 class="font-bold text-sm mb-4 uppercase tracking-widest hunter-green-text">Hardware Research</h4>
-            <p class="text-xs text-stone-500 leading-relaxed">Focusing on FPGA-based Field-Oriented Control (FOC) to achieve maximum efficiency in motor systems.</p>
-          </div>
-        </div>
       </div>
     </div>
   </section>
 
-  <section id="pursuits" class="py-32 border-t border-stone-100">
-    <div class="text-center mb-20">
-      <h2 class="lato font-bold text-4xl mb-4 hunter-green-text uppercase">Pursuits</h2>
-      <p class="mono text-[10px] text-stone-400 uppercase tracking-[0.2em]">High-discipline outside the lab</p>
-    </div>
+  <section id="pursuits" class="py-32 border-t border-stone-100 text-center">
+    <h2 class="lato font-bold text-4xl mb-12 hunter-green-text uppercase">Pursuits</h2>
     <div class="flex flex-col items-center gap-12">
         <div class="bg-stone-50 border border-stone-200 rounded-full p-2 flex gap-2 mono text-[11px] uppercase tracking-widest shadow-sm">
           <button onclick="showInterest('vault')" id="btn-vault" class="tab-btn active px-10 py-3 rounded-full transition-all">Pole Vaulting</button>
           <button onclick="showInterest('food')" id="btn-food" class="tab-btn px-10 py-3 rounded-full transition-all">Italian Cuisine</button>
         </div>
-        <div class="max-w-xl mx-auto min-h-[80px] flex items-center justify-center text-center">
-            <p id="interest-text" class="text-stone-600 text-lg italic">I apply explosive energy and technical discipline to clear new heights.</p>
-        </div>
+        <p id="interest-text" class="text-stone-600 text-lg italic max-w-xl mx-auto min-h-[80px]">I apply explosive energy and technical discipline to clear new heights.</p>
     </div>
   </section>
 
-  <section id="contact" class="pt-48 pb-32 text-center">
+  <section id="contact" class="pt-48 pb-32 text-center border-t border-stone-100">
     <h2 class="lato font-black text-6xl md:text-9xl tracking-tighter mb-16 uppercase hunter-green-text">Connect</h2>
     <div class="flex flex-col md:flex-row justify-center items-center gap-16">
       <a href="mailto:kogomaspencer@gmail.com" class="mono text-xs uppercase tracking-[0.4em] border-b border-black pb-1 hover:text-stone-400 hover:border-stone-400 transition-all">kogomaspencer@gmail.com</a>
@@ -277,7 +278,7 @@
 <footer class="py-20 border-t border-stone-100 bg-white">
   <div class="container-full flex flex-col md:flex-row justify-between items-center gap-4">
     <p class="text-[10px] text-stone-300 uppercase tracking-[0.4em]">© 2026 Spencer Chiharu Kogoma</p>
-    <p class="text-[10px] text-stone-300 uppercase tracking-[0.4em]">Northwestern Engineering & Music</p>
+    <p class="text-[10px] text-stone-300 uppercase tracking-[0.4em]">Applied Technical Discipline</p>
   </div>
 </footer>
 
@@ -305,7 +306,7 @@
     btns.forEach(b => b.classList.remove('active'));
     
     if(type === 'vault') {
-      text.innerText = "I apply explosive energy and technical discipline to clear new heights. Success is the precise intersection of physics and physical performance.";
+      text.innerText = "I apply explosive energy and technical discipline to clear new heights. Success is the intersection of physics and performance.";
       document.getElementById('btn-vault').classList.add('active');
     } else if(type === 'food') {
       text.innerText = "Exploring authentic Italian culinary arts. I focus on genuine techniques and high-quality ingredients to understand cultural heritage.";
@@ -322,7 +323,6 @@
     }
   };
 
-  // Nav scroll listener
   window.addEventListener('scroll', () => {
     const sections = ['home', 'projects', 'education', 'pursuits', 'contact'];
     const scrollPos = window.scrollY + 250;
