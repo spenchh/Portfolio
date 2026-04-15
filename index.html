@@ -5,16 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Spencer Kogoma | Computer Engineering</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #ffffff;
+      --bg: #fafaf9;
       --hunter-green: #1a331a;
       --hunter-green-mid: #3d5c3d;
-      --hunter-green-light: #e8f0e8;
-      --border: #f3f4f6;
-      --text-main: #000000;
-      --text-sub: #4b5563;
+      --border: #e7e5e4;
+      --border-light: #f0efed;
+      --text-main: #1c1917;
+      --text-sub: #57534e;
+      --text-muted: #a8a29e;
+      --card-bg: #ffffff;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,316 +26,289 @@
       background-color: var(--bg);
       color: var(--text-main);
       font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      line-height: 1.6;
+      font-weight: 400;
+      line-height: 1.7;
       -webkit-font-smoothing: antialiased;
     }
+
+    ::selection { background: var(--hunter-green); color: #fff; }
 
     .lato { font-family: 'Lato', sans-serif; }
     .mono { font-family: 'DM Mono', monospace; }
 
-    .container-full {
-      max-width: 1600px;
-      margin: 0 auto;
-      padding: 0 4rem;
-    }
+    .container-full { max-width: 1400px; margin: 0 auto; padding: 0 3rem; }
 
-    /* Navbar */
+    /* NAV */
     nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 100;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(250,250,249,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-light);
     }
-
-    .nav-tabs-container {
-      position: relative;
-      background: #f9fafb;
-      border: 1px solid var(--border);
-      display: flex;
-      border-radius: 9999px;
-      padding: 4px;
+    .nav-inner { height: 72px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: 'Lato', sans-serif; font-weight: 900; font-size: 22px; letter-spacing: -0.04em; color: var(--hunter-green); }
+    .nav-links { display: flex; gap: 4px; background: #f5f5f4; border: 1px solid var(--border); border-radius: 9999px; padding: 4px; }
+    .nav-link {
+      font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-muted); padding: 8px 20px;
+      border-radius: 9999px; cursor: pointer; transition: color 0.25s, background 0.25s;
+      text-decoration: none; user-select: none;
     }
+    .nav-link:hover { color: var(--text-sub); }
+    .nav-link.active { background: var(--hunter-green); color: #fff; }
 
-    .nav-tab {
-      position: relative;
-      z-index: 2;
-      padding: 6px 18px;
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #9ca3af;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
+    /* HERO */
+    .hero-container { min-height: 100vh; display: flex; align-items: center; padding-top: 72px; }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 5rem; width: 100%; align-items: center; }
+    .hero-label { font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.25em; color: var(--hunter-green-mid); margin-bottom: 28px; font-weight: 500; }
+    .hero-name { font-family: 'Lato', sans-serif; font-weight: 900; font-size: clamp(52px,7vw,88px); letter-spacing: -0.04em; line-height: 0.95; text-transform: uppercase; color: var(--hunter-green); margin-bottom: 40px; }
+    .hero-name span { color: #d6d3d1; }
+    .hero-list { list-style: none; margin-bottom: 48px; }
+    .hero-list li { font-family: 'DM Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); padding: 6px 0; transition: color 0.3s; cursor: default; }
+    .hero-list li:hover { color: var(--hunter-green); }
+    .hero-bio { padding-top: 40px; border-top: 1px solid var(--border); max-width: 440px; }
+    .hero-bio-heading { font-family: 'Lato', sans-serif; font-weight: 700; font-size: 20px; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .hero-bio p { font-size: 15px; color: var(--text-sub); line-height: 1.85; }
+    .accent { font-weight: 600; color: var(--hunter-green); }
+    .headshot-img { width: 100%; height: auto; display: block; border-radius: 1.25rem; box-shadow: 0 20px 60px -15px rgba(0,0,0,0.08); transition: transform 0.5s ease; }
+    .headshot-img:hover { transform: scale(1.015); }
 
-    .nav-tab.active { color: #ffffff; }
+    /* SECTIONS */
+    .section-heading { font-family: 'Lato', sans-serif; font-weight: 900; font-size: clamp(36px,4vw,52px); letter-spacing: -0.03em; text-transform: uppercase; color: var(--hunter-green); }
+    .section-sub { font-size: 15px; color: var(--text-sub); line-height: 1.8; max-width: 360px; }
+    .section-divider { border: none; border-top: 1px solid var(--border); }
 
-    .nav-indicator {
-      position: absolute;
-      top: 4px;
-      bottom: 4px;
-      left: 4px;
-      z-index: 1;
-      background: var(--hunter-green);
-      border-radius: 9999px;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    /* Hero Section - Maintaining Original Portrait Dimensions */
-    .hero-container {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding-top: 120px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 6rem;
-      width: 100%;
-      align-items: flex-start;
-    }
-
-    .headshot-wrapper {
-      position: relative;
-      width: 100%;
-      /* Removing fixed height to preserve vertical aspect ratio */
-    }
-
-    .headshot-img {
-      width: 100%;
-      height: auto; /* Preserve vertical dimensions */
-      display: block;
-      object-fit: contain; /* Ensures no cropping */
-      border-radius: 1.5rem;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-      transition: transform 0.6s ease;
-    }
-
-    .headshot-img:hover { transform: scale(1.02); }
-
-    /* Sticky Card Stacks */
+    /* CARDS */
     .card-stack-item {
-      position: sticky;
-      top: 120px;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 2.5rem;
-      padding: 4rem;
-      margin-bottom: 5rem;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
-      height: 420px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      position: sticky; top: 110px; background: var(--card-bg);
+      border: 1px solid var(--border); border-radius: 1.5rem;
+      padding: 3rem 3.5rem; margin-bottom: 4rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.02);
+      min-height: 380px; display: flex; flex-direction: column;
+      justify-content: space-between; transition: box-shadow 0.4s;
     }
+    .card-stack-item:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.05); }
+    .card-label { font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--hunter-green); font-weight: 500; }
+    .card-title { font-family: 'Lato', sans-serif; font-weight: 900; font-size: clamp(28px,3vw,40px); letter-spacing: -0.03em; text-transform: uppercase; margin-top: 20px; margin-bottom: 16px; }
+    .card-desc { font-size: 15px; color: var(--text-sub); line-height: 1.85; max-width: 520px; }
+    .card-desc .hl { color: var(--hunter-green); font-weight: 500; }
+    .tag-pill { font-family: 'DM Mono', monospace; font-size: 11px; border: 1px solid var(--border); padding: 6px 16px; border-radius: 9999px; color: var(--text-sub); display: inline-block; }
 
-    .tab-btn.active {
-      background: var(--hunter-green);
-      color: #fff;
+    /* EDUCATION */
+    .edu-grid { display: grid; grid-template-columns: 280px 1fr; gap: 4rem; }
+    .edu-meta { font-family: 'DM Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin-top: 12px; }
+    .edu-title { font-family: 'Lato', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 20px; }
+    .edu-title span { font-weight: 300; color: var(--text-muted); }
+    .edu-body { font-size: 16px; color: var(--text-sub); line-height: 1.9; max-width: 560px; }
+
+    /* PURSUITS */
+    .pursuits-toggle { display: inline-flex; gap: 4px; background: #f5f5f4; border: 1px solid var(--border); border-radius: 9999px; padding: 4px; }
+    .pursuit-btn {
+      font-family: 'DM Mono', monospace; font-size: 12px; text-transform: uppercase;
+      letter-spacing: 0.08em; padding: 10px 28px; border-radius: 9999px;
+      cursor: pointer; border: none; background: transparent; color: var(--text-muted); transition: all 0.25s;
     }
+    .pursuit-btn.active { background: var(--hunter-green); color: #fff; }
+    .pursuit-text { font-size: 16px; color: var(--text-sub); font-style: italic; max-width: 480px; margin: 0 auto; line-height: 1.8; min-height: 80px; }
 
-    .hunter-green-text { color: var(--hunter-green); }
-    .bold-accent { font-weight: 700; color: var(--hunter-green); }
+    /* CONTACT */
+    .contact-heading { font-family: 'Lato', sans-serif; font-weight: 900; font-size: clamp(56px,8vw,120px); letter-spacing: -0.04em; text-transform: uppercase; color: var(--hunter-green); margin-bottom: 48px; }
+    .contact-link {
+      font-family: 'DM Mono', monospace; font-size: 12px; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--text-sub); text-decoration: none;
+      padding-bottom: 2px; border-bottom: 1px solid var(--border); transition: color 0.3s, border-color 0.3s;
+    }
+    .contact-link:hover { color: var(--hunter-green); border-color: var(--hunter-green); }
+
+    .footer-text { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.25em; color: var(--text-muted); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
     @media (max-width: 1024px) {
       .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .headshot-wrapper { order: -1; }
-      .container-full { padding: 0 2rem; }
+      .hero-grid > div:last-child { order: -1; }
+      .container-full { padding: 0 1.5rem; }
+      .edu-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 640px) {
+      .card-stack-item { padding: 2rem; min-height: auto; }
     }
   </style>
 </head>
-<body class="selection:bg-stone-100">
+<body>
 
 <nav>
-  <div class="container-full h-20 flex items-center justify-between">
-    <span class="lato font-black text-2xl tracking-tighter hunter-green-text">SK</span>
-    
-    <div class="nav-tabs-container" id="nav-container">
-      <div class="nav-indicator" id="nav-indicator"></div>
-      <div class="nav-tab active" data-target="home" onclick="scrollToSection('home', this)">Home</div>
-      <div class="nav-tab" data-target="projects" onclick="scrollToSection('projects', this)">Projects</div>
-      <div class="nav-tab" data-target="education" onclick="scrollToSection('education', this)">Education</div>
-      <div class="nav-tab" data-target="pursuits" onclick="scrollToSection('pursuits', this)">Pursuits</div>
-      <div class="nav-tab" data-target="contact" onclick="scrollToSection('contact', this)">Contact</div>
+  <div class="container-full nav-inner">
+    <span class="nav-logo">SK</span>
+    <div class="nav-links" id="nav-links">
+      <a class="nav-link active" data-section="home" href="#home">Home</a>
+      <a class="nav-link" data-section="projects" href="#projects">Projects</a>
+      <a class="nav-link" data-section="education" href="#education">Education</a>
+      <a class="nav-link" data-section="pursuits" href="#pursuits">Pursuits</a>
+      <a class="nav-link" data-section="contact" href="#contact">Contact</a>
     </div>
   </div>
 </nav>
 
-<main class="container-full" id="home">
-  <section class="hero-container pb-32">
+<main class="container-full">
+  <section class="hero-container" id="home">
     <div class="hero-grid">
-      <div class="flex flex-col">
-        <p class="mono text-[10px] uppercase tracking-[0.4em] text-stone-400 mb-8">Computer Engineering | FPGA Systems</p>
-        <h1 class="lato font-black text-6xl lg:text-8xl tracking-tighter leading-none mb-12 hunter-green-text uppercase">
-          Spencer <br /><span class="text-stone-300">Kogoma.</span>
-        </h1>
-        <ul class="space-y-3 mono text-[11px] uppercase tracking-[0.2em] text-stone-400 mb-12">
-          <li class="hover:text-[var(--hunter-green)] transition-colors cursor-default">Full Stack FPGA Development</li>
-          <li class="hover:text-[var(--hunter-green)] transition-colors cursor-default">Electric Vehicles</li>
-          <li class="hover:text-[var(--hunter-green)] transition-colors cursor-default">Embedded Systems</li>
-          <li class="hover:text-[var(--hunter-green)] transition-colors cursor-default">Violin Performance</li>
-        </ul>
-        
-        <div class="max-w-md pt-12 border-t border-stone-100">
-          <h2 class="text-2xl font-medium text-black mb-6 uppercase tracking-tight">Summer 2026</h2>
-          <p class="text-lg text-stone-600 leading-relaxed tracking-tight">
-            I’m Spencer, a <span class="bold-accent">Computer Engineering</span> and <span class="bold-accent">Violin Performance</span> student at <span class="underline decoration-stone-200">Northwestern University</span>. I build technical systems for EVs and research hardware-accelerated motor control.
-          </p>
-        </div>
-      </div>
-
-      <div class="headshot-wrapper">
-        <img src="headshot.jpg" alt="Spencer Kogoma" class="headshot-img" />
-      </div>
-    </div>
-  </section>
-
-  <section id="projects" class="py-32 grid lg:grid-cols-2 gap-20 border-t border-stone-100">
-    <div class="md:sticky md:top-32 h-fit">
-      <h2 class="lato font-bold text-5xl mb-6 tracking-tighter hunter-green-text uppercase">Engineering</h2>
-      <p class="text-stone-500 max-w-xs mb-10 leading-relaxed font-light">Hardware optimization for real-time performance and safety-critical applications.</p>
-    </div>
-    
-    <div class="space-y-8">
-      <div class="card-stack-item">
-        <div>
-          <span class="mono text-[10px] hunter-green-text uppercase tracking-widest font-bold">Project 01</span>
-          <h3 class="lato font-bold text-4xl mt-6 mb-4 tracking-tighter uppercase">Rear-Vision Camera</h3>
-          <p class="text-stone-500 text-sm leading-relaxed font-light">Architected a real-time system with <span class="hunter-green-text font-medium">sub-40ms latency</span> for the NUSolar competition car, utilizing Pi Camera 3 Wide.</p>
-        </div>
-        <div class="flex gap-2">
-          <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">Raspberry Pi</span>
-          <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">CSI/HDMI</span>
-        </div>
-      </div>
-
-      <div class="card-stack-item">
-        <div>
-          <span class="mono text-[10px] hunter-green-text uppercase tracking-widest font-bold">Project 02</span>
-          <h3 class="lato font-bold text-4xl mt-6 mb-4 tracking-tighter uppercase">FPGA FOC Control</h3>
-          <p class="text-stone-500 text-sm leading-relaxed font-light">Implemented motor control logic in Verilog to reduce current ripple, achieving <span class="hunter-green-text font-medium">real-time hardware acceleration</span> across electric motors.</p>
-        </div>
-        <div class="flex gap-2">
-          <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">Verilog HDL</span>
-          <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">Full Stack FPGA</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="education" class="py-32 border-t border-stone-100">
-    <div class="grid md:grid-cols-3 gap-20">
       <div>
-        <h2 class="lato font-bold text-4xl mb-4 hunter-green-text uppercase">Education</h2>
-        <p class="mono text-[10px] uppercase tracking-widest text-stone-400">Northwestern University</p>
-      </div>
-      <div class="col-span-2 space-y-10">
-        <h3 class="text-3xl font-bold mb-4 uppercase tracking-tighter">McCormick School of Engineering <span class="text-stone-200 font-light">/ 2029</span></h3>
-        <p class="text-2xl text-stone-600 leading-relaxed max-w-2xl font-light">
-          I apply technical discipline to <span class="bold-accent">low-voltage systems</span> as the Lead for the NUSolar Team and conduct research on <span class="bold-accent">FPGA motor control</span>.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section id="pursuits" class="py-32 border-t border-stone-100 text-center">
-    <h2 class="lato font-bold text-4xl mb-12 hunter-green-text uppercase">Pursuits</h2>
-    <div class="flex flex-col items-center gap-12">
-        <div class="bg-stone-50 border border-stone-200 rounded-full p-2 flex gap-2 mono text-[11px] uppercase tracking-widest shadow-sm">
-          <button onclick="showInterest('vault')" id="btn-vault" class="tab-btn active px-10 py-3 rounded-full transition-all">Pole Vaulting</button>
-          <button onclick="showInterest('food')" id="btn-food" class="tab-btn px-10 py-3 rounded-full transition-all">Italian Cuisine</button>
+        <div class="hero-label">Computer Engineering | FPGA Systems</div>
+        <h1 class="hero-name">Spencer<br><span>Kogoma.</span></h1>
+        <ul class="hero-list">
+          <li>Full Stack FPGA Development</li>
+          <li>Electric Vehicles</li>
+          <li>Embedded Systems</li>
+          <li>Violin Performance</li>
+        </ul>
+        <div class="hero-bio">
+          <h2 class="hero-bio-heading">Summer 2026</h2>
+          <p>I'm Spencer, a <span class="accent">Computer Engineering</span> and <span class="accent">Violin Performance</span> student at Northwestern University. I build real-time embedded systems for EVs and research hardware-accelerated motor control.</p>
         </div>
-        <p id="interest-text" class="text-stone-600 text-lg italic max-w-xl mx-auto min-h-[80px]">I apply explosive energy and technical discipline to clear new heights.</p>
+      </div>
+      <div><img src="headshot.jpg" alt="Spencer Kogoma" class="headshot-img" /></div>
     </div>
   </section>
 
-  <section id="contact" class="pt-48 pb-32 text-center border-t border-stone-100">
-    <h2 class="lato font-black text-6xl md:text-9xl tracking-tighter mb-16 uppercase hunter-green-text">Connect</h2>
-    <div class="flex flex-col md:flex-row justify-center items-center gap-16">
-      <a href="mailto:kogomaspencer@gmail.com" class="mono text-xs uppercase tracking-[0.4em] border-b border-black pb-1 hover:text-stone-400 hover:border-stone-400 transition-all">kogomaspencer@gmail.com</a>
-      <div class="flex gap-12">
-        <a href="https://linkedin.com/in/spencer-kogoma" target="_blank" class="mono text-xs uppercase tracking-[0.4em] hover:text-stone-400 transition-all">LinkedIn</a>
-        <a href="https://github.com/spencer-kogoma" target="_blank" class="mono text-xs uppercase tracking-[0.4em] hover:text-stone-400 transition-all">GitHub</a>
+  <section id="projects" class="py-32">
+    <hr class="section-divider mb-20">
+    <div class="grid lg:grid-cols-2 gap-16">
+      <div class="md:sticky md:top-32 h-fit reveal">
+        <h2 class="section-heading mb-6">Engineering</h2>
+        <p class="section-sub">Hardware optimization for real-time performance and safety-critical applications.</p>
       </div>
+      <div class="space-y-6">
+        <div class="card-stack-item reveal">
+          <div>
+            <span class="card-label">Project 01</span>
+            <h3 class="card-title">Rear-Vision Camera</h3>
+            <p class="card-desc">Architected a real-time rear-vision system with <span class="hl">sub-40ms latency at 60 fps</span> for the NUSolar ASC 2026 competition car using Pi Camera 3 Wide with CSI-to-HDMI serial extension.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-8">
+            <span class="tag-pill">Raspberry Pi</span>
+            <span class="tag-pill">CSI/HDMI</span>
+            <span class="tag-pill">Chart.js</span>
+          </div>
+        </div>
+        <div class="card-stack-item reveal">
+          <div>
+            <span class="card-label">Project 02</span>
+            <h3 class="card-title">FPGA FOC Control</h3>
+            <p class="card-desc">Implementing Field-Oriented Control in Verilog HDL to maximize PWM switching frequency and reduce current ripple, achieving <span class="hl">hardware-accelerated motor control</span> for lightweight EV motors.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-8">
+            <span class="tag-pill">Verilog HDL</span>
+            <span class="tag-pill">FPGA</span>
+            <span class="tag-pill">Altium</span>
+          </div>
+        </div>
+        <div class="card-stack-item reveal">
+          <div>
+            <span class="card-label">Project 03</span>
+            <h3 class="card-title">Beamforming Array</h3>
+            <p class="card-desc">Building a beamforming microphone array that combines <span class="hl">camera-based face tracking with FPGA signal processing</span> to locate and follow a sound source in real time, coherently summing inputs into spatially focused audio.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-8">
+            <span class="tag-pill">FPGA</span>
+            <span class="tag-pill">DSP</span>
+            <span class="tag-pill">Computer Vision</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" class="py-32">
+    <hr class="section-divider mb-20">
+    <div class="edu-grid reveal">
+      <div>
+        <h2 class="section-heading">Education</h2>
+        <p class="edu-meta">Northwestern University</p>
+      </div>
+      <div>
+        <h3 class="edu-title">McCormick School of Engineering <span>/ 2028</span></h3>
+        <p class="edu-body">B.S. in Computer Engineering and B.M. in Violin Performance. I lead the <span class="accent">low voltage electrical systems</span> on NUSolar and conduct research on <span class="accent">FPGA-accelerated motor control</span> for lightweight motors through the SURG program.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="pursuits" class="py-32 text-center">
+    <hr class="section-divider mb-20">
+    <h2 class="section-heading mb-12 reveal">Pursuits</h2>
+    <div class="flex flex-col items-center gap-10 reveal">
+      <div class="pursuits-toggle">
+        <button onclick="showInterest('vault')" id="btn-vault" class="pursuit-btn active">Pole Vaulting</button>
+        <button onclick="showInterest('food')" id="btn-food" class="pursuit-btn">Italian Cuisine</button>
+        <button onclick="showInterest('cube')" id="btn-cube" class="pursuit-btn">Speedcubing</button>
+      </div>
+      <p id="interest-text" class="pursuit-text">I apply explosive energy and technical discipline to clear new heights. Success is the intersection of physics and performance.</p>
+    </div>
+  </section>
+
+  <section id="contact" class="pt-40 pb-32 text-center">
+    <hr class="section-divider mb-20">
+    <h2 class="contact-heading reveal">Connect</h2>
+    <div class="flex flex-col md:flex-row justify-center items-center gap-12 reveal">
+      <a href="mailto:kogomaspencer@gmail.com" class="contact-link">kogomaspencer@gmail.com</a>
+      <a href="https://linkedin.com/in/spencer-kogoma" target="_blank" class="contact-link">LinkedIn</a>
+      <a href="https://github.com/spencer-kogoma" target="_blank" class="contact-link">GitHub</a>
     </div>
   </section>
 </main>
 
-<footer class="py-20 border-t border-stone-100 bg-white">
+<footer class="py-16 border-t" style="border-color: var(--border);">
   <div class="container-full flex flex-col md:flex-row justify-between items-center gap-4">
-    <p class="text-[10px] text-stone-300 uppercase tracking-[0.4em]">© 2026 Spencer Chiharu Kogoma</p>
-    <p class="text-[10px] text-stone-300 uppercase tracking-[0.4em]">Applied Technical Discipline</p>
+    <span class="footer-text">&copy; 2026 Spencer Chiharu Kogoma</span>
+    <span class="footer-text">Applied Technical Discipline</span>
   </div>
 </footer>
 
 <script>
-  function scrollToSection(id, element) {
-    const section = document.getElementById(id);
-    const indicator = document.getElementById('nav-indicator');
-    const tabs = document.querySelectorAll('.nav-tab');
-    
-    window.scrollTo({
-      top: section.offsetTop - 100,
-      behavior: 'smooth'
-    });
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = ['home','projects','education','pursuits','contact'];
 
-    tabs.forEach(tab => tab.classList.remove('active'));
-    element.classList.add('active');
-    
-    indicator.style.width = element.offsetWidth + 'px';
-    indicator.style.left = element.offsetLeft + 'px';
+  function setActiveNav(id) {
+    navLinks.forEach(link => link.classList.toggle('active', link.dataset.section === id));
   }
-
-  function showInterest(type) {
-    const text = document.getElementById('interest-text');
-    const btns = document.querySelectorAll('.tab-btn');
-    btns.forEach(b => b.classList.remove('active'));
-    
-    if(type === 'vault') {
-      text.innerText = "I apply explosive energy and technical discipline to clear new heights. Success is the intersection of physics and performance.";
-      document.getElementById('btn-vault').classList.add('active');
-    } else if(type === 'food') {
-      text.innerText = "Exploring authentic Italian culinary arts. I focus on genuine techniques and high-quality ingredients to understand cultural heritage.";
-      document.getElementById('btn-food').classList.add('active');
-    }
-  }
-
-  window.onload = () => {
-    const activeTab = document.querySelector('.nav-tab.active');
-    const indicator = document.getElementById('nav-indicator');
-    if(activeTab && indicator) {
-      indicator.style.width = activeTab.offsetWidth + 'px';
-      indicator.style.left = activeTab.offsetLeft + 'px';
-    }
-  };
 
   window.addEventListener('scroll', () => {
-    const sections = ['home', 'projects', 'education', 'pursuits', 'contact'];
-    const scrollPos = window.scrollY + 250;
+    const scrollPos = window.scrollY + 200;
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const el = document.getElementById(sections[i]);
+      if (el && el.offsetTop <= scrollPos) { setActiveNav(sections[i]); break; }
+    }
+  });
 
-    sections.forEach(id => {
-      const el = document.getElementById(id);
-      if (el && el.offsetTop <= scrollPos && (el.offsetTop + el.offsetHeight) > scrollPos) {
-        const tab = document.querySelector(`.nav-tab[data-target="${id}"]`);
-        if (tab && !tab.classList.contains('active')) {
-          const indicator = document.getElementById('nav-indicator');
-          const tabs = document.querySelectorAll('.nav-tab');
-          tabs.forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
-          indicator.style.width = tab.offsetWidth + 'px';
-          indicator.style.left = tab.offsetLeft + 'px';
-        }
-      }
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.getElementById(link.dataset.section);
+      if (target) window.scrollTo({ top: target.offsetTop - 90, behavior: 'smooth' });
     });
   });
-</script>
 
+  const interestData = {
+    vault: "I apply explosive energy and technical discipline to clear new heights. Success is the intersection of physics and performance.",
+    food: "Exploring authentic Italian culinary arts. I focus on genuine techniques and high-quality ingredients to understand cultural heritage.",
+    cube: "Solving Rubik's cubes at speed. Pattern recognition, finger dexterity, and algorithmic thinking compressed into seconds."
+  };
+
+  function showInterest(type) {
+    document.getElementById('interest-text').innerText = interestData[type];
+    document.querySelectorAll('.pursuit-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('btn-' + type).classList.add('active');
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
