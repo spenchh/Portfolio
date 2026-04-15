@@ -84,32 +84,33 @@
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Hero Section Fix: Forced Side-by-Side Grid */
+    /* Hero Section - Maintaining Original Portrait Dimensions */
     .hero-container {
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding-top: 80px;
+      padding-top: 120px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.2fr 1fr; /* Ensures side-by-side behavior */
+      grid-template-columns: 1.2fr 1fr;
       gap: 6rem;
       width: 100%;
-      align-items: center;
+      align-items: flex-start;
     }
 
     .headshot-wrapper {
       position: relative;
       width: 100%;
-      height: 600px; /* Fixed height to match side layout */
+      /* Removing fixed height to preserve vertical aspect ratio */
     }
 
     .headshot-img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto; /* Preserve vertical dimensions */
+      display: block;
+      object-fit: contain; /* Ensures no cropping */
       border-radius: 1.5rem;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
       transition: transform 0.6s ease;
@@ -141,10 +142,9 @@
     .hunter-green-text { color: var(--hunter-green); }
     .bold-accent { font-weight: 700; color: var(--hunter-green); }
 
-    /* For mobile responsiveness to eventually stack */
     @media (max-width: 1024px) {
       .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .headshot-wrapper { height: 450px; order: -1; }
+      .headshot-wrapper { order: -1; }
       .container-full { padding: 0 2rem; }
     }
   </style>
@@ -155,7 +155,7 @@
   <div class="container-full h-20 flex items-center justify-between">
     <span class="lato font-black text-2xl tracking-tighter hunter-green-text">SK</span>
     
-    <div class="nav-tabs-container">
+    <div class="nav-tabs-container" id="nav-container">
       <div class="nav-indicator" id="nav-indicator"></div>
       <div class="nav-tab active" data-target="home" onclick="scrollToSection('home', this)">Home</div>
       <div class="nav-tab" data-target="projects" onclick="scrollToSection('projects', this)">Projects</div>
@@ -169,7 +169,7 @@
 <main class="container-full" id="home">
   <section class="hero-container pb-32">
     <div class="hero-grid">
-      <div class="flex flex-col justify-center">
+      <div class="flex flex-col">
         <p class="mono text-[10px] uppercase tracking-[0.4em] text-stone-400 mb-8">Computer Engineering | FPGA Systems</p>
         <h1 class="lato font-black text-6xl lg:text-8xl tracking-tighter leading-none mb-12 hunter-green-text uppercase">
           Spencer <br /><span class="text-stone-300">Kogoma.</span>
@@ -198,7 +198,7 @@
   <section id="projects" class="py-32 grid lg:grid-cols-2 gap-20 border-t border-stone-100">
     <div class="md:sticky md:top-32 h-fit">
       <h2 class="lato font-bold text-5xl mb-6 tracking-tighter hunter-green-text uppercase">Engineering</h2>
-      <p class="text-stone-500 max-w-xs mb-10 leading-relaxed font-light">Precision hardware optimization and real-time algorithmic acceleration.</p>
+      <p class="text-stone-500 max-w-xs mb-10 leading-relaxed font-light">Hardware optimization for real-time performance and safety-critical applications.</p>
     </div>
     
     <div class="space-y-8">
@@ -218,7 +218,7 @@
         <div>
           <span class="mono text-[10px] hunter-green-text uppercase tracking-widest font-bold">Project 02</span>
           <h3 class="lato font-bold text-4xl mt-6 mb-4 tracking-tighter uppercase">FPGA FOC Control</h3>
-          <p class="text-stone-500 text-sm leading-relaxed font-light">Implementing Field-Oriented Control in Verilog to reduce current ripple, achieving <span class="hunter-green-text font-medium">real-time hardware acceleration</span> across electric motors.</p>
+          <p class="text-stone-500 text-sm leading-relaxed font-light">Implemented motor control logic in Verilog to reduce current ripple, achieving <span class="hunter-green-text font-medium">real-time hardware acceleration</span> across electric motors.</p>
         </div>
         <div class="flex gap-2">
           <span class="mono text-[10px] border border-stone-200 px-4 py-1 rounded-full text-stone-400">Verilog HDL</span>
