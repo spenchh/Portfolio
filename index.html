@@ -128,8 +128,7 @@
       cursor: pointer; border: none; background: transparent; color: var(--text-muted); transition: all 0.25s;
     }
     .pursuit-btn.active { background: var(--hunter-green); color: #fff; }
-    .pursuit-text { font-size: 16px; color: var(--text-sub); font-style: italic; max-width: 480px; margin: 0 auto; line-height: 1.8; min-height: 80px; }
-
+    .pursuit-text { font-size: 16px; color: var(--text-sub); font-style: italic; max-width: 560px; margin: 0 auto; line-height: 1.8; min-height: 180px; }
     /* CONTACT */
     .contact-heading { font-family: 'Lato', sans-serif; font-weight: 900; font-size: clamp(56px,8vw,120px); letter-spacing: -0.04em; text-transform: uppercase; color: var(--hunter-green); margin-bottom: 48px; }
     .contact-link {
@@ -262,17 +261,16 @@
       </div>
     </div>
   </section>
-
+  
   <section id="pursuits" class="py-32 text-center">
     <hr class="section-divider mb-20">
     <h2 class="section-heading mb-12 reveal">Extracurriculars</h2>
     <div class="flex flex-col items-center gap-10 reveal">
       <div class="pursuits-toggle">
-        <button onclick="showInterest('vault')" id="btn-solar" class="pursuit-btn active">NUSolar</button>
-        <button onclick="showInterest('food')" id="btn-surg" class="pursuit-btn">SURG</button>
-        <button onclick="showInterest('cube')" id="btn-cube" class="pursuit-btn">Speedcubing</button>
+        <button onclick="showInterest('solar')" id="btn-solar" class="pursuit-btn active">NUSolar</button>
+        <button onclick="showInterest('surg')" id="btn-surg" class="pursuit-btn">SURG</button>
       </div>
-      <p id="interest-text" class="pursuit-text">I lead the <span class="accent">low voltage electrical systems</span> on NUSolar</p>
+      <p id="interest-text" class="pursuit-text">I lead the <span class="accent">low voltage electrical systems</span> for Northwestern's solar car, coordinating hardware design and integration across the team. I've contributed to FPGA relay board development in Verilog/SystemVerilog, PCB design for the Raspberry Pi integration board, CAN/SPI bus debugging, and solar array MPPT controller work. Currently designing a real-time rear-vision camera system for ASC 2026.</p>
     </div>
   </section>
 
@@ -332,9 +330,8 @@ window.addEventListener('resize', updateIndicator);
   });
 
   const interestData = {
-    solar: "I apply explosive energy and technical discipline to clear new heights. Success is the intersection of physics and performance.",
-    surg: "conduct research on FPGA-accelerated motor control for lightweight motors through the SURG program.",
-    cube: "Solving Rubik's cubes at speed. Pattern recognition, finger dexterity, and algorithmic thinking compressed into seconds."
+    solar: "I lead the low voltage electrical systems for Northwestern's solar car, coordinating hardware design and integration across the team. I've contributed to FPGA relay board development in Verilog/SystemVerilog, PCB design for the Raspberry Pi integration board, CAN/SPI bus debugging, and solar array MPPT controller work. Currently designing a real-time rear-vision camera system for ASC 2026.",
+    surg: "Conducting research on FPGA-accelerated Field-Oriented Control for lightweight motors through Northwestern's SURG program. Implementing FOC in Verilog HDL on an FPGA to maximize PWM switching frequency and reduce current ripple in low-inductance motors like the NUSolar Mitsuba M2096. The project benchmarks hardware-accelerated motor control against commercial controllers on cost, efficiency, and thermal performance, with applications to UAVs and electric micromobility."
   };
 
   function showInterest(type) {
