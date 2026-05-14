@@ -1,357 +1,1465 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Spencer Kogoma | Computer Engineering</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg: #fafaf9;
-      --hunter-green: #1a331a;
-      --hunter-green-mid: #3d5c3d;
-      --border: #e7e5e4;
-      --border-light: #f0efed;
-      --text-main: #1c1917;
-      --text-sub: #57534e;
-      --text-muted: #a8a29e;
-      --card-bg: #ffffff;
+      --bg: #fafaf7;
+      --bg-soft: #f4f2ee;
+      --hunter: #173317;
+      --hunter-2: #2f5230;
+      --hunter-3: #60785f;
+      --ink: #1c1917;
+      --sub: #57534e;
+      --muted: #a8a29e;
+      --line: #e7e2da;
+      --line-soft: #f0ece5;
+      --card: #ffffff;
+      --card-soft: #fbfaf8;
+      --shadow: 0 18px 70px rgba(28, 25, 23, 0.08);
+      --shadow-soft: 0 8px 34px rgba(28, 25, 23, 0.045);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --radius-pill: 999px;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
-      background-color: var(--bg);
-      color: var(--text-main);
-      font-family: 'DM Sans', sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(47, 82, 48, 0.08), transparent 34rem),
+        linear-gradient(180deg, #fafaf7 0%, #f8f6f1 100%);
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
       font-weight: 400;
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
-    ::selection { background: var(--hunter-green); color: #fff; }
+    ::selection {
+      background: var(--hunter);
+      color: #fff;
+    }
 
-    .lato { font-family: 'Lato', sans-serif; }
-    .mono { font-family: 'DM Mono', monospace; }
+    a {
+      color: inherit;
+    }
 
-    .container-full { max-width: 1400px; margin: 0 auto; padding: 0 3rem; }
+    .lato {
+      font-family: "Lato", sans-serif;
+    }
+
+    .mono {
+      font-family: "DM Mono", monospace;
+    }
+
+    .serif {
+      font-family: "Instrument Serif", serif;
+    }
+
+    .container-full {
+      width: min(100%, 1400px);
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+
+    .section-pad {
+      padding: 9rem 0;
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin-bottom: 4.5rem;
+    }
 
     /* NAV */
     nav {
-      position: fixed; top: 0; width: 100%; z-index: 100;
-      background: rgba(250,250,249,0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-light);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(250, 250, 247, 0.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(231, 226, 218, 0.8);
     }
-    .nav-inner { height: 72px; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { font-family: 'Lato', sans-serif; font-weight: 900; font-size: 22px; letter-spacing: -0.04em; color: var(--hunter-green); }
-    
+
+    .nav-inner {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .nav-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--hunter);
+      color: #fff;
+      font-family: "Lato", sans-serif;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      box-shadow: 0 12px 28px rgba(23, 51, 23, 0.18);
+    }
+
+    .nav-name {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .nav-name strong {
+      font-family: "Lato", sans-serif;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: var(--hunter);
+    }
+
+    .nav-name span {
+      font-family: "DM Mono", monospace;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
     .nav-links {
       position: relative;
-      display: flex; gap: 4px; background: #f5f5f4;
-      border: 1px solid var(--border); border-radius: 9999px; padding: 4px;
+      display: flex;
+      gap: 4px;
+      background: rgba(245, 244, 241, 0.86);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      padding: 4px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.72);
     }
+
     .nav-link {
-      position: relative; z-index: 1;
-      font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase;
-      letter-spacing: 0.08em; color: var(--text-muted); padding: 8px 20px;
-      border-radius: 9999px; cursor: pointer; transition: color 0.25s;
-      text-decoration: none; user-select: none;
+      position: relative;
+      z-index: 1;
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: color 0.25s ease;
+      text-decoration: none;
+      user-select: none;
+      white-space: nowrap;
     }
-    .nav-link:hover { color: var(--text-sub); }
-    .nav-link.active { background: transparent; color: #fff; }
-    
+
+    .nav-link:hover {
+      color: var(--sub);
+    }
+
+    .nav-link.active {
+      color: #fff;
+    }
+
     .nav-indicator {
       position: absolute;
       top: 4px;
       bottom: 4px;
-      background: var(--hunter-green);
-      border-radius: 9999px;
-      transition: left 0.35s cubic-bezier(0.16, 1, 0.3, 1), width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      left: 4px;
+      width: 0;
+      background: var(--hunter);
+      border-radius: var(--radius-pill);
+      transition:
+        left 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 0;
     }
 
-    
+    .mobile-mini-links {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      font-family: "DM Mono", monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--hunter);
+    }
+
+    .mobile-mini-links a {
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .mobile-mini-links a:hover {
+      border-color: var(--hunter);
+    }
 
     /* HERO */
-    .hero-container { min-height: 100vh; display: flex; align-items: center; padding-top: 72px; }
-    .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 5rem; width: 100%; align-items: center; }
-    .hero-label { font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.25em; color: var(--hunter-green-mid); margin-bottom: 28px; font-weight: 500; }
-    .hero-name { font-family: 'Lato', sans-serif; font-weight: 900; font-size: clamp(52px,7vw,88px); letter-spacing: -0.04em; line-height: 0.95; text-transform: uppercase; color: var(--hunter-green); margin-bottom: 40px; }
-    .hero-name span { color: #d6d3d1; }
-    .hero-list { list-style: none; margin-bottom: 48px; }
-    .hero-list li { font-family: 'DM Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); padding: 6px 0; transition: color 0.3s; cursor: default; }
-    .hero-list li:hover { color: var(--hunter-green); }
-    .hero-bio { padding-top: 40px; border-top: 1px solid var(--border); max-width: 440px; }
-    .hero-bio-heading { font-family: 'Lato', sans-serif; font-weight: 700; font-size: 20px; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 16px; }
-    .hero-bio p { font-size: 15px; color: var(--text-sub); line-height: 1.85; }
-    .accent { font-weight: 600; color: var(--hunter-green); }
-    .headshot-img { width: 100%; height: auto; display: block; border-radius: 1.25rem; box-shadow: 0 20px 60px -15px rgba(0,0,0,0.08); transition: transform 0.5s ease; }
-    .headshot-img:hover { transform: scale(1.015); }
+    .hero-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 76px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+      gap: 5rem;
+      width: 100%;
+      align-items: center;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      width: fit-content;
+      font-family: "DM Mono", monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--hunter);
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      padding: 0.58rem 0.88rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--hunter-2);
+      box-shadow: 0 0 0 5px rgba(47, 82, 48, 0.12);
+    }
+
+    .hero-label {
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      color: var(--hunter-3);
+      margin-bottom: 1.55rem;
+      font-weight: 500;
+    }
+
+    .hero-name {
+      font-family: "Lato", sans-serif;
+      font-weight: 900;
+      font-size: clamp(56px, 7vw, 104px);
+      letter-spacing: -0.055em;
+      line-height: 0.91;
+      text-transform: uppercase;
+      color: var(--hunter);
+      margin-bottom: 2rem;
+    }
+
+    .hero-name span {
+      color: #d2ccc3;
+    }
+
+    .hero-intro {
+      max-width: 620px;
+      font-size: clamp(18px, 2vw, 24px);
+      line-height: 1.45;
+      letter-spacing: -0.025em;
+      color: var(--sub);
+      margin-bottom: 2rem;
+    }
+
+    .hero-intro strong {
+      color: var(--hunter);
+      font-weight: 700;
+    }
+
+    .hero-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.65rem;
+      list-style: none;
+      max-width: 640px;
+      margin-bottom: 2.25rem;
+    }
+
+    .hero-list li {
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      color: var(--sub);
+      padding: 0.85rem 0.95rem;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.58);
+      transition: transform 0.25s ease, border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+    }
+
+    .hero-list li:hover {
+      transform: translateY(-2px);
+      color: var(--hunter);
+      border-color: rgba(23, 51, 23, 0.28);
+      background: #fff;
+    }
+
+    .hero-bio {
+      max-width: 600px;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .hero-bio-heading {
+      font-family: "Lato", sans-serif;
+      font-weight: 900;
+      font-size: 17px;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: var(--hunter);
+      margin-bottom: 0.7rem;
+    }
+
+    .hero-bio p {
+      font-size: 15.5px;
+      color: var(--sub);
+      line-height: 1.85;
+      max-width: 540px;
+    }
+
+    .accent {
+      font-weight: 700;
+      color: var(--hunter);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.8rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 44px;
+      padding: 0.8rem 1.15rem;
+      border-radius: var(--radius-pill);
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--hunter);
+      color: #fff;
+      box-shadow: 0 14px 32px rgba(23, 51, 23, 0.2);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.72);
+      color: var(--hunter);
+      border: 1px solid var(--line);
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .portrait-card {
+      position: relative;
+      border-radius: 32px;
+      padding: 0.75rem;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .portrait-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(23,51,23,0.09), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(96,120,95,0.18), transparent 38%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .headshot-img {
+      position: relative;
+      z-index: 0;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      display: block;
+      border-radius: 24px;
+      filter: saturate(0.93) contrast(1.02);
+      transition: transform 0.6s ease;
+    }
+
+    .portrait-card:hover .headshot-img {
+      transform: scale(1.018);
+    }
+
+    .floating-note {
+      position: absolute;
+      left: -2rem;
+      bottom: 2rem;
+      z-index: 4;
+      max-width: 240px;
+      background: rgba(255, 255, 255, 0.91);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      border-radius: 20px;
+      padding: 1rem;
+    }
+
+    .floating-note span {
+      display: block;
+      font-family: "DM Mono", monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .floating-note strong {
+      display: block;
+      font-family: "Lato", sans-serif;
+      font-size: 17px;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: var(--hunter);
+      text-transform: uppercase;
+    }
 
     /* SECTIONS */
-    .section-heading { font-family: 'Lato', sans-serif; font-weight: 900; font-size: clamp(36px,4vw,52px); letter-spacing: -0.03em; text-transform: uppercase; color: var(--hunter-green); }
-    .section-sub { font-size: 15px; color: var(--text-sub); line-height: 1.8; max-width: 360px; }
-    .section-divider { border: none; border-top: 1px solid var(--border); }
-
-    /* CARDS */
-    .card-stack-item {
-      position: sticky; top: 110px; background: var(--card-bg);
-      border: 1px solid var(--border); border-radius: 1.5rem;
-      padding: 3rem 3.5rem; margin-bottom: 4rem;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.02);
-      min-height: 380px; display: flex; flex-direction: column;
-      justify-content: space-between; transition: box-shadow 0.4s;
+    .section-heading {
+      font-family: "Lato", sans-serif;
+      font-weight: 900;
+      font-size: clamp(38px, 4vw, 60px);
+      letter-spacing: -0.04em;
+      line-height: 0.98;
+      text-transform: uppercase;
+      color: var(--hunter);
     }
-    .card-stack-item:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.05); }
-    .card-label { font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--hunter-green); font-weight: 500; }
-    .card-title { font-family: 'Lato', sans-serif; font-weight: 900; font-size: clamp(28px,3vw,40px); letter-spacing: -0.03em; text-transform: uppercase; margin-top: 20px; margin-bottom: 16px; }
-    .card-desc { font-size: 15px; color: var(--text-sub); line-height: 1.85; max-width: 520px; }
-    .card-desc .hl { color: var(--hunter-green); font-weight: 500; }
-    .tag-pill { font-family: 'DM Mono', monospace; font-size: 11px; border: 1px solid var(--border); padding: 6px 16px; border-radius: 9999px; color: var(--text-sub); display: inline-block; }
+
+    .section-kicker {
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--hunter-3);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-sub {
+      font-size: 15px;
+      color: var(--sub);
+      line-height: 1.85;
+      max-width: 380px;
+      margin-top: 1.4rem;
+    }
+
+    .section-side-card {
+      margin-top: 2rem;
+      background: rgba(255,255,255,0.62);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 1.25rem;
+      max-width: 370px;
+    }
+
+    .section-side-card p {
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: var(--sub);
+    }
+
+    /* PROJECTS */
+    .project-list {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .project-card {
+      position: sticky;
+      top: 110px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      transition: box-shadow 0.35s ease, transform 0.35s ease;
+    }
+
+    .project-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .project-card-inner {
+      display: grid;
+      grid-template-columns: 0.72fr 1fr;
+      gap: 2.25rem;
+      min-height: 410px;
+      align-items: stretch;
+    }
+
+    .project-media {
+      position: relative;
+      min-height: 100%;
+      border-radius: 22px;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(23,51,23,0.12), rgba(47,82,48,0.04)),
+        var(--card-soft);
+      border: 1px solid var(--line-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.4rem;
+    }
+
+    .project-diagram {
+      width: 100%;
+      max-width: 360px;
+      aspect-ratio: 1 / 1;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.62);
+      border: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-diagram::before {
+      content: "";
+      position: absolute;
+      inset: 1.2rem;
+      border-radius: 22px;
+      border: 1px dashed rgba(23,51,23,0.24);
+    }
+
+    .diagram-line {
+      position: absolute;
+      height: 1px;
+      background: rgba(23,51,23,0.28);
+      transform-origin: left center;
+    }
+
+    .diagram-chip,
+    .diagram-dot,
+    .diagram-screen,
+    .diagram-motor,
+    .diagram-mic {
+      position: absolute;
+      border: 1px solid rgba(23,51,23,0.25);
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 8px 20px rgba(28,25,23,0.05);
+    }
+
+    .diagram-chip {
+      width: 86px;
+      height: 66px;
+      border-radius: 14px;
+      left: 50%;
+      top: 48%;
+      transform: translate(-50%, -50%);
+    }
+
+    .diagram-chip::before,
+    .diagram-chip::after {
+      content: "";
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      height: 1px;
+      background: rgba(23,51,23,0.18);
+    }
+
+    .diagram-chip::before { top: 22px; }
+    .diagram-chip::after { bottom: 22px; }
+
+    .diagram-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+    }
+
+    .diagram-screen {
+      width: 100px;
+      height: 64px;
+      border-radius: 14px;
+      right: 15%;
+      top: 18%;
+    }
+
+    .diagram-screen::after {
+      content: "";
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: -12px;
+      height: 8px;
+      border-radius: 99px;
+      background: rgba(23,51,23,0.16);
+    }
+
+    .diagram-motor {
+      width: 104px;
+      height: 104px;
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .diagram-motor::before {
+      content: "";
+      position: absolute;
+      inset: 26px;
+      border-radius: 50%;
+      border: 1px solid rgba(23,51,23,0.2);
+    }
+
+    .diagram-mic {
+      width: 38px;
+      height: 72px;
+      border-radius: 24px;
+    }
+
+    .diagram-label {
+      position: absolute;
+      font-family: "DM Mono", monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--hunter-3);
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--line-soft);
+      border-radius: 999px;
+      padding: 0.3rem 0.5rem;
+    }
+
+    .project-content {
+      padding: 1.85rem 1.85rem 1.85rem 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .card-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1.2rem;
+    }
+
+    .card-label {
+      font-family: "DM Mono", monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--hunter);
+      font-weight: 500;
+    }
+
+    .card-year {
+      font-family: "DM Mono", monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--muted);
+    }
+
+    .card-title {
+      font-family: "Lato", sans-serif;
+      font-weight: 900;
+      font-size: clamp(30px, 3vw, 46px);
+      letter-spacing: -0.045em;
+      line-height: 0.98;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .card-desc {
+      font-size: 15.2px;
+      color: var(--sub);
+      line-height: 1.8;
+      max-width: 560px;
+    }
+
+    .impact-list {
+      list-style: none;
+      display: grid;
+      gap: 0.7rem;
+      margin-top: 1.25rem;
+    }
+
+    .impact-list li {
+      position: relative;
+      padding-left: 1.35rem;
+      font-size: 14.2px;
+      color: var(--sub);
+      line-height: 1.55;
+    }
+
+    .impact-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.68em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--hunter-2);
+      box-shadow: 0 0 0 4px rgba(47,82,48,0.12);
+    }
+
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.35rem;
+    }
+
+    .meta-pill,
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      border-radius: var(--radius-pill);
+      font-family: "DM Mono", monospace;
+      font-size: 10.2px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .meta-pill {
+      color: var(--hunter);
+      background: rgba(23,51,23,0.055);
+      border: 1px solid rgba(23,51,23,0.13);
+      padding: 0.46rem 0.72rem;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    .tag-pill {
+      color: var(--sub);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.58);
+      padding: 0.45rem 0.7rem;
+    }
 
     /* EDUCATION */
-    .edu-grid { display: grid; grid-template-columns: 280px 1fr; gap: 4rem; }
-    .edu-meta { font-family: 'DM Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin-top: 12px; }
-    .edu-title { font-family: 'Lato', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 20px; }
-    .edu-title span { font-weight: 300; color: var(--text-muted); }
-    .edu-body { font-size: 16px; color: var(--text-sub); line-height: 1.9; max-width: 560px; }
+    .edu-panel {
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .edu-meta {
+      font-family: "DM Mono", monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-top: 1rem;
+    }
+
+    .edu-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .edu-item {
+      border: 1px solid var(--line-soft);
+      background: rgba(251,250,248,0.72);
+      border-radius: 22px;
+      padding: 1.4rem;
+    }
+
+    .edu-title {
+      font-family: "Lato", sans-serif;
+      font-weight: 900;
+      font-size: clamp(21px, 2.2vw, 30px);
+      letter-spacing: -0.035em;
+      line-height: 1.08;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 0.65rem;
+    }
+
+    .edu-title span {
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .edu-body {
+      font-size: 15.2px;
+      color: var(--sub);
+      line-height: 1.8;
+      max-width: 620px;
+    }
 
     /* PURSUITS */
-    .pursuits-toggle { display: inline-flex; gap: 4px; background: #f5f5f4; border: 1px solid var(--border); border-radius: 9999px; padding: 4px; }
-    .pursuit-btn {
-      font-family: 'DM Mono', monospace; font-size: 12px; text-transform: uppercase;
-      letter-spacing: 0.08em; padding: 10px 28px; border-radius: 9999px;
-      cursor: pointer; border: none; background: transparent; color: var(--text-muted); transition: all 0.25s;
+    .pursuits-shell {
+      max-width: 940px;
+      margin: 0 auto;
+      text-align: center;
     }
-    .pursuit-btn.active { background: var(--hunter-green); color: #fff; }
-    .pursuit-text { font-size: 16px; color: var(--text-sub); font-style: italic; max-width: 560px; margin: 0 auto; line-height: 1.8; min-height: 180px; }
-    /* CONTACT */
-    .contact-heading { font-family: 'Lato', sans-serif; font-weight: 900; font-size: clamp(56px,8vw,120px); letter-spacing: -0.04em; text-transform: uppercase; color: var(--hunter-green); margin-bottom: 48px; }
-    .contact-link {
-      font-family: 'DM Mono', monospace; font-size: 12px; text-transform: uppercase;
-      letter-spacing: 0.12em; color: var(--text-sub); text-decoration: none;
-      padding-bottom: 2px; border-bottom: 1px solid var(--border); transition: color 0.3s, border-color 0.3s;
-    }
-    .contact-link:hover { color: var(--hunter-green); border-color: var(--hunter-green); }
 
-    .footer-text { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.25em; color: var(--text-muted); }
+    .pursuits-toggle {
+      display: inline-flex;
+      gap: 4px;
+      background: rgba(245, 244, 241, 0.86);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      padding: 4px;
+      margin: 2.2rem 0 2rem;
+    }
+
+    .pursuit-btn {
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      padding: 0.82rem 1.45rem;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      transition: all 0.25s ease;
+    }
+
+    .pursuit-btn.active {
+      background: var(--hunter);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(23,51,23,0.16);
+    }
+
+    .pursuit-card {
+      text-align: left;
+      background: rgba(255,255,255,0.76);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .pursuit-text {
+      font-size: 16px;
+      color: var(--sub);
+      line-height: 1.85;
+      min-height: 164px;
+    }
+
+    /* CONTACT */
+    .contact-section {
+      padding: 10rem 0 8rem;
+      text-align: center;
+    }
+
+    .contact-heading {
+      font-family: "Lato", sans-serif;
+      font-weight: 900;
+      font-size: clamp(64px, 10vw, 144px);
+      letter-spacing: -0.065em;
+      line-height: 0.88;
+      text-transform: uppercase;
+      color: var(--hunter);
+      margin-bottom: 2rem;
+    }
+
+    .contact-sub {
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      font-size: 16px;
+      color: var(--sub);
+      line-height: 1.8;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .contact-link {
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      color: var(--hunter);
+      text-decoration: none;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.68);
+      border-radius: var(--radius-pill);
+      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .contact-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(23,51,23,0.3);
+      background: #fff;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 2rem 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-text {
+      font-family: "DM Mono", monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+    }
 
     /* REVEAL */
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 1180px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 3.5rem;
+        padding: 7rem 0 5rem;
+      }
+
+      .hero-visual {
+        max-width: 520px;
+        order: -1;
+      }
+
+      .floating-note {
+        left: 1rem;
+      }
+
+      .project-card-inner {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .project-media {
+        min-height: 280px;
+      }
+
+      .project-content {
+        padding: 1rem 1rem 1.35rem;
+      }
+    }
 
     @media (max-width: 1024px) {
-      .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .hero-grid > div:last-child { order: -1; }
-      .container-full { padding: 0 1.5rem; }
-      .edu-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-      .nav-links { display: none; }
+      .container-full {
+        padding: 0 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-mini-links {
+        display: flex;
+      }
+
+      .section-pad {
+        padding: 6.5rem 0;
+      }
+
+      .edu-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
     }
-    @media (max-width: 640px) {
-      .card-stack-item { padding: 2rem; min-height: auto; }
+
+    @media (max-width: 680px) {
+      .container-full {
+        padding: 0 1.1rem;
+      }
+
+      .nav-name {
+        display: none;
+      }
+
+      .mobile-mini-links {
+        gap: 0.75rem;
+        font-size: 9px;
+      }
+
+      .hero-container {
+        min-height: auto;
+      }
+
+      .hero-grid {
+        padding: 6.5rem 0 4rem;
+      }
+
+      .hero-list {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions,
+      .contact-links {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn,
+      .contact-link {
+        width: 100%;
+      }
+
+      .floating-note {
+        position: static;
+        margin-top: 0.8rem;
+        max-width: none;
+      }
+
+      .project-card {
+        position: relative;
+        top: auto;
+        border-radius: 24px;
+      }
+
+      .project-media {
+        min-height: 240px;
+      }
+
+      .project-diagram {
+        max-width: 280px;
+      }
+
+      .edu-panel,
+      .pursuit-card {
+        padding: 1.35rem;
+      }
+
+      .pursuits-toggle {
+        width: 100%;
+      }
+
+      .pursuit-btn {
+        flex: 1;
+        padding: 0.78rem 0.7rem;
+      }
     }
   </style>
 </head>
+
 <body>
+  <nav aria-label="Primary navigation">
+    <div class="container-full nav-inner">
+      <a href="#home" class="nav-logo-wrap" aria-label="Go to home section">
+        <span class="nav-mark">SK</span>
+        <span class="nav-name">
+          <strong>Spencer Kogoma</strong>
+          <span>Computer Engineering</span>
+        </span>
+      </a>
 
-<nav>
-  <div class="container-full nav-inner">
-    <span class="nav-logo">SK</span>
-    <div class="nav-links" id="nav-links">
-      <div class="nav-indicator" id="nav-indicator"></div>
-      <a class="nav-link active" data-section="home" href="#home">Home</a>
-      <a class="nav-link" data-section="projects" href="#projects">Projects</a>
-      <a class="nav-link" data-section="education" href="#education">Education</a>
-      <a class="nav-link" data-section="pursuits" href="#pursuits">Pursuits</a>
-      <a class="nav-link" data-section="contact" href="#contact">Contact</a>
+      <div class="nav-links" id="nav-links">
+        <div class="nav-indicator" id="nav-indicator"></div>
+        <a class="nav-link active" data-section="home" href="#home">Home</a>
+        <a class="nav-link" data-section="projects" href="#projects">Projects</a>
+        <a class="nav-link" data-section="education" href="#education">Education</a>
+        <a class="nav-link" data-section="pursuits" href="#pursuits">Pursuits</a>
+        <a class="nav-link" data-section="contact" href="#contact">Contact</a>
+      </div>
+
+      <div class="mobile-mini-links" aria-label="Mobile navigation shortcuts">
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<main class="container-full">
-  <section class="hero-container" id="home">
-    <div class="hero-grid">
-      <div>
-        <div class="hero-label">Northwestern University | 2028</div>
-        <h1 class="hero-name">Spencer<br><span>Kogoma</span></h1>
-        <ul class="hero-list">
-          <li>Full Stack FPGA Development</li>
-          <li>Electric Vehicles</li>
-          <li>Embedded Systems</li>
-          <li>PCB Design</li>
-        </ul>
-        <div class="hero-bio">
-          <h2 class="hero-bio-heading">About</h2>
-          <p>I'm Spencer, a <span class="accent">Computer Engineering</span> and <span class="accent">Violin Performance</span> dual degree student at Northwestern University. I love working with FPGA's and I'm interested in EV's, Embedded Systems, and PCB Design.</p>
+  <main class="container-full">
+    <section class="hero-container" id="home">
+      <div class="hero-grid">
+        <div class="reveal">
+          <div class="status-pill"><span class="status-dot"></span>Open to embedded systems / FPGA internships</div>
+          <div class="hero-label">Northwestern University | 2028</div>
+          <h1 class="hero-name">Spencer<br><span>Kogoma</span></h1>
+
+          <p class="hero-intro">
+            Computer Engineering and Violin Performance student building real-time systems across <strong>FPGAs</strong>, <strong>embedded hardware</strong>, and <strong>electric vehicle technology</strong>.
+          </p>
+
+          <ul class="hero-list" aria-label="Technical interests">
+            <li>Full-Stack FPGA Development</li>
+            <li>Electric Vehicles</li>
+            <li>Embedded Systems</li>
+            <li>PCB Design</li>
+          </ul>
+
+          <div class="hero-bio">
+            <h2 class="hero-bio-heading">About</h2>
+            <p>
+              I'm Spencer, a <span class="accent">Computer Engineering</span> and <span class="accent">Violin Performance</span> dual degree student at Northwestern University. I love working with FPGAs and I'm interested in EVs, embedded systems, and PCB design.
+            </p>
+          </div>
+
+          <div class="hero-actions" aria-label="Portfolio actions">
+            <a href="#projects" class="btn btn-primary">View Projects</a>
+            <a href="mailto:kogomaspencer@gmail.com" class="btn btn-secondary">Contact Me</a>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="portrait-card">
+            <img src="headshot.jpg" alt="Spencer Kogoma" class="headshot-img" />
+          </div>
+          <div class="floating-note">
+            <span>Current Focus</span>
+            <strong>FPGA motor control + solar car systems</strong>
+          </div>
         </div>
       </div>
-      <div><img src="headshot.jpg" alt="Spencer Kogoma" class="headshot-img" /></div>
-    </div>
-  </section>
+    </section>
 
-  <section id="projects" class="py-32">
-    <hr class="section-divider mb-20">
-    <div class="grid lg:grid-cols-2 gap-16">
-      <div class="md:sticky md:top-32 h-fit reveal">
-        <h2 class="section-heading mb-6">Projects</h2>
-        <p class="section-sub">I design integrated technology using full-stack development and real-time embedded systems.</p>
+    <section id="projects" class="section-pad">
+      <hr class="section-divider">
+      <div class="grid lg:grid-cols-2 gap-16">
+        <div class="md:sticky md:top-32 h-fit reveal">
+          <p class="section-kicker">Selected Work</p>
+          <h2 class="section-heading">Projects</h2>
+          <p class="section-sub">
+            Integrated engineering projects across real-time embedded systems, hardware acceleration, and performance-focused technical design.
+          </p>
+          <div class="section-side-card">
+            <p>
+              Each project is built around measurable technical constraints: latency, efficiency, signal quality, cost, and hardware integration. A shocking concept, apparently, in a world full of portfolios that just say “built an app.”
+            </p>
+          </div>
+        </div>
+
+        <div class="project-list">
+          <article class="project-card reveal">
+            <div class="project-card-inner">
+              <div class="project-media" aria-hidden="true">
+                <div class="project-diagram">
+                  <div class="diagram-screen"></div>
+                  <div class="diagram-chip" style="left: 33%; top: 60%;"></div>
+                  <div class="diagram-dot" style="left: 20%; top: 24%;"></div>
+                  <div class="diagram-line" style="left: 25%; top: 30%; width: 150px; transform: rotate(20deg);"></div>
+                  <div class="diagram-line" style="left: 38%; top: 60%; width: 155px; transform: rotate(-34deg);"></div>
+                  <span class="diagram-label" style="left: 17%; bottom: 18%;">CSI / HDMI</span>
+                  <span class="diagram-label" style="right: 13%; bottom: 22%;">60 FPS</span>
+                </div>
+              </div>
+
+              <div class="project-content">
+                <div>
+                  <div class="card-topline">
+                    <span class="card-label">Project 01</span>
+                    <span class="card-year">2026</span>
+                  </div>
+                  <h3 class="card-title">Rear-Vision Camera</h3>
+                  <p class="card-desc">
+                    Built a real-time rear-vision system for Northwestern's 2026 solar car using a Pi Camera Module 3 Wide with CSI to HDMI extensions.
+                  </p>
+                  <ul class="impact-list">
+                    <li>Achieved sub-40ms latency at 60 fps over 3 meters.</li>
+                    <li>Benchmarked six platforms against automotive-grade GMSL2 and FPD-Link III standards.</li>
+                    <li>Developed an interactive HTML dashboard for performance data using Chart.js.</li>
+                  </ul>
+                  <div class="project-meta">
+                    <span class="meta-pill">Role: Embedded Systems</span>
+                    <span class="meta-pill">Team: NUSolar</span>
+                  </div>
+                </div>
+
+                <div class="tag-row">
+                  <span class="tag-pill">Raspberry Pi</span>
+                  <span class="tag-pill">HTML</span>
+                  <span class="tag-pill">Chart.js</span>
+                  <span class="tag-pill">Embedded Systems</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-card-inner">
+              <div class="project-media" aria-hidden="true">
+                <div class="project-diagram">
+                  <div class="diagram-motor"></div>
+                  <div class="diagram-chip" style="left: 26%; top: 28%;"></div>
+                  <div class="diagram-line" style="left: 31%; top: 37%; width: 170px; transform: rotate(31deg);"></div>
+                  <div class="diagram-line" style="left: 50%; top: 50%; width: 120px; transform: rotate(-18deg);"></div>
+                  <span class="diagram-label" style="left: 14%; top: 16%;">Verilog HDL</span>
+                  <span class="diagram-label" style="right: 13%; bottom: 18%;">PWM</span>
+                </div>
+              </div>
+
+              <div class="project-content">
+                <div>
+                  <div class="card-topline">
+                    <span class="card-label">Project 02</span>
+                    <span class="card-year">2026</span>
+                  </div>
+                  <h3 class="card-title">FPGA FOC Control</h3>
+                  <p class="card-desc">
+                    Implementing Field-Oriented Control in Verilog HDL on an FPGA to improve lightweight motor control for the NUSolar Mitsuba M2096.
+                  </p>
+                  <ul class="impact-list">
+                    <li>Maximizing PWM switching frequency to reduce current ripple in low-inductance motors.</li>
+                    <li>Benchmarking hardware-accelerated motor control against commercial controllers.</li>
+                    <li>Designing a custom PCB for FPGA-based control and integration.</li>
+                  </ul>
+                  <div class="project-meta">
+                    <span class="meta-pill">Role: Research / Hardware</span>
+                    <span class="meta-pill">Focus: Motor Control</span>
+                  </div>
+                </div>
+
+                <div class="tag-row">
+                  <span class="tag-pill">Verilog HDL</span>
+                  <span class="tag-pill">FPGA</span>
+                  <span class="tag-pill">Altium</span>
+                  <span class="tag-pill">PCB Design</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-card-inner">
+              <div class="project-media" aria-hidden="true">
+                <div class="project-diagram">
+                  <div class="diagram-mic" style="left: 20%; top: 50%; transform: translateY(-50%);"></div>
+                  <div class="diagram-mic" style="left: 42%; top: 50%; transform: translateY(-50%);"></div>
+                  <div class="diagram-mic" style="left: 64%; top: 50%; transform: translateY(-50%);"></div>
+                  <div class="diagram-dot" style="right: 18%; top: 24%;"></div>
+                  <div class="diagram-line" style="left: 25%; top: 52%; width: 170px; transform: rotate(-22deg);"></div>
+                  <div class="diagram-line" style="left: 47%; top: 52%; width: 120px; transform: rotate(-32deg);"></div>
+                  <span class="diagram-label" style="left: 15%; bottom: 18%;">DSP</span>
+                  <span class="diagram-label" style="right: 12%; bottom: 20%;">Tracking</span>
+                </div>
+              </div>
+
+              <div class="project-content">
+                <div>
+                  <div class="card-topline">
+                    <span class="card-label">Project 03</span>
+                    <span class="card-year">2026</span>
+                  </div>
+                  <h3 class="card-title">FPGA Beamforming Array</h3>
+                  <p class="card-desc">
+                    Building an FPGA beamforming microphone array with real-time spatial tracking for focused audio capture.
+                  </p>
+                  <ul class="impact-list">
+                    <li>Combines camera-based face tracking with FPGA signal processing.</li>
+                    <li>Locates and follows a sound source in real time.</li>
+                    <li>Coherently sums microphone inputs into spatially focused audio.</li>
+                  </ul>
+                  <div class="project-meta">
+                    <span class="meta-pill">Role: FPGA / DSP</span>
+                    <span class="meta-pill">Focus: Real-Time Audio</span>
+                  </div>
+                </div>
+
+                <div class="tag-row">
+                  <span class="tag-pill">FPGA</span>
+                  <span class="tag-pill">DSP</span>
+                  <span class="tag-pill">Computer Vision</span>
+                  <span class="tag-pill">Signal Processing</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
-      <div class="space-y-6">
-        <div class="card-stack-item reveal">
+    </section>
+
+    <section id="education" class="section-pad">
+      <hr class="section-divider">
+      <div class="edu-panel reveal">
+        <div class="edu-grid">
           <div>
-            <span class="card-label">Project 01</span>
-            <h3 class="card-title">Rear-Vision Camera</h3>
-            <p class="card-desc">Built a real-time rear-vision system for Northwestern's 2026 solar car using a Pi Camera Module 3 Wide with CSI to HDMI extensions to achieve <span class="hl">sub-40ms latency at 60 fps</span> over 3 meters. My work also included benchmarking six platforms against automotive grade standards GMSL2 and FPD-Link III, developing an interactive HTML dashboard for performance data using chat.js</p>
+            <p class="section-kicker">Background</p>
+            <h2 class="section-heading">Education</h2>
+            <p class="edu-meta">Northwestern University</p>
           </div>
-          <div class="flex flex-wrap gap-2 mt-8">
-            <span class="tag-pill">Raspberry Pi</span>
-            <span class="tag-pill">HTML</span>
-            <span class="tag-pill">Embedded Systems</span>
-          </div>
-        </div>
-        <div class="card-stack-item reveal">
-          <div>
-            <span class="card-label">Project 02</span>
-            <h3 class="card-title">FPGA FOC Control</h3>
-            <p class="card-desc">Implementing Field Oriented Control in Verilog HDL on an FPGA to maximize PWM switching frequency and reduce current ripple in lightweight motors. Benchmarking hardware accelerated motor control against commercial controllers and designing a custom PCB for the NUSolar Mitsuba M2096</p>
-          </div>
-          <div class="flex flex-wrap gap-2 mt-8">
-            <span class="tag-pill">Verilog HDL</span>
-            <span class="tag-pill">FPGA</span>
-            <span class="tag-pill">Altium</span>
-            <span class="tag-pill">PCB Design</span>
-          </div>
-        </div>
-        <div class="card-stack-item reveal">
-          <div>
-            <span class="card-label">Project 03</span>
-            <h3 class="card-title">FPGA Beamforming Array</h3>
-            <p class="card-desc">Building a FPGA beamforming microphone array with real-time spatial tracking that combines <span class="hl">camera-based face tracking with FPGA signal processing</span> to locate and follow a sound source in real time, coherently summing inputs into spatially focused audio.</p>
-          </div>
-          <div class="flex flex-wrap gap-2 mt-8">
-            <span class="tag-pill">FPGA</span>
-            <span class="tag-pill">DSP</span>
-            <span class="tag-pill">Computer Vision</span>
+
+          <div class="edu-list">
+            <div class="edu-item">
+              <h3 class="edu-title">McCormick School of Engineering <span>/ 2028</span></h3>
+              <p class="edu-body">B.S. in Computer Engineering</p>
+            </div>
+            <div class="edu-item">
+              <h3 class="edu-title">Bienen School of Music <span>/ 2028</span></h3>
+              <p class="edu-body">B.M. in Violin Performance, studying with Professor Blair Milton</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="education" class="py-32">
-    <hr class="section-divider mb-20">
-    <div class="edu-grid reveal">
-      <div>
-        <h2 class="section-heading">Education</h2>
-        <p class="edu-meta">Northwestern University</p>
-      </div>
-      <div class="space-y-10">
-        <div>
-          <h3 class="edu-title">McCormick School of Engineering <span>/ 2028</span></h3>
-          <p class="edu-body">B.S. in Computer Engineering</p>
+    <section id="pursuits" class="section-pad">
+      <hr class="section-divider">
+      <div class="pursuits-shell reveal">
+        <p class="section-kicker">Beyond Coursework</p>
+        <h2 class="section-heading">Extracurriculars</h2>
+
+        <div class="pursuits-toggle" role="tablist" aria-label="Extracurricular selector">
+          <button onclick="showInterest('solar')" id="btn-solar" class="pursuit-btn active" type="button" role="tab" aria-selected="true">NUSolar</button>
+          <button onclick="showInterest('surg')" id="btn-surg" class="pursuit-btn" type="button" role="tab" aria-selected="false">SURG</button>
         </div>
-        <div>
-          <h3 class="edu-title">Bienen School of Music <span>/ 2028</span></h3>
-          <p class="edu-body">B.M. in Violin Performance - Studying under Professor Blair Milton</p>
+
+        <div class="pursuit-card">
+          <p id="interest-text" class="pursuit-text">
+            I lead the low voltage electrical systems for Northwestern's solar car, coordinating hardware design and integration across the team. I've contributed to FPGA relay board development in Verilog/SystemVerilog, PCB design for the Raspberry Pi integration board, CAN/SPI bus debugging, and solar array MPPT controller work. Currently designing a real-time rear-vision camera system for ASC 2026.
+          </p>
         </div>
       </div>
-    </div>
-  </section>
-  
-  <section id="pursuits" class="py-32 text-center">
-    <hr class="section-divider mb-20">
-    <h2 class="section-heading mb-12 reveal">Extracurriculars</h2>
-    <div class="flex flex-col items-center gap-10 reveal">
-      <div class="pursuits-toggle">
-        <button onclick="showInterest('solar')" id="btn-solar" class="pursuit-btn active">NUSolar</button>
-        <button onclick="showInterest('surg')" id="btn-surg" class="pursuit-btn">SURG</button>
+    </section>
+
+    <section id="contact" class="contact-section">
+      <hr class="section-divider">
+      <div class="reveal">
+        <p class="section-kicker">Let's Build Something</p>
+        <h2 class="contact-heading">Connect</h2>
+        <p class="contact-sub">
+          Interested in embedded systems, FPGA development, EV hardware, or technical design work? Reach out here.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:kogomaspencer@gmail.com" class="contact-link">kogomaspencer@gmail.com</a>
+          <a href="https://linkedin.com/in/spencer-kogoma" target="_blank" rel="noopener noreferrer" class="contact-link">LinkedIn</a>
+          <a href="https://github.com/spencer-kogoma" target="_blank" rel="noopener noreferrer" class="contact-link">GitHub</a>
+        </div>
       </div>
-      <p id="interest-text" class="pursuit-text">I lead the <span class="accent">low voltage electrical systems</span> for Northwestern's solar car, coordinating hardware design and integration across the team. I've contributed to FPGA relay board development in Verilog/SystemVerilog, PCB design for the Raspberry Pi integration board, CAN/SPI bus debugging, and solar array MPPT controller work. Currently designing a real-time rear-vision camera system for ASC 2026.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container-full footer-inner">
+      <span class="footer-text">&copy; 2026 Spencer Kogoma</span>
+      <span class="footer-text">Applied Technical Discipline</span>
     </div>
-  </section>
+  </footer>
 
-  <section id="contact" class="pt-40 pb-32 text-center">
-    <hr class="section-divider mb-20">
-    <h2 class="contact-heading reveal">Connect</h2>
-    <div class="flex flex-col md:flex-row justify-center items-center gap-12 reveal">
-      <a href="mailto:kogomaspencer@gmail.com" class="contact-link">kogomaspencer@gmail.com</a>
-      <a href="https://linkedin.com/in/spencer-kogoma" target="_blank" class="contact-link">LinkedIn</a>
-      <a href="https://github.com/spencer-kogoma" target="_blank" class="contact-link">GitHub</a>
-    </div>
-  </section>
-</main>
+  <script>
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = ['home', 'projects', 'education', 'pursuits', 'contact'];
 
-<footer class="py-16 border-t" style="border-color: var(--border);">
-  <div class="container-full flex flex-col md:flex-row justify-between items-center gap-4">
-    <span class="footer-text">&copy; 2026 Spencer Kogoma</span>
-    <span class="footer-text">Applied Technical Discipline</span>
-  </div>
-</footer>
-
-<script>
-  const navLinks = document.querySelectorAll('.nav-link');
-  const sections = ['home','projects','education','pursuits','contact'];
-
-  function updateIndicator() {
-  const active = document.querySelector('.nav-link.active');
-  const indicator = document.getElementById('nav-indicator');
-  if (active && indicator) {
-    indicator.style.width = active.offsetWidth + 'px';
-    indicator.style.left = active.offsetLeft + 'px';
-  }
-}
-
-function setActiveNav(id) {
-  navLinks.forEach(link => link.classList.toggle('active', link.dataset.section === id));
-  updateIndicator();
-}
-
-window.addEventListener('load', updateIndicator);
-window.addEventListener('resize', updateIndicator);
-
-  window.addEventListener('scroll', () => {
-    const scrollPos = window.scrollY + 200;
-    const atBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 10;
-    
-    if (atBottom) {
-      setActiveNav(sections[sections.length - 1]);
-      return;
+    function updateIndicator() {
+      const active = document.querySelector('.nav-link.active');
+      const indicator = document.getElementById('nav-indicator');
+      if (!active || !indicator) return;
+      indicator.style.width = `${active.offsetWidth}px`;
+      indicator.style.left = `${active.offsetLeft}px`;
     }
-    
-    for (let i = sections.length - 1; i >= 0; i--) {
-      const el = document.getElementById(sections[i]);
-      if (el && el.offsetTop <= scrollPos) { setActiveNav(sections[i]); break; }
+
+    function setActiveNav(id) {
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.dataset.section === id);
+      });
+      updateIndicator();
     }
-  });
 
-  navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = document.getElementById(link.dataset.section);
-      if (target) window.scrollTo({ top: target.offsetTop - 90, behavior: 'smooth' });
-    });
-  });
+    window.addEventListener('load', updateIndicator);
+    window.addEventListener('resize', updateIndicator);
 
-  const interestData = {
-    solar: "I lead the low voltage electrical systems for Northwestern's solar car, coordinating hardware design and integration across the team. I've contributed to FPGA relay board development in Verilog/SystemVerilog, PCB design for the Raspberry Pi integration board, CAN/SPI bus debugging, and solar array MPPT controller work. Currently designing a real-time rear-vision camera system for ASC 2026.",
-    surg: "Conducting research on FPGA-accelerated Field-Oriented Control for lightweight motors through Northwestern's SURG program. Implementing FOC in Verilog HDL on an FPGA to maximize PWM switching frequency and reduce current ripple in low-inductance motors like the NUSolar Mitsuba M2096. The project benchmarks hardware-accelerated motor control against commercial controllers on cost, efficiency, and thermal performance, with applications to UAVs and electric micromobility."
-  };
-
-  function showInterest(type) {
-    document.getElementById('interest-text').innerText = interestData[type];
-    document.querySelectorAll('.pursuit-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('btn-' + type).classList.add('active');
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
-</body>
-</html>
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY + 210;
