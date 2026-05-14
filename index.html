@@ -75,9 +75,11 @@
     }
 
     .container-full {
-      width: min(100%, 1400px);
+      width: 100%;
+      max-width: none;
       margin: 0 auto;
-      padding: 0 3rem;
+      padding-left: clamp(1.25rem, 5vw, 6rem);
+      padding-right: clamp(1.25rem, 5vw, 6rem);
     }
 
     .section-pad {
@@ -1050,7 +1052,8 @@
 
     @media (max-width: 1024px) {
       .container-full {
-        padding: 0 1.5rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
       }
 
       .nav-links {
@@ -1073,7 +1076,8 @@
 
     @media (max-width: 680px) {
       .container-full {
-        padding: 0 1.1rem;
+        padding-left: 1.1rem;
+        padding-right: 1.1rem;
       }
 
       .nav-name {
