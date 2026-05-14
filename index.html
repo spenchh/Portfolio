@@ -994,14 +994,13 @@
 
     /* REVEAL */
     .reveal {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      opacity: 1;
+      transform: none;
     }
 
     .reveal.visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: none;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1440,6 +1439,7 @@
   </footer>
 
   <script>
+
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = ['home', 'projects', 'education', 'pursuits', 'contact'];
 
@@ -1463,3 +1463,62 @@
 
     window.addEventListener('scroll', () => {
       const scrollPos = window.scrollY + 210;
+      const atBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 10;
+
+      if (atBottom) {
+        setActiveNav(sections[sections.length - 1]);
+        return;
+      }
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i]);
+        if (el && el.offsetTop <= scrollPos) {
+          setActiveNav(sections[i]);
+          break;
+        }
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', event => {
+        event.preventDefault();
+        const target = document.getElementById(link.dataset.section);
+        if (!target) return;
+        window.scrollTo({
+          top: target.offsetTop - 92,
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    const interestData = {
+      solar: "I lead the low voltage electrical systems for Northwestern's solar car, coordinating hardware design and integration across the team. I've contributed to FPGA relay board development in Verilog/SystemVerilog, PCB design for the Raspberry Pi integration board, CAN/SPI bus debugging, and solar array MPPT controller work. Currently designing a real-time rear-vision camera system for ASC 2026.",
+      surg: "Conducting research on FPGA-accelerated Field-Oriented Control for lightweight motors through Northwestern's SURG program. Implementing FOC in Verilog HDL on an FPGA to maximize PWM switching frequency and reduce current ripple in low-inductance motors like the NUSolar Mitsuba M2096. The project benchmarks hardware-accelerated motor control against commercial controllers on cost, efficiency, and thermal performance, with applications to UAVs and electric micromobility."
+    };
+
+    function showInterest(type) {
+      const text = document.getElementById('interest-text');
+      const solarBtn = document.getElementById('btn-solar');
+      const surgBtn = document.getElementById('btn-surg');
+
+      if (!text || !interestData[type]) return;
+      text.textContent = interestData[type];
+
+      document.querySelectorAll('.pursuit-btn').forEach(button => {
+        button.classList.remove('active');
+        button.setAttribute('aria-selected', 'false');
+      });
+
+      const activeButton = type === 'solar' ? solarBtn : surgBtn;
+      if (activeButton) {
+        activeButton.classList.add('active');
+        activeButton.setAttribute('aria-selected', 'true');
+      }
+    }
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      el.classList.add('visible');
+    });
+  </script>
+</body>
+</html>
