@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spencer Kogoma | Computer Engineering</title>
+  <title>Spencer Kogoma | FPGA & Hardware Engineering</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1156,7 +1156,7 @@
         <span class="nav-mark">SK</span>
         <span class="nav-name">
           <strong>Spencer Kogoma</strong>
-          <span>Computer Engineering</span>
+          <span>FPGA & Hardware Engineering</span>
         </span>
       </a>
 
@@ -1165,7 +1165,7 @@
         <a class="nav-link active" data-section="home" href="#home">Home</a>
         <a class="nav-link" data-section="projects" href="#projects">Projects</a>
         <a class="nav-link" data-section="education" href="#education">Education</a>
-        <a class="nav-link" data-section="pursuits" href="#pursuits">Pursuits</a>
+        <a class="nav-link" data-section="pursuits" href="#pursuits">Leadership</a>
         <a class="nav-link" data-section="contact" href="#contact">Contact</a>
       </div>
 
@@ -1180,16 +1180,16 @@
     <section class="hero-container" id="home">
       <div class="hero-grid">
         <div class="reveal">
-          <div class="status-pill"><span class="status-dot"></span>Open to embedded systems / FPGA internships</div>
+          <div class="status-pill"><span class="status-dot"></span>Open to FPGA / RTL / hardware internships</div>
           <div class="hero-label">Northwestern University | 2028</div>
           <h1 class="hero-name">Spencer<br><span>Kogoma</span></h1>
 
           <p class="hero-intro">
-            Computer Engineering and Violin Performance student building real-time systems across <strong>FPGAs</strong>, <strong>embedded hardware</strong>, and <strong>electric vehicle technology</strong>.
+            Computer Engineering and Violin Performance student building real-time systems across <strong>FPGAs</strong>, <strong>RTL design</strong>, <strong>embedded hardware</strong>, and <strong>electric vehicle technology</strong>.
           </p>
 
           <ul class="hero-list" aria-label="Technical interests">
-            <li>Full-Stack FPGA Development</li>
+            <li>FPGA / RTL Design</li>
             <li>Electric Vehicles</li>
             <li>Embedded Systems</li>
             <li>PCB Design</li>
@@ -1198,7 +1198,7 @@
           <div class="hero-bio">
             <h2 class="hero-bio-heading">About</h2>
             <p>
-              I'm Spencer, a <span class="accent">Computer Engineering</span> and <span class="accent">Violin Performance</span> dual degree student at Northwestern University. I love working with FPGAs and I'm interested in EVs, embedded systems, and PCB design.
+              I'm Spencer, a <span class="accent">Computer Engineering</span> and <span class="accent">Violin Performance</span> dual degree student at Northwestern University. I work on FPGA-based motor control, solar car electrical systems, PCB design, and RTL onboarding for Northwestern's student-led silicon initiative.
             </p>
           </div>
 
@@ -1214,7 +1214,7 @@
           </div>
           <div class="floating-note">
             <span>Current Focus</span>
-            <strong>FPGA motor control + solar car systems</strong>
+            <strong>FPGA motor control + silicon design onboarding</strong>
           </div>
         </div>
       </div>
@@ -1227,11 +1227,11 @@
           <p class="section-kicker">Selected Work</p>
           <h2 class="section-heading">Projects</h2>
           <p class="section-sub">
-            Integrated engineering projects across real-time embedded systems, hardware acceleration, and performance-focused technical design.
+            Selected engineering work across FPGA motor control, embedded vehicle systems, RTL design, and real-time signal processing.
           </p>
           <div class="section-side-card">
             <p>
-              Each project is built around measurable technical constraints: latency, efficiency, signal quality, cost, and hardware integration. A shocking concept, apparently, in a world full of portfolios that just say “built an app.”
+              Each project is built around measurable technical constraints: latency, efficiency, signal quality, cost, verification, and hardware integration.
             </p>
           </div>
         </div>
@@ -1262,9 +1262,9 @@
                     Built a real-time rear-vision system for Northwestern's 2026 solar car using a Pi Camera Module 3 Wide with CSI to HDMI extensions.
                   </p>
                   <ul class="impact-list">
-                    <li>Achieved sub-40ms latency at 60 fps over 3 meters.</li>
-                    <li>Benchmarked six platforms against automotive-grade GMSL2 and FPD-Link III standards.</li>
-                    <li>Developed an interactive HTML dashboard for performance data using Chart.js.</li>
+                    <li>Designed and validated a sub-30 ms rear-vision pipeline for solar vehicle integration.</li>
+                    <li>Selected architecture from a 6-candidate trade study comparing latency, FOV, EMI risk, cable length, and BOM cost.</li>
+                    <li>Benchmarked CSI extension against automotive GMSL2 SerDes for reliability, cost, latency, and vehicle integration.</li>
                   </ul>
                   <div class="project-meta">
                     <span class="meta-pill">Role: Embedded Systems</span>
@@ -1274,8 +1274,8 @@
 
                 <div class="tag-row">
                   <span class="tag-pill">Raspberry Pi</span>
-                  <span class="tag-pill">HTML</span>
-                  <span class="tag-pill">Chart.js</span>
+                  <span class="tag-pill">CSI</span>
+                  <span class="tag-pill">GMSL2 Trade Study</span>
                   <span class="tag-pill">Embedded Systems</span>
                 </div>
               </div>
@@ -1303,21 +1303,21 @@
                   </div>
                   <h3 class="card-title">FPGA FOC Control</h3>
                   <p class="card-desc">
-                    Implementing Field-Oriented Control in Verilog HDL on an FPGA to improve lightweight motor control for the NUSolar Mitsuba M2096.
+                    Implementing FPGA-based Field-Oriented Control in Verilog RTL for the lightweight NUSolar Mitsuba M2096 motor.
                   </p>
                   <ul class="impact-list">
-                    <li>Maximizing PWM switching frequency to reduce current ripple in low-inductance motors.</li>
-                    <li>Benchmarking hardware-accelerated motor control against commercial controllers.</li>
-                    <li>Designing a custom PCB for FPGA-based control and integration.</li>
+                    <li>Targeting high-frequency PWM generation to reduce current ripple and motor energy loss.</li>
+                    <li>Measuring motor Back-EMF and supporting efficiency tests across torque/load conditions.</li>
+                    <li>Designing a 4-layer Altium PCB integrating FPGA logic, MCU interface, CAN telemetry, motor drivers, and power distribution.</li>
                   </ul>
                   <div class="project-meta">
-                    <span class="meta-pill">Role: Research / Hardware</span>
+                    <span class="meta-pill">Role: SURG Research</span>
                     <span class="meta-pill">Focus: Motor Control</span>
                   </div>
                 </div>
 
                 <div class="tag-row">
-                  <span class="tag-pill">Verilog HDL</span>
+                  <span class="tag-pill">Verilog RTL</span>
                   <span class="tag-pill">FPGA</span>
                   <span class="tag-pill">Altium</span>
                   <span class="tag-pill">PCB Design</span>
@@ -1349,12 +1349,12 @@
                   </div>
                   <h3 class="card-title">FPGA Beamforming Array</h3>
                   <p class="card-desc">
-                    Building an FPGA beamforming microphone array with real-time spatial tracking for focused audio capture.
+                    Designing a fixed-point delay-and-sum beamforming pipeline in Verilog for real-time multi-channel directional audio.
                   </p>
                   <ul class="impact-list">
-                    <li>Combines camera-based face tracking with FPGA signal processing.</li>
-                    <li>Locates and follows a sound source in real time.</li>
-                    <li>Coherently sums microphone inputs into spatially focused audio.</li>
+                    <li>Integrates camera-based face tracking with an FPGA DSP pipeline.</li>
+                    <li>Steers beamforming direction toward a moving source in real time.</li>
+                    <li>Targets phase-aligned audio output using fixed-point datapath design.</li>
                   </ul>
                   <div class="project-meta">
                     <span class="meta-pill">Role: FPGA / DSP</span>
@@ -1365,8 +1365,57 @@
                 <div class="tag-row">
                   <span class="tag-pill">FPGA</span>
                   <span class="tag-pill">DSP</span>
-                  <span class="tag-pill">Computer Vision</span>
+                  <span class="tag-pill">Fixed-Point DSP</span>
                   <span class="tag-pill">Signal Processing</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-card-inner">
+              <div class="project-media" aria-hidden="true">
+                <div class="project-diagram">
+                  <div class="diagram-chip" style="left: 50%; top: 50%;"></div>
+                  <div class="diagram-dot" style="left: 22%; top: 24%;"></div>
+                  <div class="diagram-dot" style="right: 22%; top: 24%;"></div>
+                  <div class="diagram-dot" style="left: 22%; bottom: 24%;"></div>
+                  <div class="diagram-dot" style="right: 22%; bottom: 24%;"></div>
+                  <div class="diagram-line" style="left: 27%; top: 29%; width: 135px; transform: rotate(31deg);"></div>
+                  <div class="diagram-line" style="left: 56%; top: 29%; width: 135px; transform: rotate(149deg);"></div>
+                  <div class="diagram-line" style="left: 27%; bottom: 29%; width: 135px; transform: rotate(-31deg);"></div>
+                  <div class="diagram-line" style="left: 56%; bottom: 29%; width: 135px; transform: rotate(-149deg);"></div>
+                  <span class="diagram-label" style="left: 14%; top: 16%;">SystemVerilog</span>
+                  <span class="diagram-label" style="right: 13%; bottom: 18%;">2x2 Kernel</span>
+                </div>
+              </div>
+
+              <div class="project-content">
+                <div>
+                  <div class="card-topline">
+                    <span class="card-label">Project 04</span>
+                    <span class="card-year">2026</span>
+                  </div>
+                  <h3 class="card-title">NUSi RTL Onboarding</h3>
+                  <p class="card-desc">
+                    Leading digital design onboarding for Northwestern University Silicon Initiative, a student-led silicon design club focused on RTL, verification, and ASIC flow.
+                  </p>
+                  <ul class="impact-list">
+                    <li>Creating SystemVerilog lessons and HDLBits-style exercises for incoming members.</li>
+                    <li>Developing a 2x2 kernel training project covering module hierarchy, FSMs, and testbenches.</li>
+                    <li>Coordinating RTL materials with verification and physical-design curriculum teams.</li>
+                  </ul>
+                  <div class="project-meta">
+                    <span class="meta-pill">Role: Digital Design Lead</span>
+                    <span class="meta-pill">Team: NUSi / NU Silicats</span>
+                  </div>
+                </div>
+
+                <div class="tag-row">
+                  <span class="tag-pill">SystemVerilog</span>
+                  <span class="tag-pill">RTL Design</span>
+                  <span class="tag-pill">Testbenches</span>
+                  <span class="tag-pill">ASIC Flow</span>
                 </div>
               </div>
             </div>
@@ -1403,16 +1452,17 @@
       <hr class="section-divider">
       <div class="pursuits-shell reveal">
         <p class="section-kicker">Beyond Coursework</p>
-        <h2 class="section-heading">Extracurriculars</h2>
+        <h2 class="section-heading">Leadership</h2>
 
         <div class="pursuits-toggle" role="tablist" aria-label="Extracurricular selector">
           <button onclick="showInterest('solar')" id="btn-solar" class="pursuit-btn active" type="button" role="tab" aria-selected="true">NUSolar</button>
           <button onclick="showInterest('surg')" id="btn-surg" class="pursuit-btn" type="button" role="tab" aria-selected="false">SURG</button>
+          <button onclick="showInterest('nusi')" id="btn-nusi" class="pursuit-btn" type="button" role="tab" aria-selected="false">NUSi</button>
         </div>
 
         <div class="pursuit-card">
           <p id="interest-text" class="pursuit-text">
-            I lead the low voltage electrical systems for Northwestern's solar car, coordinating hardware design and integration across the team. I've contributed to FPGA relay board development in Verilog/SystemVerilog, PCB design for the Raspberry Pi integration board, CAN/SPI bus debugging, and solar array MPPT controller work. Currently designing a real-time rear-vision camera system for ASC 2026.
+            I lead low-voltage electrical systems for Northwestern's solar car, coordinating hardware design and integration across the team. My work includes FPGA relay sequencing in Verilog/SystemVerilog, multi-layer Altium PCB design, CAN/SPI bus debugging, power sequencing, and vehicle integration support.
           </p>
         </div>
       </div>
@@ -1429,7 +1479,7 @@
         <div class="contact-links">
           <a href="mailto:kogomaspencer@gmail.com" class="contact-link">kogomaspencer@gmail.com</a>
           <a href="https://linkedin.com/in/spencer-kogoma" target="_blank" rel="noopener noreferrer" class="contact-link">LinkedIn</a>
-          <a href="https://github.com/spencer-kogoma" target="_blank" rel="noopener noreferrer" class="contact-link">GitHub</a>
+          <a href="https://github.com/spenchh" target="_blank" rel="noopener noreferrer" class="contact-link">GitHub</a>
         </div>
       </div>
     </section>
@@ -1438,7 +1488,7 @@
   <footer>
     <div class="container-full footer-inner">
       <span class="footer-text">&copy; 2026 Spencer Kogoma</span>
-      <span class="footer-text">Applied Technical Discipline</span>
+      <span class="footer-text">FPGA | Embedded Systems | PCB Design</span>
     </div>
   </footer>
 
@@ -1496,14 +1546,13 @@
     });
 
     const interestData = {
-      solar: "I lead the low voltage electrical systems for Northwestern's solar car, coordinating hardware design and integration across the team. I've contributed to FPGA relay board development in Verilog/SystemVerilog, PCB design for the Raspberry Pi integration board, CAN/SPI bus debugging, and solar array MPPT controller work. Currently designing a real-time rear-vision camera system for ASC 2026.",
-      surg: "Conducting research on FPGA-accelerated Field-Oriented Control for lightweight motors through Northwestern's SURG program. Implementing FOC in Verilog HDL on an FPGA to maximize PWM switching frequency and reduce current ripple in low-inductance motors like the NUSolar Mitsuba M2096. The project benchmarks hardware-accelerated motor control against commercial controllers on cost, efficiency, and thermal performance, with applications to UAVs and electric micromobility."
+      solar: "I lead low-voltage electrical systems for Northwestern's solar car, coordinating hardware design and integration across the team. My work includes FPGA relay sequencing in Verilog/SystemVerilog, multi-layer Altium PCB design, CAN/SPI bus debugging, power sequencing, and vehicle integration support.",
+      surg: "Conducting research on FPGA-accelerated Field-Oriented Control for lightweight motors through Northwestern's SURG program. Implementing FOC in Verilog RTL on an FPGA to improve PWM generation and reduce current ripple in low-inductance motors like the NUSolar Mitsuba M2096. The project benchmarks motor-control hardware against commercial controllers on cost, efficiency, and thermal performance.",
+      nusi: "Serving as Digital Design Lead for Northwestern University Silicon Initiative, also known as NU Silicats. I am developing RTL onboarding materials for incoming members, including SystemVerilog lessons, HDLBits-style exercises, and a 2x2 kernel training project that connects digital design, verification, and physical-design fundamentals."
     };
 
     function showInterest(type) {
       const text = document.getElementById('interest-text');
-      const solarBtn = document.getElementById('btn-solar');
-      const surgBtn = document.getElementById('btn-surg');
 
       if (!text || !interestData[type]) return;
       text.textContent = interestData[type];
@@ -1513,7 +1562,7 @@
         button.setAttribute('aria-selected', 'false');
       });
 
-      const activeButton = type === 'solar' ? solarBtn : surgBtn;
+      const activeButton = document.getElementById(`btn-${type}`);
       if (activeButton) {
         activeButton.classList.add('active');
         activeButton.setAttribute('aria-selected', 'true');
