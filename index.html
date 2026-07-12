@@ -148,7 +148,7 @@
       z-index: 100;
       width: 100%;
       border-bottom: 1px solid rgba(229, 223, 212, 0.85);
-      background: rgba(250, 249, 245, 0.85);
+      background: rgba(250, 249, 245, 0.88);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
     }
@@ -214,7 +214,7 @@
       padding: 0.25rem;
       border: 1px solid var(--line);
       border-radius: var(--pill);
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.64);
     }
 
     .nav-links a {
@@ -263,10 +263,14 @@
     .hero-grid {
       width: 100%;
       display: grid;
-      grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
-      gap: 5rem;
+      grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+      gap: clamp(3rem, 6vw, 6rem);
       align-items: center;
-      padding: 6.5rem 0 5rem;
+      padding: 5.5rem 0 4rem;
+    }
+
+    .hero-content {
+      max-width: 720px;
     }
 
     .status {
@@ -274,59 +278,59 @@
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      margin-bottom: 1.6rem;
-      padding: 0.58rem 0.9rem;
+      margin-bottom: 1.4rem;
+      padding: 0.55rem 0.85rem;
       border: 1px solid var(--line);
       border-radius: var(--pill);
       color: var(--green-dark);
-      background: rgba(255, 255, 255, 0.75);
+      background: rgba(255, 255, 255, 0.78);
       box-shadow: var(--shadow-soft);
       font-family: "DM Mono", monospace;
-      font-size: 0.62rem;
+      font-size: 0.58rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
     .status-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 0 5px rgba(49, 91, 53, 0.12);
+      box-shadow: 0 0 0 5px rgba(49, 91, 53, 0.11);
     }
 
     .hero-label {
-      margin-bottom: 1.45rem;
+      margin-bottom: 1rem;
       color: var(--green-light);
       font-family: "DM Mono", monospace;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 500;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
     }
 
     .hero-title {
-      margin-bottom: 1.8rem;
+      margin-bottom: 1.4rem;
       color: var(--green-dark);
       font-family: "Lato", sans-serif;
-      font-size: clamp(3.8rem, 7vw, 7.2rem);
+      font-size: clamp(4rem, 6.2vw, 6.8rem);
       font-weight: 900;
       letter-spacing: -0.06em;
-      line-height: 0.87;
+      line-height: 0.88;
       text-transform: uppercase;
     }
 
     .hero-title span {
-      color: #d1cbc1;
+      color: #cfc9bf;
     }
 
     .hero-intro {
-      max-width: 690px;
-      margin-bottom: 2rem;
+      max-width: 660px;
+      margin-bottom: 1.7rem;
       color: var(--text-soft);
-      font-size: clamp(1.08rem, 2vw, 1.45rem);
+      font-size: clamp(1.05rem, 1.6vw, 1.35rem);
       letter-spacing: -0.02em;
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     .hero-intro strong {
@@ -335,29 +339,29 @@
     }
 
     .focus-grid {
-      max-width: 680px;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.65rem;
-      margin-bottom: 2rem;
+      max-width: 650px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-bottom: 1.7rem;
       list-style: none;
     }
 
     .focus-grid li {
-      padding: 0.85rem 1rem;
+      padding: 0.58rem 0.8rem;
       border: 1px solid var(--line);
-      border-radius: var(--radius-small);
+      border-radius: var(--pill);
       color: var(--text-soft);
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.58);
       font-family: "DM Mono", monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
+      font-size: 0.58rem;
+      letter-spacing: 0.07em;
       text-transform: uppercase;
       transition:
-        transform 0.2s ease,
-        border-color 0.2s ease,
         color 0.2s ease,
-        background 0.2s ease;
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
     }
 
     .focus-grid li:hover {
@@ -368,12 +372,12 @@
     }
 
     .hero-summary {
-      max-width: 660px;
-      padding-top: 1.65rem;
+      max-width: 630px;
+      padding-top: 1.35rem;
       border-top: 1px solid var(--line);
       color: var(--text-soft);
-      font-size: 0.96rem;
-      line-height: 1.85;
+      font-size: 0.92rem;
+      line-height: 1.75;
     }
 
     .hero-summary strong {
@@ -383,8 +387,8 @@
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 1.8rem;
+      gap: 0.7rem;
+      margin-top: 1.5rem;
     }
 
     .button {
@@ -423,15 +427,18 @@
 
     .hero-photo-wrap {
       position: relative;
+      width: 100%;
+      max-width: 480px;
+      justify-self: end;
     }
 
     .hero-photo-card {
       position: relative;
       overflow: hidden;
-      padding: 0.75rem;
+      padding: 0.65rem;
       border: 1px solid var(--line);
-      border-radius: 32px;
-      background: rgba(255, 255, 255, 0.72);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.76);
       box-shadow: var(--shadow);
     }
 
@@ -455,11 +462,11 @@
 
     .hero-photo {
       width: 100%;
-      aspect-ratio: 4 / 5;
+      height: 570px;
       display: block;
       object-fit: cover;
-      object-position: center 28%;
-      border-radius: 24px;
+      object-position: center 24%;
+      border-radius: 21px;
       filter: saturate(0.95) contrast(1.02);
       transition: transform 0.5s ease;
     }
@@ -470,23 +477,23 @@
 
     .focus-note {
       position: absolute;
-      left: -2rem;
+      left: -2.2rem;
       bottom: 2rem;
       z-index: 2;
-      max-width: 245px;
-      padding: 1rem 1.1rem;
+      width: 220px;
+      padding: 1rem;
       border: 1px solid var(--line);
-      border-radius: var(--radius-medium);
-      background: rgba(255, 255, 255, 0.93);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.94);
       box-shadow: var(--shadow-soft);
     }
 
     .focus-note span {
       display: block;
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.4rem;
       color: var(--muted);
       font-family: "DM Mono", monospace;
-      font-size: 0.58rem;
+      font-size: 0.54rem;
       letter-spacing: 0.13em;
       text-transform: uppercase;
     }
@@ -494,10 +501,10 @@
     .focus-note strong {
       color: var(--green-dark);
       font-family: "Lato", sans-serif;
-      font-size: 1rem;
+      font-size: 0.92rem;
       font-weight: 900;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
       text-transform: uppercase;
     }
 
@@ -835,7 +842,7 @@
       line-height: 1.8;
     }
 
-    /* Education and leadership */
+    /* Education */
 
     .split-grid {
       display: grid;
@@ -961,7 +968,7 @@
       text-transform: uppercase;
     }
 
-    /* Animation */
+    /* Reveal animations */
 
     .reveal {
       opacity: 0;
@@ -994,17 +1001,25 @@
       }
     }
 
-    /* Responsive */
+    /* Tablet */
 
-    @media (max-width: 1040px) {
+    @media (max-width: 1050px) {
       .hero-grid {
         grid-template-columns: 1fr;
         gap: 3rem;
+        padding-top: 6rem;
       }
 
       .hero-photo-wrap {
-        width: min(540px, 100%);
+        width: min(500px, 100%);
+        max-width: 500px;
+        justify-self: start;
         order: -1;
+      }
+
+      .hero-photo {
+        height: auto;
+        aspect-ratio: 4 / 5;
       }
 
       .focus-note {
@@ -1036,6 +1051,8 @@
       }
     }
 
+    /* Mobile */
+
     @media (max-width: 760px) {
       .container {
         width: min(100% - 2rem, 1180px);
@@ -1062,23 +1079,30 @@
       }
 
       .hero-grid {
-        padding: 6.5rem 0 4rem;
+        padding: 5.5rem 0 3.5rem;
       }
 
-      .focus-grid,
+      .hero-title {
+        font-size: clamp(3.3rem, 16vw, 5rem);
+      }
+
+      .hero-photo-wrap {
+        max-width: 100%;
+      }
+
+      .focus-note {
+        position: static;
+        width: 100%;
+        margin-top: 0.75rem;
+      }
+
       .skills-grid,
       .split-grid {
         grid-template-columns: 1fr;
       }
 
-      .focus-note {
-        position: static;
-        max-width: none;
-        margin-top: 0.8rem;
-      }
-
-      .contact-links,
-      .hero-actions {
+      .hero-actions,
+      .contact-links {
         flex-direction: column;
         align-items: stretch;
       }
@@ -1091,6 +1115,34 @@
       .footer-inner {
         flex-direction: column;
         align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .mobile-links {
+        gap: 0.65rem;
+      }
+
+      .mobile-links a {
+        font-size: 0.55rem;
+      }
+
+      .status {
+        align-items: flex-start;
+        line-height: 1.45;
+      }
+
+      .project-content {
+        padding: 1.4rem;
+      }
+
+      .skills-panel {
+        padding: 1.2rem;
+      }
+
+      .timeline-card {
+        margin-left: 2.15rem;
+        padding: 1.25rem;
       }
     }
   </style>
@@ -1127,14 +1179,14 @@
   <main>
     <section class="hero" id="home">
       <div class="container hero-grid">
-        <div class="reveal">
+        <div class="hero-content reveal">
           <div class="status">
             <span class="status-dot"></span>
-            Open to FPGA, RTL, verification, and hardware internships
+            Open to Summer and Fall 2026 engineering internships
           </div>
 
           <p class="hero-label">
-            Northwestern University | Class of 2028
+            Northwestern University | Computer Engineering | Class of 2028
           </p>
 
           <h1 class="hero-title">
@@ -1143,25 +1195,27 @@
           </h1>
 
           <p class="hero-intro">
-            Computer Engineering and Violin Performance student building
-            real-time systems across <strong>FPGA development</strong>,
-            <strong>RTL design</strong>, <strong>embedded hardware</strong>,
-            <strong>PCB design</strong>, and <strong>digital verification</strong>.
+            I build real-time digital systems across
+            <strong>FPGA development</strong>,
+            <strong>RTL design</strong>,
+            <strong>embedded hardware</strong>, and
+            <strong>digital verification</strong>.
           </p>
 
           <ul class="focus-grid" aria-label="Technical focus areas">
-            <li>SystemVerilog and Verilog RTL</li>
-            <li>FPGA and SoC Integration</li>
-            <li>PCB and Embedded Systems</li>
-            <li>Verification and Waveform Debug</li>
+            <li>SystemVerilog</li>
+            <li>FPGA and SoC</li>
+            <li>RTL Verification</li>
+            <li>PCB Design</li>
+            <li>Embedded Systems</li>
+            <li>Computer Architecture</li>
           </ul>
 
           <p class="hero-summary">
-            I am a dual-degree student at Northwestern University working on
-            FPGA-based motor control, solar-car electrical systems, digital
-            design education, and real-time signal processing. I enjoy
-            engineering problems that require careful thinking across
-            <strong>hardware, software, timing, safety, and physical integration</strong>.
+            Currently developing FPGA-based motor control on a Zynq-7000 SoC,
+            leading low-voltage electrical systems for Northwestern Solar Car,
+            and teaching RTL design and ASIC workflows through Northwestern's
+            student silicon initiative.
           </p>
 
           <div class="hero-actions">
@@ -1190,7 +1244,7 @@
           <div class="focus-note">
             <span>Current focus</span>
             <strong>
-              Zynq-7000 motor control, RTL verification, and silicon design
+              FPGA motor control, RTL verification, and ASIC design
             </strong>
           </div>
         </div>
@@ -1204,7 +1258,10 @@
         <div class="projects-layout">
           <div class="section-sticky reveal">
             <p class="eyebrow">Selected work</p>
-            <h2 class="section-title">Projects</h2>
+
+            <h2 class="section-title">
+              Projects
+            </h2>
 
             <p class="section-copy">
               Engineering work across FPGA motor control, embedded vehicle
@@ -1214,7 +1271,7 @@
 
             <div class="section-note">
               Each project is shaped by measurable constraints such as timing,
-              latency, safety, reliability, signal integrity, cost, and
+              latency, safety, reliability, signal quality, cost, and
               hardware-software integration.
             </div>
           </div>
@@ -1238,7 +1295,7 @@
                   <div>
                     <div class="project-topline">
                       <span class="project-number">Project 01</span>
-                      <span class="project-year">2026 - Present</span>
+                      <span class="project-year">2026 to Present</span>
                     </div>
 
                     <h3 class="project-title">
@@ -1277,7 +1334,7 @@
                     <span class="tag">AXI-Lite</span>
                     <span class="tag">Fixed-Point Control</span>
                     <span class="tag">PWM</span>
-                    <span class="tag">MATLAB / Simulink</span>
+                    <span class="tag">MATLAB and Simulink</span>
                   </div>
                 </div>
               </div>
@@ -1325,10 +1382,9 @@
                       </li>
 
                       <li>
-                        Selected the final architecture through a six-candidate
-                        trade study covering latency, field of view, EMI risk,
-                        cable length, reliability, integration complexity, and
-                        BOM cost.
+                        Selected the architecture through a six-candidate trade
+                        study covering latency, field of view, EMI risk, cable
+                        length, reliability, integration complexity, and cost.
                       </li>
                     </ul>
                   </div>
@@ -1337,7 +1393,7 @@
                     <span class="tag">Embedded Linux</span>
                     <span class="tag">Bash</span>
                     <span class="tag">Systemd</span>
-                    <span class="tag">CSI / HDMI</span>
+                    <span class="tag">CSI and HDMI</span>
                     <span class="tag">GMSL2 Analysis</span>
                     <span class="tag">Hardware Validation</span>
                   </div>
@@ -1363,7 +1419,7 @@
                   <div>
                     <div class="project-topline">
                       <span class="project-number">Project 03</span>
-                      <span class="project-year">2026 - Present</span>
+                      <span class="project-year">2026 to Present</span>
                     </div>
 
                     <h3 class="project-title">
@@ -1422,7 +1478,7 @@
                   <div>
                     <div class="project-topline">
                       <span class="project-number">Project 04</span>
-                      <span class="project-year">2026 - Present</span>
+                      <span class="project-year">2026 to Present</span>
                     </div>
 
                     <h3 class="project-title">
@@ -1476,8 +1532,13 @@
 
         <div class="experience-grid">
           <div class="section-sticky reveal">
-            <p class="eyebrow">Engineering and leadership</p>
-            <h2 class="section-title">Experience</h2>
+            <p class="eyebrow">
+              Engineering and leadership
+            </p>
+
+            <h2 class="section-title">
+              Experience
+            </h2>
 
             <p class="section-copy">
               Roles that combine technical ownership, system integration,
@@ -1496,7 +1557,7 @@
               </p>
 
               <span class="timeline-date">
-                June 2026 - Present
+                June 2026 to Present
               </span>
 
               <p class="timeline-text">
@@ -1517,7 +1578,7 @@
               </p>
 
               <span class="timeline-date">
-                June 2026 - Present
+                June 2026 to Present
               </span>
 
               <p class="timeline-text">
@@ -1537,7 +1598,7 @@
               </p>
 
               <span class="timeline-date">
-                September 2025 - Present
+                September 2025 to Present
               </span>
 
               <p class="timeline-text">
@@ -1558,7 +1619,7 @@
               </p>
 
               <span class="timeline-date">
-                September 2025 - Present
+                September 2025 to Present
               </span>
 
               <p class="timeline-text">
@@ -1578,7 +1639,7 @@
               </p>
 
               <span class="timeline-date">
-                August 2021 - Present
+                August 2021 to Present
               </span>
 
               <p class="timeline-text">
@@ -1598,7 +1659,7 @@
               </p>
 
               <span class="timeline-date">
-                January 2014 - June 2025
+                January 2014 to June 2025
               </span>
 
               <p class="timeline-text">
@@ -1617,12 +1678,19 @@
         <hr class="section-divider">
 
         <div class="skills-panel reveal">
-          <p class="eyebrow">Technical toolkit</p>
-          <h2 class="section-title">Skills</h2>
+          <p class="eyebrow">
+            Technical toolkit
+          </p>
+
+          <h2 class="section-title">
+            Skills
+          </h2>
 
           <div class="skills-grid">
             <div class="skill-card">
-              <h3 class="skill-title">RTL and Verification</h3>
+              <h3 class="skill-title">
+                RTL and Verification
+              </h3>
 
               <p class="skill-list">
                 Verilog, SystemVerilog, RTL design, digital logic, finite-state
@@ -1632,7 +1700,9 @@
             </div>
 
             <div class="skill-card">
-              <h3 class="skill-title">FPGA and SoC</h3>
+              <h3 class="skill-title">
+                FPGA and SoC
+              </h3>
 
               <p class="skill-list">
                 FPGA prototyping, Arty Zynq-7000 SoC, AXI-Lite, ARM and FPGA
@@ -1642,7 +1712,9 @@
             </div>
 
             <div class="skill-card">
-              <h3 class="skill-title">PCB and Embedded</h3>
+              <h3 class="skill-title">
+                PCB and Embedded
+              </h3>
 
               <p class="skill-list">
                 Altium Designer, multilayer PCB layout, schematic capture,
@@ -1652,7 +1724,9 @@
             </div>
 
             <div class="skill-card">
-              <h3 class="skill-title">EDA Tools</h3>
+              <h3 class="skill-title">
+                EDA Tools
+              </h3>
 
               <p class="skill-list">
                 Cadence Xcelium, Genus, Innovus, Vivado Design Suite, MATLAB,
@@ -1661,7 +1735,9 @@
             </div>
 
             <div class="skill-card">
-              <h3 class="skill-title">Software</h3>
+              <h3 class="skill-title">
+                Software
+              </h3>
 
               <p class="skill-list">
                 Python, Java, Linux, Bash, systemd, Git, scripting, test
@@ -1670,7 +1746,9 @@
             </div>
 
             <div class="skill-card">
-              <h3 class="skill-title">Engineering Focus</h3>
+              <h3 class="skill-title">
+                Engineering Focus
+              </h3>
 
               <p class="skill-list">
                 Computer architecture, embedded systems, digital verification,
@@ -1688,8 +1766,13 @@
         <hr class="section-divider">
 
         <div class="reveal">
-          <p class="eyebrow">Academic background</p>
-          <h2 class="section-title">Education</h2>
+          <p class="eyebrow">
+            Academic background
+          </p>
+
+          <h2 class="section-title">
+            Education
+          </h2>
 
           <p class="section-copy">
             Dual-degree study connecting engineering precision, technical
@@ -1712,7 +1795,8 @@
             </p>
 
             <p class="coursework">
-              GPA: 3.73<br><br>
+              GPA: 3.73
+              <br><br>
               Relevant coursework: Computer Architecture, Embedded IoT Systems
               and Edge Computing, Advanced Digital Design, Computer
               Engineering, Electrical Engineering, Programming, Linear
@@ -1745,7 +1829,9 @@
 
     <section class="contact" id="contact">
       <div class="container reveal">
-        <p class="eyebrow">Let's build something</p>
+        <p class="eyebrow">
+          Let's build something
+        </p>
 
         <h2 class="contact-title">
           Connect
