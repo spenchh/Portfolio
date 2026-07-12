@@ -2,19 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Spencer Kogoma | FPGA, RTL, and Hardware Engineering</title>
+  <title>Spencer Kogoma | FPGA and Hardware Engineering</title>
 
   <meta
     name="description"
-    content="Spencer Kogoma is a Computer Engineering and Violin Performance student at Northwestern University working across FPGA development, RTL design, embedded systems, PCB design, and digital verification."
+    content="Spencer Kogoma is a Northwestern University Computer Engineering and Violin Performance student focused on FPGA design, RTL verification, embedded systems, and hardware integration."
   >
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
+
   <link
     rel="preconnect"
     href="https://fonts.gstatic.com"
@@ -29,19 +31,19 @@
   <style>
     :root {
       --background: #faf9f5;
-      --background-soft: #f3f0e9;
-      --card: rgba(255, 255, 255, 0.78);
-      --card-solid: #ffffff;
-      --green-dark: #173317;
-      --green: #315b35;
-      --green-light: #6f8c70;
-      --text: #1d1b18;
-      --text-soft: #5d5851;
-      --muted: #9b958c;
-      --line: #e5dfd4;
-      --line-dark: rgba(23, 51, 23, 0.2);
-      --shadow: 0 24px 80px rgba(29, 27, 24, 0.09);
-      --shadow-soft: 0 12px 36px rgba(29, 27, 24, 0.055);
+      --background-alt: #f2f0e9;
+      --card: #ffffff;
+      --green-dark: #123816;
+      --green: #2f6135;
+      --green-soft: #769178;
+      --green-pale: #eaf0e8;
+      --text: #1e1c19;
+      --text-soft: #615c55;
+      --muted: #9c958b;
+      --line: #e4ded4;
+      --line-dark: rgba(18, 56, 22, 0.18);
+      --shadow: 0 24px 70px rgba(31, 28, 23, 0.09);
+      --shadow-soft: 0 12px 36px rgba(31, 28, 23, 0.055);
       --radius-large: 30px;
       --radius-medium: 20px;
       --radius-small: 14px;
@@ -67,9 +69,9 @@
       color: var(--text);
       background:
         radial-gradient(
-          circle at top left,
-          rgba(49, 91, 53, 0.1),
-          transparent 32rem
+          circle at 12% 8%,
+          rgba(47, 97, 53, 0.12),
+          transparent 31rem
         ),
         linear-gradient(
           180deg,
@@ -95,61 +97,68 @@
       max-width: 100%;
     }
 
-    p,
-    li,
     h1,
     h2,
     h3,
-    a,
-    span {
+    p,
+    li,
+    span,
+    a {
       overflow-wrap: break-word;
     }
 
     .container {
-      width: min(calc(100% - clamp(2rem, 6vw, 6rem)), 1180px);
-      margin-left: auto;
+      width: min(calc(100% - clamp(2rem, 6vw, 7rem)), 1380px);
       margin-right: auto;
+      margin-left: auto;
     }
 
     .section {
-      padding: clamp(5.5rem, 8vw, 8rem) 0;
+      padding: clamp(6rem, 9vw, 9rem) 0;
       scroll-margin-top: 92px;
     }
 
-    .section-divider {
-      width: 100%;
-      height: 1px;
-      margin-bottom: clamp(2.8rem, 5vw, 4rem);
-      border: 0;
-      background: var(--line);
+    .section-alt {
+      background: rgba(242, 240, 233, 0.56);
+      border-top: 1px solid rgba(228, 222, 212, 0.7);
+      border-bottom: 1px solid rgba(228, 222, 212, 0.7);
     }
 
     .eyebrow {
-      margin-bottom: 0.8rem;
-      color: var(--green-light);
+      margin-bottom: 0.85rem;
+      color: var(--green-soft);
       font-family: "DM Mono", monospace;
       font-size: 0.68rem;
       font-weight: 500;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.19em;
       text-transform: uppercase;
+    }
+
+    .section-heading-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 3rem;
+      margin-bottom: clamp(2.8rem, 5vw, 4.5rem);
     }
 
     .section-title {
       color: var(--green-dark);
       font-family: "Lato", sans-serif;
-      font-size: clamp(2.5rem, 4.8vw, 4.2rem);
+      font-size: clamp(3rem, 5.7vw, 5.8rem);
       font-weight: 900;
-      letter-spacing: -0.045em;
-      line-height: 0.95;
+      letter-spacing: -0.055em;
+      line-height: 0.9;
       text-transform: uppercase;
+      white-space: nowrap;
     }
 
-    .section-copy {
-      max-width: 560px;
-      margin-top: 1.35rem;
+    .section-intro {
+      max-width: 510px;
+      padding-bottom: 0.35rem;
       color: var(--text-soft);
-      font-size: 1rem;
-      line-height: 1.85;
+      font-size: 0.98rem;
+      line-height: 1.8;
     }
 
     /* Navigation */
@@ -160,14 +169,14 @@
       left: 0;
       z-index: 100;
       width: 100%;
-      border-bottom: 1px solid rgba(229, 223, 212, 0.85);
+      border-bottom: 1px solid rgba(228, 222, 212, 0.82);
       background: rgba(250, 249, 245, 0.9);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
     }
 
     .nav-inner {
-      min-height: 74px;
+      min-height: 76px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -183,48 +192,48 @@
     }
 
     .brand-mark {
-      width: 42px;
-      height: 42px;
+      width: 43px;
+      height: 43px;
       display: grid;
       place-items: center;
       border-radius: 50%;
       color: #ffffff;
       background: var(--green-dark);
-      box-shadow: 0 10px 28px rgba(23, 51, 23, 0.22);
+      box-shadow: 0 10px 26px rgba(18, 56, 22, 0.22);
       font-family: "Lato", sans-serif;
       font-size: 0.9rem;
       font-weight: 900;
-      letter-spacing: -0.05em;
+      letter-spacing: -0.04em;
     }
 
-    .brand-text {
+    .brand-copy {
       display: flex;
       flex-direction: column;
       line-height: 1.1;
     }
 
-    .brand-text strong {
+    .brand-copy strong {
       color: var(--green-dark);
       font-family: "Lato", sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 900;
       letter-spacing: 0.01em;
       text-transform: uppercase;
     }
 
-    .brand-text span {
-      margin-top: 0.22rem;
+    .brand-copy span {
+      margin-top: 0.25rem;
       color: var(--muted);
       font-family: "DM Mono", monospace;
       font-size: 0.52rem;
-      letter-spacing: 0.13em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 0.12rem;
+      gap: 0.14rem;
       padding: 0.25rem;
       border: 1px solid var(--line);
       border-radius: var(--pill);
@@ -234,11 +243,11 @@
     .nav-links a {
       padding:
         clamp(0.48rem, 0.55vw, 0.58rem)
-        clamp(0.58rem, 0.8vw, 0.9rem);
+        clamp(0.65rem, 0.9vw, 1rem);
       border-radius: var(--pill);
       color: var(--text-soft);
       font-family: "DM Mono", monospace;
-      font-size: clamp(0.52rem, 0.55vw, 0.62rem);
+      font-size: clamp(0.53rem, 0.56vw, 0.62rem);
       letter-spacing: 0.09em;
       text-decoration: none;
       text-transform: uppercase;
@@ -256,13 +265,13 @@
 
     .mobile-links {
       display: none;
-      gap: 0.9rem;
+      gap: 0.85rem;
     }
 
     .mobile-links a {
       color: var(--green-dark);
       font-family: "DM Mono", monospace;
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       letter-spacing: 0.09em;
       text-decoration: none;
       text-transform: uppercase;
@@ -271,99 +280,66 @@
     /* Hero */
 
     .hero {
-      width: 100%;
       min-height: 100svh;
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding-top: 74px;
+      padding-top: 76px;
     }
 
     .hero-grid {
       width: 100%;
-      max-width: 1120px;
       display: grid;
       grid-template-columns:
         minmax(0, 1.04fr)
-        minmax(340px, 0.96fr);
-      gap: clamp(2.5rem, 4vw, 4.25rem);
+        minmax(430px, 0.96fr);
+      gap: clamp(3.5rem, 6vw, 7rem);
       align-items: center;
-      margin-left: auto;
-      margin-right: auto;
       padding:
-        clamp(4rem, 7vh, 5.5rem)
+        clamp(4.5rem, 8vh, 6.5rem)
         0
-        clamp(3rem, 6vh, 4.5rem);
+        clamp(4rem, 7vh, 5.5rem);
     }
 
     .hero-content {
       width: 100%;
-      max-width: 640px;
-      min-width: 0;
+      max-width: 720px;
       justify-self: end;
     }
 
-    .status {
-      width: fit-content;
-      max-width: 100%;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 1.35rem;
-      padding: 0.55rem 0.85rem;
-      border: 1px solid var(--line);
-      border-radius: var(--pill);
-      color: var(--green-dark);
-      background: rgba(255, 255, 255, 0.78);
-      box-shadow: var(--shadow-soft);
-      font-family: "DM Mono", monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      flex-shrink: 0;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 0 5px rgba(49, 91, 53, 0.11);
-    }
-
     .hero-label {
-      margin-bottom: 1rem;
-      color: var(--green-light);
+      margin-bottom: 1.15rem;
+      color: var(--green-soft);
       font-family: "DM Mono", monospace;
-      font-size: 0.68rem;
+      font-size: 0.72rem;
       font-weight: 500;
-      letter-spacing: 0.17em;
+      letter-spacing: 0.18em;
       line-height: 1.6;
       text-transform: uppercase;
     }
 
     .hero-title {
-      margin-bottom: 1.4rem;
+      margin-bottom: 1.65rem;
       color: var(--green-dark);
       font-family: "Lato", sans-serif;
-      font-size: clamp(3.9rem, 5.7vw, 6.25rem);
+      font-size: clamp(4.8rem, 7.2vw, 8.2rem);
       font-weight: 900;
-      letter-spacing: -0.06em;
-      line-height: 0.89;
+      letter-spacing: -0.068em;
+      line-height: 0.84;
       text-transform: uppercase;
     }
 
     .hero-title span {
+      display: block;
       color: #cfc9bf;
     }
 
     .hero-intro {
-      max-width: 610px;
-      margin-bottom: 1.55rem;
+      max-width: 680px;
+      margin-bottom: 1.5rem;
       color: var(--text-soft);
-      font-size: clamp(1.02rem, 1.45vw, 1.28rem);
+      font-size: clamp(1.18rem, 1.6vw, 1.48rem);
       letter-spacing: -0.02em;
-      line-height: 1.55;
+      line-height: 1.5;
     }
 
     .hero-intro strong {
@@ -371,26 +347,37 @@
       font-weight: 700;
     }
 
-    .focus-grid {
-      max-width: 610px;
+    .hero-about {
+      max-width: 660px;
+      padding-top: 1.45rem;
+      border-top: 1px solid var(--line);
+      color: var(--text-soft);
+      font-size: 0.96rem;
+      line-height: 1.82;
+    }
+
+    .hero-about strong {
+      color: var(--green-dark);
+      font-weight: 700;
+    }
+
+    .hero-skills {
       display: flex;
       flex-wrap: wrap;
       gap: 0.55rem;
-      margin-bottom: 1.55rem;
+      margin-top: 1.5rem;
       list-style: none;
     }
 
-    .focus-grid li {
-      flex: 0 1 auto;
-      padding: 0.55rem 0.78rem;
+    .hero-skills li {
+      padding: 0.54rem 0.78rem;
       border: 1px solid var(--line);
       border-radius: var(--pill);
       color: var(--text-soft);
-      background: rgba(255, 255, 255, 0.58);
+      background: rgba(255, 255, 255, 0.6);
       font-family: "DM Mono", monospace;
-      font-size: 0.56rem;
-      letter-spacing: 0.07em;
-      text-align: center;
+      font-size: 0.57rem;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       transition:
         color 0.2s ease,
@@ -399,43 +386,30 @@
         transform 0.2s ease;
     }
 
-    .focus-grid li:hover {
+    .hero-skills li:hover {
       color: var(--green-dark);
       border-color: var(--line-dark);
       background: #ffffff;
       transform: translateY(-2px);
     }
 
-    .hero-summary {
-      max-width: 610px;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--line);
-      color: var(--text-soft);
-      font-size: 0.91rem;
-      line-height: 1.75;
-    }
-
-    .hero-summary strong {
-      color: var(--green-dark);
-    }
-
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.7rem;
-      margin-top: 1.45rem;
+      gap: 0.75rem;
+      margin-top: 1.8rem;
     }
 
     .button {
-      min-height: 44px;
+      min-height: 46px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.78rem 1.12rem;
+      padding: 0.82rem 1.2rem;
       border-radius: var(--pill);
       font-family: "DM Mono", monospace;
       font-size: 0.66rem;
-      letter-spacing: 0.09em;
+      letter-spacing: 0.1em;
       text-decoration: none;
       text-transform: uppercase;
       transition:
@@ -451,30 +425,27 @@
     .button-primary {
       color: #ffffff;
       background: var(--green-dark);
-      box-shadow: 0 14px 32px rgba(23, 51, 23, 0.2);
+      box-shadow: 0 14px 32px rgba(18, 56, 22, 0.22);
     }
 
     .button-secondary {
       color: var(--green-dark);
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.76);
     }
 
     .hero-photo-wrap {
-      position: relative;
-      width: min(100%, 425px);
-      max-width: 425px;
-      min-width: 0;
+      width: min(100%, 560px);
       justify-self: start;
     }
 
     .hero-photo-card {
       position: relative;
       overflow: hidden;
-      padding: 0.62rem;
+      padding: 0.72rem;
       border: 1px solid var(--line);
-      border-radius: 28px;
-      background: rgba(255, 255, 255, 0.76);
+      border-radius: 34px;
+      background: rgba(255, 255, 255, 0.78);
       box-shadow: var(--shadow);
     }
 
@@ -486,248 +457,129 @@
       background:
         linear-gradient(
           135deg,
-          rgba(23, 51, 23, 0.07),
+          rgba(18, 56, 22, 0.07),
           transparent 36%
         ),
         radial-gradient(
           circle at bottom right,
-          rgba(111, 140, 112, 0.14),
-          transparent 40%
+          rgba(118, 145, 120, 0.14),
+          transparent 42%
         );
     }
 
     .hero-photo {
       width: 100%;
-      height: auto;
-      aspect-ratio: 4 / 5;
+      height: min(72vh, 720px);
+      min-height: 570px;
       display: block;
       object-fit: cover;
-      object-position: center 24%;
-      border-radius: 21px;
-      filter: saturate(0.95) contrast(1.02);
-      transition: transform 0.5s ease;
+      object-position: center 25%;
+      border-radius: 26px;
+      filter: saturate(0.96) contrast(1.02);
+      transition: transform 0.55s ease;
     }
 
     .hero-photo-card:hover .hero-photo {
-      transform: scale(1.018);
+      transform: scale(1.015);
     }
 
-    .focus-note {
-      position: absolute;
-      left: -1.4rem;
-      bottom: 1.6rem;
-      z-index: 2;
-      width: min(210px, 68%);
-      padding: 0.95rem 1rem;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.94);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .focus-note span {
-      display: block;
-      margin-bottom: 0.4rem;
-      color: var(--muted);
-      font-family: "DM Mono", monospace;
-      font-size: 0.53rem;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
-    }
-
-    .focus-note strong {
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: 0.88rem;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      line-height: 1.25;
-      text-transform: uppercase;
-    }
-
-    /* Main section layouts */
-
-    .projects-layout,
-    .experience-grid {
-      width: 100%;
-      max-width: 1120px;
-      display: grid;
-      grid-template-columns:
-        minmax(230px, 290px)
-        minmax(0, 1fr);
-      gap: clamp(2.5rem, 5vw, 4.5rem);
-      align-items: start;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .section-sticky {
-      position: sticky;
-      top: 120px;
-    }
-
-    .section-note {
-      margin-top: 1.8rem;
-      padding: 1.2rem;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-medium);
-      color: var(--text-soft);
-      background: rgba(255, 255, 255, 0.55);
-      font-size: 0.86rem;
-      line-height: 1.75;
-    }
-
-    /* Projects */
+    /* Project cards */
 
     .project-list {
-      min-width: 0;
       display: grid;
-      gap: 1.5rem;
+      gap: 1.4rem;
     }
 
     .project-card {
+      position: relative;
       overflow: hidden;
+      padding: clamp(1.7rem, 3vw, 2.6rem);
       border: 1px solid var(--line);
       border-radius: var(--radius-large);
-      background: var(--card);
+      background: rgba(255, 255, 255, 0.79);
       box-shadow: var(--shadow-soft);
       transition:
         transform 0.25s ease,
-        box-shadow 0.25s ease;
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
     }
 
     .project-card:hover {
-      transform: translateY(-3px);
+      transform: translateY(-4px);
+      border-color: var(--line-dark);
       box-shadow: var(--shadow);
     }
 
-    .project-inner {
-      min-width: 0;
-      display: grid;
-      grid-template-columns:
-        minmax(220px, 0.78fr)
-        minmax(0, 1.22fr);
-      min-height: 390px;
-    }
-
-    .project-visual {
-      position: relative;
-      min-width: 0;
-      min-height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      padding: 1.5rem;
-      border-right: 1px solid var(--line);
-      background:
-        linear-gradient(
-          135deg,
-          rgba(23, 51, 23, 0.12),
-          rgba(49, 91, 53, 0.035)
-        ),
-        var(--background-soft);
-    }
-
-    .visual-grid {
-      position: absolute;
-      inset: 0;
-      opacity: 0.33;
-      background-image:
-        linear-gradient(var(--line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--line) 1px, transparent 1px);
-      background-size: 28px 28px;
-    }
-
-    .visual-chip {
-      position: relative;
-      z-index: 1;
-      width: min(75%, 210px);
-      aspect-ratio: 1 / 1;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(23, 51, 23, 0.22);
-      border-radius: 26px;
-      background: rgba(255, 255, 255, 0.86);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .visual-chip::before {
+    .project-card::before {
       content: "";
       position: absolute;
-      inset: 18px;
-      border: 1px dashed rgba(23, 51, 23, 0.24);
-      border-radius: 18px;
+      top: 0;
+      left: 0;
+      width: 7px;
+      height: 100%;
+      background: var(--green-dark);
     }
 
-    .visual-chip strong {
-      position: relative;
-      z-index: 2;
-      color: var(--green-dark);
-      font-family: "DM Mono", monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      line-height: 1.65;
-      text-align: center;
-      text-transform: uppercase;
-    }
-
-    .project-content {
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 2rem;
-      padding: clamp(1.4rem, 2.2vw, 2rem);
-    }
-
-    .project-topline {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .project-number,
-    .project-year {
-      font-family: "DM Mono", monospace;
-      font-size: 0.61rem;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
+    .project-header {
+      display: grid;
+      grid-template-columns: 90px minmax(0, 1fr);
+      gap: 1.5rem;
+      align-items: start;
     }
 
     .project-number {
-      color: var(--green);
-      font-weight: 500;
+      color: var(--green-soft);
+      font-family: "DM Mono", monospace;
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
     }
 
-    .project-year {
-      color: var(--muted);
+    .project-title-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
     }
 
     .project-title {
-      margin-bottom: 0.9rem;
-      color: var(--text);
+      color: var(--green-dark);
       font-family: "Lato", sans-serif;
-      font-size: clamp(1.75rem, 2.6vw, 2.65rem);
+      font-size: clamp(1.8rem, 3.1vw, 3.2rem);
       font-weight: 900;
       letter-spacing: -0.045em;
       line-height: 1;
       text-transform: uppercase;
     }
 
-    .project-description {
-      max-width: 620px;
+    .project-date {
+      flex-shrink: 0;
+      color: var(--muted);
+      font-family: "DM Mono", monospace;
+      font-size: 0.59rem;
+      letter-spacing: 0.11em;
+      text-align: right;
+      text-transform: uppercase;
+    }
+
+    .project-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(270px, 0.65fr);
+      gap: clamp(2rem, 4vw, 4rem);
+      margin-top: 1.5rem;
+      margin-left: 105px;
+    }
+
+    .project-summary {
       color: var(--text-soft);
-      font-size: 0.94rem;
-      line-height: 1.8;
+      font-size: 0.98rem;
+      line-height: 1.82;
     }
 
     .project-points {
       display: grid;
-      gap: 0.68rem;
-      margin-top: 1.25rem;
+      gap: 0.72rem;
+      margin-top: 1.15rem;
       list-style: none;
     }
 
@@ -735,257 +587,313 @@
       position: relative;
       padding-left: 1.25rem;
       color: var(--text-soft);
-      font-size: 0.87rem;
-      line-height: 1.55;
+      font-size: 0.88rem;
+      line-height: 1.58;
     }
 
     .project-points li::before {
       content: "";
       position: absolute;
-      top: 0.62em;
+      top: 0.64em;
       left: 0;
       width: 7px;
       height: 7px;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 0 4px rgba(49, 91, 53, 0.11);
+      box-shadow: 0 0 0 4px rgba(47, 97, 53, 0.11);
     }
 
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--line);
+    .project-details {
+      display: grid;
+      gap: 0.75rem;
+      align-content: start;
     }
 
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.42rem 0.68rem;
-      border: 1px solid var(--line);
-      border-radius: var(--pill);
-      color: var(--text-soft);
-      background: rgba(255, 255, 255, 0.58);
+    .detail-row {
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .detail-row:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .detail-label {
+      display: block;
+      margin-bottom: 0.28rem;
+      color: var(--green-soft);
       font-family: "DM Mono", monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.07em;
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
+    }
+
+    .detail-value {
+      color: var(--text);
+      font-size: 0.84rem;
+      font-weight: 600;
+      line-height: 1.55;
     }
 
     /* Experience */
 
-    .timeline {
-      position: relative;
-      min-width: 0;
+    .experience-grid {
       display: grid;
-      gap: 1rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.2rem;
     }
 
-    .timeline::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 13px;
-      width: 1px;
-      background: var(--line);
-    }
-
-    .timeline-card {
-      position: relative;
-      margin-left: 2.5rem;
-      padding: 1.5rem;
+    .experience-card {
+      display: flex;
+      flex-direction: column;
+      padding: 1.6rem;
       border: 1px solid var(--line);
       border-radius: var(--radius-medium);
-      background: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.78);
       box-shadow: var(--shadow-soft);
+      transition:
+        transform 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease;
     }
 
-    .timeline-card::before {
-      content: "";
-      position: absolute;
-      top: 1.8rem;
-      left: -2.18rem;
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: var(--green-dark);
-      box-shadow:
-        0 0 0 5px var(--background),
-        0 0 0 6px var(--line);
+    .experience-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--line-dark);
+      box-shadow: var(--shadow);
     }
 
-    .timeline-role {
-      margin-bottom: 0.25rem;
+    .experience-date {
+      margin-bottom: 0.75rem;
+      color: var(--green-soft);
+      font-family: "DM Mono", monospace;
+      font-size: 0.56rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .experience-role {
+      margin-bottom: 0.35rem;
       color: var(--green-dark);
       font-family: "Lato", sans-serif;
-      font-size: 1.15rem;
+      font-size: 1.28rem;
       font-weight: 900;
       letter-spacing: -0.025em;
+      line-height: 1.08;
       text-transform: uppercase;
     }
 
-    .timeline-org {
+    .experience-org {
+      margin-bottom: 1rem;
       color: var(--text);
-      font-size: 0.92rem;
-      font-weight: 600;
+      font-size: 0.88rem;
+      font-weight: 700;
+      line-height: 1.5;
     }
 
-    .timeline-date {
-      display: block;
-      margin-top: 0.3rem;
-      color: var(--muted);
-      font-family: "DM Mono", monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.11em;
-      text-transform: uppercase;
-    }
-
-    .timeline-text {
-      margin-top: 0.9rem;
+    .experience-copy {
       color: var(--text-soft);
-      font-size: 0.87rem;
-      line-height: 1.75;
+      font-size: 0.86rem;
+      line-height: 1.74;
     }
 
-    /* Skills */
+    /* Leadership */
 
-    .skills-panel {
-      width: 100%;
-      max-width: 1120px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: clamp(1.4rem, 2.5vw, 2rem);
+    .leadership-panel {
+      margin-top: 1.25rem;
+      padding: clamp(1.5rem, 3vw, 2.2rem);
       border: 1px solid var(--line);
       border-radius: var(--radius-large);
-      background: rgba(255, 255, 255, 0.72);
-      box-shadow: var(--shadow-soft);
+      background: var(--green-dark);
+      box-shadow: var(--shadow);
     }
 
-    .skills-grid {
-      min-width: 0;
+    .leadership-heading {
+      margin-bottom: 1.3rem;
+      color: #ffffff;
+      font-family: "Lato", sans-serif;
+      font-size: clamp(1.5rem, 2.6vw, 2.3rem);
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      text-transform: uppercase;
+    }
+
+    .leadership-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 1rem;
-      margin-top: 2.25rem;
     }
 
-    .skill-card {
-      min-width: 0;
-      padding: 1.3rem;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-medium);
-      background: var(--background-soft);
+    .leadership-item {
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius-small);
+      background: rgba(255, 255, 255, 0.065);
     }
 
-    .skill-title {
-      margin-bottom: 0.8rem;
-      color: var(--green-dark);
+    .leadership-title {
+      margin-bottom: 0.25rem;
+      color: #ffffff;
       font-family: "Lato", sans-serif;
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 900;
       letter-spacing: -0.02em;
       text-transform: uppercase;
     }
 
-    .skill-list {
+    .leadership-meta {
+      margin-bottom: 0.6rem;
+      color: #b8c9b9;
+      font-family: "DM Mono", monospace;
+      font-size: 0.53rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .leadership-copy {
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 0.8rem;
+      line-height: 1.65;
+    }
+
+    /* Technical toolkit */
+
+    .toolkit {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .toolkit-card {
+      padding: 1.4rem;
+      border-top: 4px solid var(--green-dark);
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+      border-radius: 0 0 var(--radius-medium) var(--radius-medium);
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .toolkit-title {
+      margin-bottom: 0.7rem;
+      color: var(--green-dark);
+      font-family: "Lato", sans-serif;
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .toolkit-copy {
       color: var(--text-soft);
-      font-size: 0.85rem;
-      line-height: 1.8;
+      font-size: 0.83rem;
+      line-height: 1.75;
     }
 
     /* Education */
 
-    .education-inner {
-      width: 100%;
-      max-width: 1120px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .split-grid {
-      min-width: 0;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.25rem;
-      margin-top: 2.2rem;
-    }
-
-    .info-card {
-      min-width: 0;
-      padding: 1.6rem;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-medium);
-      background: rgba(255, 255, 255, 0.7);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .info-label {
-      margin-bottom: 0.55rem;
-      color: var(--green-light);
+    .education-gpa {
+      margin-top: 0.8rem;
+      color: var(--green-dark);
       font-family: "DM Mono", monospace;
-      font-size: 0.58rem;
+      font-size: 0.74rem;
+      font-weight: 500;
       letter-spacing: 0.13em;
       text-transform: uppercase;
     }
 
-    .info-title {
-      margin-bottom: 0.5rem;
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: 1.3rem;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
+    .education-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+
+    .education-card {
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(1.6rem, 3vw, 2.2rem);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-large);
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .education-school {
+      margin-bottom: 0.55rem;
+      color: var(--green-soft);
+      font-family: "DM Mono", monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.13em;
       text-transform: uppercase;
     }
 
-    .info-body {
-      color: var(--text-soft);
-      font-size: 0.87rem;
-      line-height: 1.75;
+    .education-degree {
+      margin-bottom: 0.5rem;
+      color: var(--green-dark);
+      font-family: "Lato", sans-serif;
+      font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      text-transform: uppercase;
     }
 
-    .coursework {
-      margin-top: 1rem;
+    .education-college {
+      margin-bottom: 1.15rem;
+      color: var(--text);
+      font-size: 0.93rem;
+      font-weight: 600;
+    }
+
+    .education-copy {
       color: var(--text-soft);
-      font-size: 0.84rem;
-      line-height: 1.8;
+      font-size: 0.88rem;
+      line-height: 1.78;
+    }
+
+    .education-note {
+      margin-top: auto;
+      padding-top: 1.1rem;
+      color: var(--green);
+      font-family: "DM Mono", monospace;
+      font-size: 0.61rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
 
     /* Contact */
 
     .contact {
       padding:
-        clamp(6rem, 10vw, 9rem)
+        clamp(6rem, 10vw, 10rem)
         0
-        clamp(4.5rem, 8vw, 7rem);
+        clamp(5rem, 8vw, 8rem);
       text-align: center;
       scroll-margin-top: 80px;
     }
 
     .contact-inner {
-      width: 100%;
-      max-width: 760px;
-      margin-left: auto;
-      margin-right: auto;
+      max-width: 820px;
+      margin: 0 auto;
     }
 
     .contact-title {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.6rem;
       color: var(--green-dark);
       font-family: "Lato", sans-serif;
-      font-size: clamp(4rem, 10vw, 8rem);
+      font-size: clamp(4.5rem, 11vw, 9.5rem);
       font-weight: 900;
-      letter-spacing: -0.065em;
-      line-height: 0.88;
+      letter-spacing: -0.07em;
+      line-height: 0.84;
       text-transform: uppercase;
     }
 
     .contact-copy {
-      max-width: 560px;
-      margin: 0 auto 2.3rem;
+      max-width: 590px;
+      margin: 0 auto 2.2rem;
       color: var(--text-soft);
       font-size: 0.98rem;
       line-height: 1.8;
@@ -999,13 +907,13 @@
     }
 
     .contact-link {
-      padding: 0.8rem 1rem;
+      padding: 0.82rem 1.05rem;
       border: 1px solid var(--line);
       border-radius: var(--pill);
       color: var(--green-dark);
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.76);
       font-family: "DM Mono", monospace;
-      font-size: 0.64rem;
+      font-size: 0.63rem;
       letter-spacing: 0.09em;
       text-decoration: none;
       text-transform: uppercase;
@@ -1035,12 +943,12 @@
       gap: 1rem;
       color: var(--muted);
       font-family: "DM Mono", monospace;
-      font-size: 0.58rem;
+      font-size: 0.57rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
     }
 
-    /* Reveal animation */
+    /* Reveal */
 
     .reveal {
       opacity: 0;
@@ -1073,42 +981,46 @@
       }
     }
 
-    /* Medium screens and browser zoom */
+    /* Medium screens */
 
-    @media (max-width: 1080px) {
+    @media (max-width: 1120px) {
       .container {
-        width: min(calc(100% - 3rem), 980px);
+        width: min(calc(100% - 3rem), 1040px);
       }
 
       .hero-grid {
         grid-template-columns:
           minmax(0, 1fr)
-          minmax(310px, 0.82fr);
-        gap: 2.5rem;
-      }
-
-      .hero-photo-wrap {
-        max-width: 390px;
+          minmax(350px, 0.82fr);
+        gap: 3rem;
       }
 
       .hero-title {
-        font-size: clamp(3.7rem, 6vw, 5.5rem);
+        font-size: clamp(4.3rem, 7.4vw, 6.7rem);
       }
 
-      .projects-layout,
+      .hero-photo {
+        min-height: 520px;
+      }
+
+      .project-body {
+        grid-template-columns: 1fr;
+      }
+
       .experience-grid {
-        grid-template-columns:
-          minmax(210px, 250px)
-          minmax(0, 1fr);
-        gap: 2.75rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .skills-grid {
+      .experience-card:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .toolkit {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
-    /* Tablet and higher browser zoom */
+    /* Tablet and browser zoom */
 
     @media (max-width: 900px) {
       .container {
@@ -1129,7 +1041,7 @@
 
       .hero-grid {
         grid-template-columns: 1fr;
-        gap: 2.5rem;
+        gap: 3rem;
         padding-top: 5rem;
       }
 
@@ -1140,34 +1052,57 @@
       }
 
       .hero-photo-wrap {
-        width: min(100%, 430px);
-        max-width: 430px;
+        width: min(100%, 540px);
         justify-self: center;
         order: 1;
       }
 
-      .focus-note {
-        left: 1rem;
+      .hero-photo {
+        height: auto;
+        min-height: 0;
+        aspect-ratio: 4 / 5;
       }
 
-      .projects-layout,
-      .experience-grid {
+      .section-heading-row {
+        display: block;
+      }
+
+      .section-intro {
+        margin-top: 1.3rem;
+      }
+
+      .section-title {
+        font-size: clamp(3rem, 10vw, 5.3rem);
+      }
+
+      .project-header {
         grid-template-columns: 1fr;
-        gap: 2.5rem;
+        gap: 0.75rem;
       }
 
-      .section-sticky {
-        position: static;
+      .project-body {
+        margin-left: 0;
       }
 
-      .project-inner {
+      .project-title-row {
+        display: block;
+      }
+
+      .project-date {
+        margin-top: 0.55rem;
+        text-align: left;
+      }
+
+      .leadership-grid {
         grid-template-columns: 1fr;
       }
 
-      .project-visual {
-        min-height: clamp(220px, 40vw, 290px);
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
+      .education-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .education-card {
+        min-height: 0;
       }
     }
 
@@ -1182,7 +1117,7 @@
         width: min(calc(100% - 1.5rem), 560px);
       }
 
-      .brand-text {
+      .brand-copy {
         display: none;
       }
 
@@ -1191,32 +1126,16 @@
       }
 
       .hero-grid {
-        gap: 2.25rem;
-        padding-top: 4.75rem;
+        gap: 2.4rem;
+        padding-top: 4.5rem;
       }
 
       .hero-title {
-        font-size: clamp(3.1rem, 15vw, 4.7rem);
+        font-size: clamp(3.5rem, 17vw, 5.4rem);
       }
 
       .hero-intro {
-        font-size: 1.05rem;
-      }
-
-      .focus-grid li {
-        flex: 1 1 calc(50% - 0.3rem);
-      }
-
-      .focus-note {
-        position: static;
-        width: 100%;
-        max-width: none;
-        margin-top: 0.75rem;
-      }
-
-      .skills-grid,
-      .split-grid {
-        grid-template-columns: 1fr;
+        font-size: 1.08rem;
       }
 
       .hero-actions,
@@ -1230,8 +1149,17 @@
         width: 100%;
       }
 
-      .timeline-card {
-        margin-left: 2.1rem;
+      .section-title {
+        font-size: clamp(2.7rem, 14vw, 4.4rem);
+      }
+
+      .experience-grid,
+      .toolkit {
+        grid-template-columns: 1fr;
+      }
+
+      .experience-card:last-child {
+        grid-column: auto;
       }
 
       .footer-inner {
@@ -1242,11 +1170,11 @@
 
     @media (max-width: 480px) {
       .container {
-        width: min(calc(100% - 1.1rem), 460px);
+        width: min(calc(100% - 1rem), 460px);
       }
 
       .nav-inner {
-        min-height: 62px;
+        min-height: 64px;
       }
 
       .brand-mark {
@@ -1255,66 +1183,56 @@
       }
 
       .mobile-links a {
-        font-size: 0.52rem;
-      }
-
-      .status {
-        width: 100%;
-        align-items: flex-start;
-        font-size: 0.54rem;
-        line-height: 1.5;
-      }
-
-      .hero-label {
-        font-size: 0.6rem;
+        font-size: 0.51rem;
       }
 
       .hero-title {
-        font-size: clamp(2.85rem, 16vw, 4.1rem);
+        font-size: clamp(3rem, 17vw, 4.4rem);
       }
 
-      .focus-grid {
+      .hero-skills {
         display: grid;
         grid-template-columns: 1fr;
       }
 
-      .focus-grid li {
+      .hero-skills li {
         width: 100%;
+        text-align: center;
       }
 
-      .project-content,
-      .info-card,
-      .timeline-card,
-      .skill-card {
-        padding: 1.15rem;
+      .section-title {
+        font-size: clamp(2.55rem, 13vw, 3.8rem);
+      }
+
+      .project-card,
+      .experience-card,
+      .education-card,
+      .toolkit-card {
+        padding: 1.2rem;
       }
 
       .contact-title {
-        font-size: clamp(3.2rem, 17vw, 5rem);
+        font-size: clamp(3.4rem, 18vw, 5.2rem);
       }
     }
 
-    /* Wide and zoomed-out screens */
+    /* Wide screens */
 
-    @media (min-width: 1500px) {
+    @media (min-width: 1550px) {
       .container {
-        width: min(calc(100% - 8rem), 1260px);
-      }
-
-      .hero-grid,
-      .projects-layout,
-      .experience-grid,
-      .skills-panel,
-      .education-inner {
-        max-width: 1180px;
-      }
-
-      .hero-photo-wrap {
-        max-width: 450px;
+        width: min(calc(100% - 9rem), 1440px);
       }
 
       .hero-title {
-        font-size: clamp(5.2rem, 5.8vw, 6.7rem);
+        font-size: clamp(6rem, 7vw, 8.8rem);
+      }
+
+      .hero-photo-wrap {
+        max-width: 590px;
+      }
+
+      .hero-photo {
+        height: min(74vh, 760px);
       }
     }
   </style>
@@ -1326,11 +1244,11 @@
       <a
         href="#home"
         class="brand"
-        aria-label="Go to home section"
+        aria-label="Go to home"
       >
         <span class="brand-mark">SK</span>
 
-        <span class="brand-text">
+        <span class="brand-copy">
           <strong>Spencer Kogoma</strong>
           <span>FPGA | RTL | Hardware Engineering</span>
         </span>
@@ -1340,7 +1258,6 @@
         <a href="#home" class="active">Home</a>
         <a href="#projects">Projects</a>
         <a href="#experience">Experience</a>
-        <a href="#skills">Skills</a>
         <a href="#education">Education</a>
         <a href="#contact">Contact</a>
       </div>
@@ -1356,46 +1273,42 @@
     <section class="hero" id="home">
       <div class="container hero-grid">
         <div class="hero-content reveal">
-          <div class="status">
-            <span class="status-dot"></span>
-            Open to Summer and Fall 2026 engineering internships
-          </div>
-
           <p class="hero-label">
             Northwestern University | Computer Engineering | Class of 2028
           </p>
 
           <h1 class="hero-title">
-            Spencer<br>
+            Spencer
             <span>Kogoma</span>
           </h1>
 
           <p class="hero-intro">
             I build real-time digital systems across
-            <strong>FPGA development</strong>,
-            <strong>RTL design</strong>,
-            <strong>embedded hardware</strong>, and
-            <strong>digital verification</strong>.
+            <strong>FPGA design</strong>,
+            <strong>RTL verification</strong>,
+            <strong>embedded systems</strong>, and
+            <strong>hardware integration</strong>.
+          </p>
+
+          <p class="hero-about">
+            I am a Computer Engineering and Violin Performance student at
+            Northwestern University focused on turning specifications into
+            working hardware. My projects span RTL development, simulation,
+            FPGA prototyping, PCB design, embedded interfaces, and
+            <strong>system-level debugging</strong>.
           </p>
 
           <ul
-            class="focus-grid"
+            class="hero-skills"
             aria-label="Technical focus areas"
           >
             <li>SystemVerilog</li>
+            <li>Verilog</li>
             <li>FPGA and SoC</li>
-            <li>RTL Verification</li>
+            <li>Digital Verification</li>
             <li>PCB Design</li>
-            <li>Embedded Systems</li>
             <li>Computer Architecture</li>
           </ul>
-
-          <p class="hero-summary">
-            Currently developing FPGA-based motor control on a Zynq-7000 SoC,
-            leading low-voltage electrical systems for Northwestern Solar Car,
-            and teaching RTL design and ASIC workflows through Northwestern's
-            student silicon initiative.
-          </p>
 
           <div class="hero-actions">
             <a
@@ -1422,557 +1335,440 @@
               class="hero-photo"
             >
           </div>
-
-          <div class="focus-note">
-            <span>Current focus</span>
-
-            <strong>
-              FPGA motor control, RTL verification, and ASIC design
-            </strong>
-          </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="projects">
+    <section class="section section-alt" id="projects">
       <div class="container">
-        <hr class="section-divider">
+        <div class="section-heading-row reveal">
+          <div>
+            <p class="eyebrow">Selected engineering work</p>
+            <h2 class="section-title">Projects</h2>
+          </div>
 
-        <div class="projects-layout">
-          <div class="section-sticky reveal">
-            <p class="eyebrow">
-              Selected work
-            </p>
+          <p class="section-intro">
+            My most relevant projects across FPGA architecture, RTL
+            development, real-time signal processing, embedded Linux, and
+            hardware validation.
+          </p>
+        </div>
 
-            <h2 class="section-title">
-              Projects
-            </h2>
+        <div class="project-list">
+          <article class="project-card reveal">
+            <div class="project-header">
+              <span class="project-number">Project 01</span>
 
-            <p class="section-copy">
-              Engineering work across FPGA motor control, embedded vehicle
-              systems, RTL verification, real-time DSP, and digital-design
-              education.
-            </p>
+              <div class="project-title-row">
+                <h3 class="project-title">
+                  FPGA-Based Field-Oriented Control
+                </h3>
 
-            <div class="section-note">
-              Each project is shaped by measurable constraints such as timing,
-              latency, safety, reliability, signal quality, cost, and
-              hardware-software integration.
+                <span class="project-date">
+                  June 2026 to Present
+                </span>
+              </div>
             </div>
-          </div>
 
-          <div class="project-list">
-            <article class="project-card reveal">
-              <div class="project-inner">
-                <div
-                  class="project-visual"
-                  aria-hidden="true"
-                >
-                  <div class="visual-grid"></div>
+            <div class="project-body">
+              <div>
+                <p class="project-summary">
+                  Architecting a motor-control accelerator on an Arty
+                  Zynq-7000 SoC, with real-time control and safety functions
+                  implemented in FPGA fabric and system management handled by
+                  ARM software.
+                </p>
 
-                  <div class="visual-chip">
-                    <strong>
-                      Zynq-7000<br>
-                      FOC<br>
-                      Accelerator
-                    </strong>
-                  </div>
+                <ul class="project-points">
+                  <li>
+                    Develop SystemVerilog modules for 3PWM and 6PWM output,
+                    deadtime insertion, Hall-sector detection, speed
+                    estimation, ADC sample timing, and reusable PI control.
+                  </li>
+
+                  <li>
+                    Partition CAN, logging, calibration, and recovery into ARM
+                    software while keeping PWM, sensing, safety, and fixed-point
+                    control in FPGA logic.
+                  </li>
+
+                  <li>
+                    Research MATLAB, Simulink, and HDL Coder workflows for
+                    Clarke and Park transforms, SVPWM, saturation, and
+                    anti-windup behavior.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="project-details">
+                <div class="detail-row">
+                  <span class="detail-label">Platform</span>
+                  <span class="detail-value">
+                    Arty Zynq-7000 SoC
+                  </span>
                 </div>
 
-                <div class="project-content">
-                  <div>
-                    <div class="project-topline">
-                      <span class="project-number">
-                        Project 01
-                      </span>
+                <div class="detail-row">
+                  <span class="detail-label">Languages</span>
+                  <span class="detail-value">
+                    SystemVerilog, Python, Bash
+                  </span>
+                </div>
 
-                      <span class="project-year">
-                        2026 to Present
-                      </span>
-                    </div>
+                <div class="detail-row">
+                  <span class="detail-label">Core concepts</span>
+                  <span class="detail-value">
+                    AXI-Lite, fixed-point arithmetic, PWM, FOC, fault handling
+                  </span>
+                </div>
 
-                    <h3 class="project-title">
-                      FPGA-Based Field-Oriented Control
-                    </h3>
-
-                    <p class="project-description">
-                      Architecting a motor-control accelerator on an Arty
-                      Zynq-7000 SoC for lightweight electric motors.
-                    </p>
-
-                    <ul class="project-points">
-                      <li>
-                        Develop SystemVerilog modules for 3PWM and 6PWM output,
-                        deadtime insertion, Hall-sector detection, speed
-                        estimation, ADC sample strobes, and reusable PI control.
-                      </li>
-
-                      <li>
-                        Partition the control stack between ARM software for
-                        CAN, logging, calibration, and recovery and FPGA fabric
-                        for sensing, PWM, safety, and fixed-point control.
-                      </li>
-
-                      <li>
-                        Research MATLAB, Simulink, and HDL Coder flows for
-                        Clarke and Park transforms, inverse Park, SVPWM,
-                        saturation, and anti-windup behavior.
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div class="tags">
-                    <span class="tag">SystemVerilog</span>
-                    <span class="tag">Zynq-7000</span>
-                    <span class="tag">AXI-Lite</span>
-                    <span class="tag">Fixed-Point Control</span>
-                    <span class="tag">PWM</span>
-                    <span class="tag">MATLAB and Simulink</span>
-                  </div>
+                <div class="detail-row">
+                  <span class="detail-label">Tools</span>
+                  <span class="detail-value">
+                    Vivado, MATLAB, Simulink, HDL Coder
+                  </span>
                 </div>
               </div>
-            </article>
+            </div>
+          </article>
 
-            <article class="project-card reveal">
-              <div class="project-inner">
-                <div
-                  class="project-visual"
-                  aria-hidden="true"
-                >
-                  <div class="visual-grid"></div>
+          <article class="project-card reveal">
+            <div class="project-header">
+              <span class="project-number">Project 02</span>
 
-                  <div class="visual-chip">
-                    <strong>
-                      Rear Vision<br>
-                      Under 30 ms<br>
-                      Pipeline
-                    </strong>
-                  </div>
+              <div class="project-title-row">
+                <h3 class="project-title">
+                  FPGA Beamforming Microphone Array
+                </h3>
+
+                <span class="project-date">
+                  June 2026 to Present
+                </span>
+              </div>
+            </div>
+
+            <div class="project-body">
+              <div>
+                <p class="project-summary">
+                  Designing a fixed-point delay-and-sum beamforming pipeline
+                  for real-time, multi-channel directional audio processing.
+                </p>
+
+                <ul class="project-points">
+                  <li>
+                    Implement the beamforming datapath in Verilog for
+                    deterministic real-time processing.
+                  </li>
+
+                  <li>
+                    Integrate camera-based face tracking to steer the FPGA DSP
+                    pipeline toward a moving source.
+                  </li>
+
+                  <li>
+                    Evaluate latency, phase alignment, numerical precision, and
+                    FPGA resource tradeoffs.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="project-details">
+                <div class="detail-row">
+                  <span class="detail-label">Focus</span>
+                  <span class="detail-value">
+                    Real-time audio DSP
+                  </span>
                 </div>
 
-                <div class="project-content">
-                  <div>
-                    <div class="project-topline">
-                      <span class="project-number">
-                        Project 02
-                      </span>
+                <div class="detail-row">
+                  <span class="detail-label">Language</span>
+                  <span class="detail-value">
+                    Verilog
+                  </span>
+                </div>
 
-                      <span class="project-year">
-                        2026
-                      </span>
-                    </div>
+                <div class="detail-row">
+                  <span class="detail-label">Core concepts</span>
+                  <span class="detail-value">
+                    Fixed-point DSP, delay-and-sum beamforming, pipelining
+                  </span>
+                </div>
 
-                    <h3 class="project-title">
-                      Rear-Vision Camera and Display System
-                    </h3>
-
-                    <p class="project-description">
-                      Designed and validated a low-latency rear-vision system
-                      for Northwestern's American Solar Challenge vehicle.
-                    </p>
-
-                    <ul class="project-points">
-                      <li>
-                        Built a sub-30 ms camera pipeline using a Pi Camera 3
-                        Wide and CSI-to-HDMI extension hardware.
-                      </li>
-
-                      <li>
-                        Automated headless startup and system recovery using
-                        Linux, Bash, and systemd.
-                      </li>
-
-                      <li>
-                        Selected the architecture through a six-candidate trade
-                        study covering latency, field of view, EMI risk, cable
-                        length, reliability, integration complexity, and cost.
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div class="tags">
-                    <span class="tag">Embedded Linux</span>
-                    <span class="tag">Bash</span>
-                    <span class="tag">Systemd</span>
-                    <span class="tag">CSI and HDMI</span>
-                    <span class="tag">GMSL2 Analysis</span>
-                    <span class="tag">Hardware Validation</span>
-                  </div>
+                <div class="detail-row">
+                  <span class="detail-label">Integration</span>
+                  <span class="detail-value">
+                    Camera tracking and FPGA signal processing
+                  </span>
                 </div>
               </div>
-            </article>
+            </div>
+          </article>
 
-            <article class="project-card reveal">
-              <div class="project-inner">
-                <div
-                  class="project-visual"
-                  aria-hidden="true"
-                >
-                  <div class="visual-grid"></div>
+          <article class="project-card reveal">
+            <div class="project-header">
+              <span class="project-number">Project 03</span>
 
-                  <div class="visual-chip">
-                    <strong>
-                      FPGA<br>
-                      Beamforming<br>
-                      DSP
-                    </strong>
-                  </div>
+              <div class="project-title-row">
+                <h3 class="project-title">
+                  Rear-Vision Camera and Display System
+                </h3>
+
+                <span class="project-date">
+                  March 2026 to June 2026
+                </span>
+              </div>
+            </div>
+
+            <div class="project-body">
+              <div>
+                <p class="project-summary">
+                  Designed and validated a low-latency rear-vision system for
+                  Northwestern’s 2026 American Solar Challenge vehicle.
+                </p>
+
+                <ul class="project-points">
+                  <li>
+                    Built a sub-30 ms video pipeline using a Pi Camera 3 Wide
+                    and CSI-to-HDMI extension hardware.
+                  </li>
+
+                  <li>
+                    Automated headless startup and recovery with Linux, Bash,
+                    and systemd.
+                  </li>
+
+                  <li>
+                    Selected the final design through a six-candidate trade
+                    study covering latency, field of view, EMI risk,
+                    reliability, integration complexity, and cost.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="project-details">
+                <div class="detail-row">
+                  <span class="detail-label">Platform</span>
+                  <span class="detail-value">
+                    Raspberry Pi and Pi Camera 3 Wide
+                  </span>
                 </div>
 
-                <div class="project-content">
-                  <div>
-                    <div class="project-topline">
-                      <span class="project-number">
-                        Project 03
-                      </span>
+                <div class="detail-row">
+                  <span class="detail-label">Performance</span>
+                  <span class="detail-value">
+                    Sub-30 ms end-to-end latency
+                  </span>
+                </div>
 
-                      <span class="project-year">
-                        2026 to Present
-                      </span>
-                    </div>
+                <div class="detail-row">
+                  <span class="detail-label">Software</span>
+                  <span class="detail-value">
+                    Linux, Bash, systemd
+                  </span>
+                </div>
 
-                    <h3 class="project-title">
-                      FPGA Beamforming Microphone Array
-                    </h3>
-
-                    <p class="project-description">
-                      Designing a real-time multi-channel directional-audio
-                      system using fixed-point FPGA signal processing.
-                    </p>
-
-                    <ul class="project-points">
-                      <li>
-                        Implement a fixed-point delay-and-sum beamformer in
-                        Verilog for real-time audio processing.
-                      </li>
-
-                      <li>
-                        Integrate camera-based face tracking to steer the FPGA
-                        DSP pipeline toward a moving source.
-                      </li>
-
-                      <li>
-                        Explore phase alignment, datapath precision, latency,
-                        and resource tradeoffs across the processing pipeline.
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div class="tags">
-                    <span class="tag">Verilog</span>
-                    <span class="tag">FPGA</span>
-                    <span class="tag">DSP</span>
-                    <span class="tag">Fixed-Point Arithmetic</span>
-                    <span class="tag">Computer Vision</span>
-                  </div>
+                <div class="detail-row">
+                  <span class="detail-label">Engineering process</span>
+                  <span class="detail-value">
+                    Architecture trade study and hardware validation
+                  </span>
                 </div>
               </div>
-            </article>
-
-            <article class="project-card reveal">
-              <div class="project-inner">
-                <div
-                  class="project-visual"
-                  aria-hidden="true"
-                >
-                  <div class="visual-grid"></div>
-
-                  <div class="visual-chip">
-                    <strong>
-                      RTL<br>
-                      Verification<br>
-                      Onboarding
-                    </strong>
-                  </div>
-                </div>
-
-                <div class="project-content">
-                  <div>
-                    <div class="project-topline">
-                      <span class="project-number">
-                        Project 04
-                      </span>
-
-                      <span class="project-year">
-                        2026 to Present
-                      </span>
-                    </div>
-
-                    <h3 class="project-title">
-                      NUSi Digital Design Curriculum
-                    </h3>
-
-                    <p class="project-description">
-                      Leading RTL onboarding for Northwestern University
-                      Silicon Initiative and NU Silicats.
-                    </p>
-
-                    <ul class="project-points">
-                      <li>
-                        Create SystemVerilog lessons, HDLBits-style exercises,
-                        testbenches, waveform-debugging activities, and a 2x2
-                        kernel datapath project.
-                      </li>
-
-                      <li>
-                        Teach finite-state machines, module hierarchy,
-                        verification concepts, and simulation-based debugging.
-                      </li>
-
-                      <li>
-                        Coordinate onboarding for Cadence Xcelium, Genus, and
-                        Innovus across simulation, synthesis, and
-                        place-and-route workflows.
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div class="tags">
-                    <span class="tag">SystemVerilog</span>
-                    <span class="tag">Testbenches</span>
-                    <span class="tag">Cadence Xcelium</span>
-                    <span class="tag">Genus</span>
-                    <span class="tag">Innovus</span>
-                    <span class="tag">ASIC Flow</span>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
     <section class="section" id="experience">
       <div class="container">
-        <hr class="section-divider">
-
-        <div class="experience-grid">
-          <div class="section-sticky reveal">
-            <p class="eyebrow">
-              Engineering and leadership
-            </p>
-
-            <h2 class="section-title">
-              Experience
-            </h2>
-
-            <p class="section-copy">
-              Roles that combine technical ownership, system integration,
-              mentorship, and multidisciplinary teamwork.
-            </p>
+        <div class="section-heading-row reveal">
+          <div>
+            <p class="eyebrow">Engineering and technical leadership</p>
+            <h2 class="section-title">Experience</h2>
           </div>
 
-          <div class="timeline">
-            <article class="timeline-card reveal">
-              <h3 class="timeline-role">
-                Undergraduate Researcher
-              </h3>
+          <p class="section-intro">
+            Roles where I own hardware design, system integration, RTL
+            education, testing, and cross-functional engineering work.
+          </p>
+        </div>
 
-              <p class="timeline-org">
-                Northwestern University
-              </p>
+        <div class="experience-grid">
+          <article class="experience-card reveal">
+            <span class="experience-date">
+              June 2026 to Present
+            </span>
 
-              <span class="timeline-date">
-                June 2026 to Present
-              </span>
+            <h3 class="experience-role">
+              Undergraduate Researcher
+            </h3>
 
-              <p class="timeline-text">
-                Architect FPGA-based field-oriented motor control on a
-                Zynq-7000 SoC, including AXI-Lite interfaces, deterministic
-                PWM, Hall decoding, current-sample timing, fixed-point control,
-                and fault-latched shutdown.
-              </p>
-            </article>
+            <p class="experience-org">
+              Northwestern University
+            </p>
 
-            <article class="timeline-card reveal">
-              <h3 class="timeline-role">
-                Digital Design Lead
-              </h3>
+            <p class="experience-copy">
+              Develop FPGA-based field-oriented motor control on a Zynq-7000
+              SoC, including deterministic PWM, Hall decoding, sample timing,
+              fixed-point control, AXI-Lite interfaces, and fault-latched
+              shutdown.
+            </p>
+          </article>
 
-              <p class="timeline-org">
-                Northwestern University Silicon Initiative
-              </p>
+          <article class="experience-card reveal">
+            <span class="experience-date">
+              September 2025 to Present
+            </span>
 
-              <span class="timeline-date">
-                June 2026 to Present
-              </span>
+            <h3 class="experience-role">
+              Low-Voltage Electrical Lead
+            </h3>
 
-              <p class="timeline-text">
-                Lead RTL onboarding and digital-design education through
-                SystemVerilog exercises, testbenches, waveform debugging, and
-                Cadence simulation-to-place-and-route workflows.
-              </p>
-            </article>
+            <p class="experience-org">
+              Northwestern Solar Car Team
+            </p>
 
-            <article class="timeline-card reveal">
-              <h3 class="timeline-role">
-                Low-Voltage Electrical Lead
-              </h3>
+            <p class="experience-copy">
+              Lead low-voltage systems, develop FPGA-controlled relay
+              sequencing and safety interlocks, design multilayer Altium PCBs,
+              and debug CAN and SPI communication during vehicle integration.
+            </p>
+          </article>
 
-              <p class="timeline-org">
-                Northwestern Solar Car Team
-              </p>
+          <article class="experience-card reveal">
+            <span class="experience-date">
+              June 2026 to Present
+            </span>
 
-              <span class="timeline-date">
-                September 2025 to Present
-              </span>
+            <h3 class="experience-role">
+              Digital Design Lead
+            </h3>
 
-              <p class="timeline-text">
-                Lead low-voltage electrical systems, develop FPGA-controlled
-                relay sequencing and safety interlocks, design multilayer
-                Altium PCBs, and debug CAN and SPI communication during vehicle
-                integration.
-              </p>
-            </article>
+            <p class="experience-org">
+              Northwestern University Silicon Initiative
+            </p>
 
-            <article class="timeline-card reveal">
-              <h3 class="timeline-role">
+            <p class="experience-copy">
+              Lead RTL onboarding through SystemVerilog lessons, testbenches,
+              waveform debugging, and Cadence Xcelium, Genus, and Innovus
+              simulation-to-place-and-route workflows.
+            </p>
+          </article>
+        </div>
+
+        <div class="leadership-panel reveal">
+          <h3 class="leadership-heading">
+            Leadership Beyond Engineering
+          </h3>
+
+          <div class="leadership-grid">
+            <div class="leadership-item">
+              <h4 class="leadership-title">
                 Concertmaster
-              </h3>
+              </h4>
 
-              <p class="timeline-org">
-                Northwestern University Philharmonia Orchestra
+              <p class="leadership-meta">
+                Northwestern Philharmonia
               </p>
 
-              <span class="timeline-date">
-                September 2025 to Present
-              </span>
-
-              <p class="timeline-text">
-                Serve as lead violinist and conductor liaison after selection
-                through competitive audition, coordinating preparation and
-                ensemble execution across major orchestral repertoire.
+              <p class="leadership-copy">
+                Lead violinist and conductor liaison, selected through
+                competitive audition.
               </p>
-            </article>
+            </div>
 
-            <article class="timeline-card reveal">
-              <h3 class="timeline-role">
+            <div class="leadership-item">
+              <h4 class="leadership-title">
                 Private Violin Instructor
-              </h3>
+              </h4>
 
-              <p class="timeline-org">
+              <p class="leadership-meta">
                 Self-Employed
               </p>
 
-              <span class="timeline-date">
-                August 2021 to Present
-              </span>
-
-              <p class="timeline-text">
+              <p class="leadership-copy">
                 Mentor students through auditions, competitions, and long-term
-                technical development using individualized training plans and
-                structured feedback.
+                technical development.
               </p>
-            </article>
+            </div>
 
-            <article class="timeline-card reveal">
-              <h3 class="timeline-role">
+            <div class="leadership-item">
+              <h4 class="leadership-title">
                 Eagle Scout
-              </h3>
+              </h4>
 
-              <p class="timeline-org">
+              <p class="leadership-meta">
                 Scouting America
               </p>
 
-              <span class="timeline-date">
-                January 2014 to June 2025
-              </span>
-
-              <p class="timeline-text">
-                Earned the Eagle Scout rank after leading troop initiatives and
-                completing a sustained leadership and community-service
-                project.
+              <p class="leadership-copy">
+                Earned the rank after sustained service, troop leadership, and
+                completion of a community project.
               </p>
-            </article>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="skills">
+    <section class="section section-alt" id="skills">
       <div class="container">
-        <hr class="section-divider">
+        <div class="section-heading-row reveal">
+          <div>
+            <p class="eyebrow">Technical toolkit</p>
+            <h2 class="section-title">Skills</h2>
+          </div>
 
-        <div class="skills-panel reveal">
-          <p class="eyebrow">
-            Technical toolkit
+          <p class="section-intro">
+            Tools and technical areas developed through research, team
+            engineering, coursework, and independent projects.
           </p>
+        </div>
 
-          <h2 class="section-title">
-            Skills
-          </h2>
+        <div class="toolkit">
+          <div class="toolkit-card reveal">
+            <h3 class="toolkit-title">
+              RTL and Verification
+            </h3>
 
-          <div class="skills-grid">
-            <div class="skill-card">
-              <h3 class="skill-title">
-                RTL and Verification
-              </h3>
+            <p class="toolkit-copy">
+              Verilog, SystemVerilog, digital logic, finite-state machines,
+              testbenches, simulation, waveform debugging, and RTL design.
+            </p>
+          </div>
 
-              <p class="skill-list">
-                Verilog, SystemVerilog, RTL design, digital logic, finite-state
-                machines, testbenches, waveform debugging, simulation, and
-                hardware verification.
-              </p>
-            </div>
+          <div class="toolkit-card reveal">
+            <h3 class="toolkit-title">
+              FPGA and SoC
+            </h3>
 
-            <div class="skill-card">
-              <h3 class="skill-title">
-                FPGA and SoC
-              </h3>
+            <p class="toolkit-copy">
+              Zynq-7000, AXI-Lite, FPGA prototyping, ARM and FPGA partitioning,
+              fixed-point arithmetic, PWM, and real-time control.
+            </p>
+          </div>
 
-              <p class="skill-list">
-                FPGA prototyping, Arty Zynq-7000 SoC, AXI-Lite, ARM and FPGA
-                partitioning, fixed-point arithmetic, PWM, field-oriented
-                control, and safety logic.
-              </p>
-            </div>
+          <div class="toolkit-card reveal">
+            <h3 class="toolkit-title">
+              PCB and Embedded
+            </h3>
 
-            <div class="skill-card">
-              <h3 class="skill-title">
-                PCB and Embedded
-              </h3>
+            <p class="toolkit-copy">
+              Altium Designer, schematic capture, multilayer layout, DRC and
+              ERC, CAN, SPI, power sequencing, and hardware bring-up.
+            </p>
+          </div>
 
-              <p class="skill-list">
-                Altium Designer, multilayer PCB layout, schematic capture,
-                DRC and ERC, CAN, SPI, power sequencing, embedded interfaces,
-                and hardware bring-up.
-              </p>
-            </div>
+          <div class="toolkit-card reveal">
+            <h3 class="toolkit-title">
+              Tools and Software
+            </h3>
 
-            <div class="skill-card">
-              <h3 class="skill-title">
-                EDA Tools
-              </h3>
-
-              <p class="skill-list">
-                Cadence Xcelium, Genus, Innovus, Vivado Design Suite, MATLAB,
-                Simulink, HDL Coder, and waveform analysis.
-              </p>
-            </div>
-
-            <div class="skill-card">
-              <h3 class="skill-title">
-                Software
-              </h3>
-
-              <p class="skill-list">
-                Python, Java, Linux, Bash, systemd, Git, scripting, test
-                automation, and embedded-system configuration.
-              </p>
-            </div>
-
-            <div class="skill-card">
-              <h3 class="skill-title">
-                Engineering Focus
-              </h3>
-
-              <p class="skill-list">
-                Computer architecture, embedded systems, digital verification,
-                motor control, real-time DSP, system integration, debugging,
-                and first-principles trade studies.
-              </p>
-            </div>
+            <p class="toolkit-copy">
+              Vivado, Cadence Xcelium, Genus, Innovus, MATLAB, Simulink,
+              Python, Java, Linux, Bash, systemd, and Git.
+            </p>
           </div>
         </div>
       </div>
@@ -1980,68 +1776,72 @@
 
     <section class="section" id="education">
       <div class="container">
-        <hr class="section-divider">
+        <div class="section-heading-row reveal">
+          <div>
+            <p class="eyebrow">Academic background</p>
+            <h2 class="section-title">Education</h2>
 
-        <div class="education-inner">
-          <div class="reveal">
-            <p class="eyebrow">
-              Academic background
-            </p>
-
-            <h2 class="section-title">
-              Education
-            </h2>
-
-            <p class="section-copy">
-              Dual-degree study connecting engineering precision, technical
-              communication, creativity, and collaborative performance.
+            <p class="education-gpa">
+              Cumulative GPA: 3.73
             </p>
           </div>
 
-          <div class="split-grid">
-            <article class="info-card reveal">
-              <p class="info-label">
-                Northwestern University | Expected 2028
-              </p>
+          <p class="section-intro">
+            A dual-degree education combining computer engineering,
+            disciplined performance, technical communication, and creative
+            problem-solving.
+          </p>
+        </div>
 
-              <h3 class="info-title">
-                B.S. Computer Engineering
-              </h3>
+        <div class="education-grid">
+          <article class="education-card reveal">
+            <p class="education-school">
+              Northwestern University | Expected 2028
+            </p>
 
-              <p class="info-body">
-                McCormick School of Engineering
-              </p>
+            <h3 class="education-degree">
+              B.S. Computer Engineering
+            </h3>
 
-              <p class="coursework">
-                GPA: 3.73
-                <br><br>
-                Relevant coursework: Computer Architecture, Embedded IoT
-                Systems and Edge Computing, Advanced Digital Design, Computer
-                Engineering, Electrical Engineering, Programming, Linear
-                Algebra, and Multivariable Calculus.
-              </p>
-            </article>
+            <p class="education-college">
+              McCormick School of Engineering
+            </p>
 
-            <article class="info-card reveal">
-              <p class="info-label">
-                Northwestern University | Expected 2028
-              </p>
+            <p class="education-copy">
+              Relevant coursework includes Computer Architecture, Embedded IoT
+              Systems and Edge Computing, Advanced Digital Design, Computer
+              Engineering, Electrical Engineering, Programming, Linear
+              Algebra, and Multivariable Calculus.
+            </p>
 
-              <h3 class="info-title">
-                B.M. Violin Performance
-              </h3>
+            <p class="education-note">
+              Evanston, Illinois
+            </p>
+          </article>
 
-              <p class="info-body">
-                Bienen School of Music
-              </p>
+          <article class="education-card reveal">
+            <p class="education-school">
+              Northwestern University | Expected 2028
+            </p>
 
-              <p class="coursework">
-                Performance training emphasizes disciplined preparation,
-                attention to detail, communication, and coordination within
-                high-performing ensembles.
-              </p>
-            </article>
-          </div>
+            <h3 class="education-degree">
+              B.M. Violin Performance
+            </h3>
+
+            <p class="education-college">
+              Bienen School of Music
+            </p>
+
+            <p class="education-copy">
+              Conservatory-level performance training centered on disciplined
+              preparation, attention to detail, musical leadership, and
+              collaboration within high-performing ensembles.
+            </p>
+
+            <p class="education-note">
+              Student of Blair Milton
+            </p>
+          </article>
         </div>
       </div>
     </section>
@@ -2049,18 +1849,16 @@
     <section class="contact" id="contact">
       <div class="container">
         <div class="contact-inner reveal">
-          <p class="eyebrow">
-            Let's build something
-          </p>
+          <p class="eyebrow">Let’s build something</p>
 
           <h2 class="contact-title">
             Connect
           </h2>
 
           <p class="contact-copy">
-            I am interested in opportunities across FPGA development, RTL
-            design, digital verification, embedded systems, PCB development,
-            hardware integration, and computer architecture.
+            I am interested in FPGA, RTL design, digital verification,
+            embedded systems, computer architecture, and hardware engineering
+            opportunities.
           </p>
 
           <div class="contact-links">
@@ -2101,7 +1899,7 @@
       </span>
 
       <span>
-        FPGA | RTL | Embedded Systems | PCB Design
+        FPGA | RTL | Embedded Systems | Hardware Design
       </span>
     </div>
   </footer>
@@ -2111,7 +1909,7 @@
     const sections = document.querySelectorAll("main section[id]");
 
     function updateActiveNavigation() {
-      const scrollPosition = window.scrollY + 180;
+      const scrollPosition = window.scrollY + 190;
       let currentSection = "home";
 
       sections.forEach((section) => {
