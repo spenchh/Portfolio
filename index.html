@@ -333,6 +333,26 @@
       color: #cfc9bf;
     }
 
+    .hero-now {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: var(--green);
+      transition: color 0.25s ease;
+    }
+
+    .hero-now:hover {
+      color: var(--green-dark);
+    }
+
+    .hero-now-logo {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      background: var(--card);
+      object-fit: contain;
+    }
+
     .hero-intro {
       max-width: 680px;
       margin-bottom: 1.5rem;
@@ -347,51 +367,7 @@
       font-weight: 700;
     }
 
-    .hero-about {
-      max-width: 660px;
-      padding-top: 1.45rem;
-      border-top: 1px solid var(--line);
-      color: var(--text-soft);
-      font-size: 0.96rem;
-      line-height: 1.82;
-    }
 
-    .hero-about strong {
-      color: var(--green-dark);
-      font-weight: 700;
-    }
-
-    .hero-skills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-      margin-top: 1.5rem;
-      list-style: none;
-    }
-
-    .hero-skills li {
-      padding: 0.54rem 0.78rem;
-      border: 1px solid var(--line);
-      border-radius: var(--pill);
-      color: var(--text-soft);
-      background: rgba(255, 255, 255, 0.6);
-      font-family: "DM Mono", monospace;
-      font-size: 0.57rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition:
-        color 0.2s ease,
-        border-color 0.2s ease,
-        background 0.2s ease,
-        transform 0.2s ease;
-    }
-
-    .hero-skills li:hover {
-      color: var(--green-dark);
-      border-color: var(--line-dark);
-      background: #ffffff;
-      transform: translateY(-2px);
-    }
 
     .hero-actions {
       display: flex;
@@ -1265,15 +1241,6 @@
         font-size: clamp(3rem, 17vw, 4.4rem);
       }
 
-      .hero-skills {
-        display: grid;
-        grid-template-columns: 1fr;
-      }
-
-      .hero-skills li {
-        width: 100%;
-        text-align: center;
-      }
 
       .section-title {
         font-size: clamp(2.55rem, 13vw, 3.8rem);
@@ -1354,9 +1321,16 @@
       <div class="container hero-grid">
         <div class="hero-content reveal">
           <p class="hero-label">
-            Northwestern University | Computer Engineering | Class of 2028
-            <br>
-            Digital Design Intern at Amentum | San Ramon, CA to Evanston, IL
+            <a class="hero-now" href="#experience">
+              <img
+                src="amentum-logo.svg"
+                alt=""
+                class="hero-now-logo"
+                width="20"
+                height="20"
+                onerror="this.remove()"
+              >Digital Design Intern @ Amentum
+            </a>
           </p>
 
           <h1 class="hero-title">
@@ -1365,19 +1339,10 @@
           </h1>
 
           <p class="hero-intro">
-            I build real-time digital systems across
-            <strong>FPGA design</strong>,
-            <strong>RTL verification</strong>,
-            <strong>ASIC and silicon-adjacent work</strong>,
-            <strong>embedded systems</strong>, and
-            <strong>low-latency digital design</strong>.
-          </p>
-
-          <p class="hero-about">
-            I am a Computer Engineering and Violin Performance student at
-            Northwestern University focused on turning specifications into
-            working hardware, with a pull toward the problems where timing and
-            <strong>determinism</strong> are the hard part.
+            Northwestern Computer Engineering and Violin Performance student
+            building <strong>FPGA</strong> and <strong>RTL</strong> hardware,
+            currently researching an <strong>HFT-inspired 10GbE datapath</strong>
+            for low-latency, deterministic digital systems.
           </p>
 
           <div class="hero-actions">
