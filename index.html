@@ -12,7 +12,7 @@
 
   <meta
     name="description"
-    content="Spencer Kogoma is a Northwestern University Computer Engineering and Violin Performance student focused on FPGA design, RTL verification, embedded systems, and hardware integration."
+    content="Spencer Kogoma is a Northwestern University Computer Engineering and Violin Performance student focused on FPGA design, RTL verification, embedded systems, hardware integration, and a current 10GbE FPGA tick-to-trade datapath project."
   >
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1256,6 +1256,7 @@
 
       <div class="nav-links">
         <a href="#home" class="active">Home</a>
+        <a href="#current">Current</a>
         <a href="#projects">Projects</a>
         <a href="#experience">Experience</a>
         <a href="#education">Education</a>
@@ -1263,6 +1264,7 @@
       </div>
 
       <div class="mobile-links">
+        <a href="#current">Current</a>
         <a href="#projects">Projects</a>
         <a href="#contact">Contact</a>
       </div>
@@ -1336,6 +1338,102 @@
             >
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="section" id="current">
+      <div class="container">
+        <div class="section-heading-row reveal">
+          <div>
+            <p class="eyebrow">Currently doing</p>
+            <h2 class="section-title">Current</h2>
+          </div>
+
+          <p class="section-intro">
+            My current independent research project focuses on FPGA-based
+            networking, deterministic dataflow, and hardware acceleration for
+            latency-sensitive systems.
+          </p>
+        </div>
+
+        <article class="project-card reveal">
+          <div class="project-header">
+            <span class="project-number">Active project</span>
+
+            <div class="project-title-row">
+              <h3 class="project-title">
+                10GbE FPGA Tick-to-Trade Datapath
+              </h3>
+
+              <span class="project-date">
+                Current
+              </span>
+            </div>
+          </div>
+
+          <div class="project-body">
+            <div>
+              <p class="project-summary">
+                Building a simulation-first HFT-focused FPGA datapath that
+                treats trading as the workload for real-time networking,
+                packet processing, fixed-point decision logic, and
+                hardware-enforced risk controls.
+              </p>
+
+              <ul class="project-points">
+                <li>
+                  Define a SystemVerilog pipeline for UDP/IP parsing,
+                  market-data decoding, symbol and book state, decision logic,
+                  risk checks, and order/cancel encoding.
+                </li>
+
+                <li>
+                  Use Python and cocotb for packet generation, golden models,
+                  randomized tests, scoreboard checks, and latency analysis
+                  before hardware bring-up.
+                </li>
+
+                <li>
+                  Develop C++ host replay, control, and logging tools to drive
+                  simulated market data and collect debug evidence for later
+                  10GbE hardware validation.
+                </li>
+              </ul>
+            </div>
+
+            <div class="project-details">
+              <div class="detail-row">
+                <span class="detail-label">Status</span>
+                <span class="detail-value">
+                  Current independent FPGA research project
+                </span>
+              </div>
+
+              <div class="detail-row">
+                <span class="detail-label">Stack</span>
+                <span class="detail-value">
+                  SystemVerilog, Python, cocotb, C++20
+                </span>
+              </div>
+
+              <div class="detail-row">
+                <span class="detail-label">Architecture</span>
+                <span class="detail-value">
+                  10GbE, UDP/IP, streaming parsers, fixed-point pipelines,
+                  hardware risk gate
+                </span>
+              </div>
+
+              <div class="detail-row">
+                <span class="detail-label">Evidence target</span>
+                <span class="detail-value">
+                  Self-checking tests, timing reports, latency measurements,
+                  debug captures, hardware demo
+                </span>
+              </div>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
 
