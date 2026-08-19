@@ -1,2070 +1,1602 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Spencer Kogoma | FPGA and Hardware Engineering</title>
-
-  <meta
-    name="description"
-    content="Spencer Kogoma is a Northwestern University Computer Engineering and Violin Performance student focused on FPGA design, RTL verification, embedded systems, hardware integration, and a current 10GbE FPGA tick-to-trade datapath project."
-  >
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Lato:wght@700;900&display=swap"
-    rel="stylesheet"
-  >
-
-  <style>
-    :root {
-      --background: #faf9f5;
-      --background-alt: #f2f0e9;
-      --card: #ffffff;
-      --green-dark: #123816;
-      --green: #2f6135;
-      --green-soft: #769178;
-      --green-pale: #eaf0e8;
-      --text: #1e1c19;
-      --text-soft: #615c55;
-      --muted: #9c958b;
-      --line: #e4ded4;
-      --line-dark: rgba(18, 56, 22, 0.18);
-      --shadow: 0 24px 70px rgba(31, 28, 23, 0.09);
-      --shadow-soft: 0 12px 36px rgba(31, 28, 23, 0.055);
-      --radius-large: 30px;
-      --radius-medium: 20px;
-      --radius-small: 14px;
-      --pill: 999px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-      font-size: clamp(14px, 0.18vw + 13.5px, 17px);
-    }
-
-    body {
-      width: 100%;
-      min-height: 100vh;
-      overflow-x: hidden;
-      color: var(--text);
-      background:
-        radial-gradient(
-          circle at 12% 8%,
-          rgba(47, 97, 53, 0.12),
-          transparent 31rem
-        ),
-        linear-gradient(
-          180deg,
-          var(--background) 0%,
-          #f7f4ee 100%
-        );
-      font-family: "DM Sans", sans-serif;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    ::selection {
-      color: #ffffff;
-      background: var(--green-dark);
-    }
-
-    a {
-      color: inherit;
-    }
-
-    img {
-      max-width: 100%;
-    }
-
-    h1,
-    h2,
-    h3,
-    p,
-    li,
-    span,
-    a {
-      overflow-wrap: break-word;
-    }
-
-    .container {
-      width: min(calc(100% - clamp(2rem, 6vw, 7rem)), 1380px);
-      margin-right: auto;
-      margin-left: auto;
-    }
-
-    .section {
-      padding: clamp(6rem, 9vw, 9rem) 0;
-      scroll-margin-top: 92px;
-    }
-
-    .section-alt {
-      background: rgba(242, 240, 233, 0.56);
-      border-top: 1px solid rgba(228, 222, 212, 0.7);
-      border-bottom: 1px solid rgba(228, 222, 212, 0.7);
-    }
-
-    .eyebrow {
-      margin-bottom: 0.85rem;
-      color: var(--green-soft);
-      font-family: "DM Mono", monospace;
-      font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.19em;
-      text-transform: uppercase;
-    }
-
-    .section-heading-row {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 3rem;
-      margin-bottom: clamp(2.8rem, 5vw, 4.5rem);
-    }
-
-    .section-title {
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: clamp(3rem, 5.7vw, 5.8rem);
-      font-weight: 900;
-      letter-spacing: -0.055em;
-      line-height: 0.9;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .section-intro {
-      max-width: 510px;
-      padding-bottom: 0.35rem;
-      color: var(--text-soft);
-      font-size: 0.98rem;
-      line-height: 1.8;
-    }
-
-    /* Navigation */
-
-    .site-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 100;
-      width: 100%;
-      border-bottom: 1px solid rgba(228, 222, 212, 0.82);
-      background: rgba(250, 249, 245, 0.9);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-    }
-
-    .nav-inner {
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.8rem;
-      flex-shrink: 0;
-      text-decoration: none;
-    }
-
-    .brand-mark {
-      width: 43px;
-      height: 43px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      color: #ffffff;
-      background: var(--green-dark);
-      box-shadow: 0 10px 26px rgba(18, 56, 22, 0.22);
-      font-family: "Lato", sans-serif;
-      font-size: 0.9rem;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-    }
-
-    .brand-copy {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-    }
-
-    .brand-copy strong {
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: 0.82rem;
-      font-weight: 900;
-      letter-spacing: 0.01em;
-      text-transform: uppercase;
-    }
-
-    .brand-copy span {
-      margin-top: 0.25rem;
-      color: var(--muted);
-      font-family: "DM Mono", monospace;
-      font-size: 0.52rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 0.14rem;
-      padding: 0.25rem;
-      border: 1px solid var(--line);
-      border-radius: var(--pill);
-      background: rgba(255, 255, 255, 0.64);
-    }
-
-    .nav-links a {
-      padding:
-        clamp(0.48rem, 0.55vw, 0.58rem)
-        clamp(0.65rem, 0.9vw, 1rem);
-      border-radius: var(--pill);
-      color: var(--text-soft);
-      font-family: "DM Mono", monospace;
-      font-size: clamp(0.53rem, 0.56vw, 0.62rem);
-      letter-spacing: 0.09em;
-      text-decoration: none;
-      text-transform: uppercase;
-      white-space: nowrap;
-      transition:
-        color 0.2s ease,
-        background 0.2s ease;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: #ffffff;
-      background: var(--green-dark);
-    }
-
-    .mobile-links {
-      display: none;
-      gap: 0.85rem;
-    }
-
-    .mobile-links a {
-      color: var(--green-dark);
-      font-family: "DM Mono", monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.09em;
-      text-decoration: none;
-      text-transform: uppercase;
-    }
-
-    /* Hero */
-
-    .hero {
-      min-height: 100svh;
-      display: flex;
-      align-items: center;
-      padding-top: 76px;
-    }
-
-    .hero-grid {
-      width: 100%;
-      display: grid;
-      grid-template-columns:
-        minmax(0, 1.04fr)
-        minmax(430px, 0.96fr);
-      gap: clamp(3.5rem, 6vw, 7rem);
-      align-items: center;
-      padding:
-        clamp(4.5rem, 8vh, 6.5rem)
-        0
-        clamp(4rem, 7vh, 5.5rem);
-    }
-
-    .hero-content {
-      width: 100%;
-      max-width: 720px;
-      justify-self: end;
-    }
-
-    .hero-label {
-      margin-bottom: 1.15rem;
-      color: var(--green-soft);
-      font-family: "DM Mono", monospace;
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      line-height: 1.6;
-      text-transform: uppercase;
-    }
-
-    .hero-title {
-      margin-bottom: 1.65rem;
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: clamp(4.8rem, 7.2vw, 8.2rem);
-      font-weight: 900;
-      letter-spacing: -0.068em;
-      line-height: 0.84;
-      text-transform: uppercase;
-    }
-
-    .hero-title span {
-      display: block;
-      color: #cfc9bf;
-    }
-
-    .hero-intro {
-      max-width: 680px;
-      margin-bottom: 1.5rem;
-      color: var(--text-soft);
-      font-size: clamp(1.18rem, 1.6vw, 1.48rem);
-      letter-spacing: -0.02em;
-      line-height: 1.5;
-    }
-
-    .hero-intro strong {
-      color: var(--green-dark);
-      font-weight: 700;
-    }
-
-    .hero-about {
-      max-width: 660px;
-      padding-top: 1.45rem;
-      border-top: 1px solid var(--line);
-      color: var(--text-soft);
-      font-size: 0.96rem;
-      line-height: 1.82;
-    }
-
-    .hero-about strong {
-      color: var(--green-dark);
-      font-weight: 700;
-    }
-
-    .hero-skills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-      margin-top: 1.5rem;
-      list-style: none;
-    }
-
-    .hero-skills li {
-      padding: 0.54rem 0.78rem;
-      border: 1px solid var(--line);
-      border-radius: var(--pill);
-      color: var(--text-soft);
-      background: rgba(255, 255, 255, 0.6);
-      font-family: "DM Mono", monospace;
-      font-size: 0.57rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition:
-        color 0.2s ease,
-        border-color 0.2s ease,
-        background 0.2s ease,
-        transform 0.2s ease;
-    }
-
-    .hero-skills li:hover {
-      color: var(--green-dark);
-      border-color: var(--line-dark);
-      background: #ffffff;
-      transform: translateY(-2px);
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 1.8rem;
-    }
-
-    .button {
-      min-height: 46px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.82rem 1.2rem;
-      border-radius: var(--pill);
-      font-family: "DM Mono", monospace;
-      font-size: 0.66rem;
-      letter-spacing: 0.1em;
-      text-decoration: none;
-      text-transform: uppercase;
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        border-color 0.2s ease;
-    }
-
-    .button:hover {
-      transform: translateY(-2px);
-    }
-
-    .button-primary {
-      color: #ffffff;
-      background: var(--green-dark);
-      box-shadow: 0 14px 32px rgba(18, 56, 22, 0.22);
-    }
-
-    .button-secondary {
-      color: var(--green-dark);
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.76);
-    }
-
-    .hero-photo-wrap {
-      width: min(100%, 560px);
-      justify-self: start;
-    }
-
-    .hero-photo-card {
-      position: relative;
-      overflow: hidden;
-      padding: 0.72rem;
-      border: 1px solid var(--line);
-      border-radius: 34px;
-      background: rgba(255, 255, 255, 0.78);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-photo-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        linear-gradient(
-          135deg,
-          rgba(18, 56, 22, 0.07),
-          transparent 36%
-        ),
-        radial-gradient(
-          circle at bottom right,
-          rgba(118, 145, 120, 0.14),
-          transparent 42%
-        );
-    }
-
-    .hero-photo {
-      width: 100%;
-      height: min(72vh, 720px);
-      min-height: 570px;
-      display: block;
-      object-fit: cover;
-      object-position: center 25%;
-      border-radius: 26px;
-      filter: saturate(0.96) contrast(1.02);
-      transition: transform 0.55s ease;
-    }
-
-    .hero-photo-card:hover .hero-photo {
-      transform: scale(1.015);
-    }
-
-    /* Project cards */
-
-    .project-list {
-      display: grid;
-      gap: 1.4rem;
-    }
-
-    .project-card {
-      position: relative;
-      overflow: hidden;
-      padding: clamp(1.7rem, 3vw, 2.6rem);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-large);
-      background: rgba(255, 255, 255, 0.79);
-      box-shadow: var(--shadow-soft);
-      transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
-    }
-
-    .project-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--line-dark);
-      box-shadow: var(--shadow);
-    }
-
-    .project-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 7px;
-      height: 100%;
-      background: var(--green-dark);
-    }
-
-    .project-header {
-      display: grid;
-      grid-template-columns: 90px minmax(0, 1fr);
-      gap: 1.5rem;
-      align-items: start;
-    }
-
-    .project-number {
-      color: var(--green-soft);
-      font-family: "DM Mono", monospace;
-      font-size: 0.66rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .project-title-row {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 2rem;
-    }
-
-    .project-title {
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: clamp(1.8rem, 3.1vw, 3.2rem);
-      font-weight: 900;
-      letter-spacing: -0.045em;
-      line-height: 1;
-      text-transform: uppercase;
-    }
-
-    .project-date {
-      flex-shrink: 0;
-      color: var(--muted);
-      font-family: "DM Mono", monospace;
-      font-size: 0.59rem;
-      letter-spacing: 0.11em;
-      text-align: right;
-      text-transform: uppercase;
-    }
-
-    .project-body {
-      display: grid;
-      grid-template-columns: minmax(0, 1.35fr) minmax(270px, 0.65fr);
-      gap: clamp(2rem, 4vw, 4rem);
-      margin-top: 1.5rem;
-      margin-left: 105px;
-    }
-
-    .project-summary {
-      color: var(--text-soft);
-      font-size: 0.98rem;
-      line-height: 1.82;
-    }
-
-    .project-points {
-      display: grid;
-      gap: 0.72rem;
-      margin-top: 1.15rem;
-      list-style: none;
-    }
-
-    .project-points li {
-      position: relative;
-      padding-left: 1.25rem;
-      color: var(--text-soft);
-      font-size: 0.88rem;
-      line-height: 1.58;
-    }
-
-    .project-points li::before {
-      content: "";
-      position: absolute;
-      top: 0.64em;
-      left: 0;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 0 4px rgba(47, 97, 53, 0.11);
-    }
-
-    .project-details {
-      display: grid;
-      gap: 0.75rem;
-      align-content: start;
-    }
-
-    .detail-row {
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .detail-row:last-child {
-      padding-bottom: 0;
-      border-bottom: 0;
-    }
-
-    .detail-label {
-      display: block;
-      margin-bottom: 0.28rem;
-      color: var(--green-soft);
-      font-family: "DM Mono", monospace;
-      font-size: 0.55rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .detail-value {
-      color: var(--text);
-      font-size: 0.84rem;
-      font-weight: 600;
-      line-height: 1.55;
-    }
-
-    /* Experience */
-
-    .experience-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1.2rem;
-    }
-
-    .experience-card {
-      display: flex;
-      flex-direction: column;
-      padding: 1.6rem;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-medium);
-      background: rgba(255, 255, 255, 0.78);
-      box-shadow: var(--shadow-soft);
-      transition:
-        transform 0.22s ease,
-        border-color 0.22s ease,
-        box-shadow 0.22s ease;
-    }
-
-    .experience-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--line-dark);
-      box-shadow: var(--shadow);
-    }
-
-    .experience-date {
-      margin-bottom: 0.75rem;
-      color: var(--green-soft);
-      font-family: "DM Mono", monospace;
-      font-size: 0.56rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .experience-role {
-      margin-bottom: 0.35rem;
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: 1.28rem;
-      font-weight: 900;
-      letter-spacing: -0.025em;
-      line-height: 1.08;
-      text-transform: uppercase;
-    }
-
-    .experience-org {
-      margin-bottom: 1rem;
-      color: var(--text);
-      font-size: 0.88rem;
-      font-weight: 700;
-      line-height: 1.5;
-    }
-
-    .experience-copy {
-      color: var(--text-soft);
-      font-size: 0.86rem;
-      line-height: 1.74;
-    }
-
-    /* Leadership */
-
-    .leadership-panel {
-      margin-top: 1.25rem;
-      padding: clamp(1.5rem, 3vw, 2.2rem);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-large);
-      background: var(--green-dark);
-      box-shadow: var(--shadow);
-    }
-
-    .leadership-heading {
-      margin-bottom: 1.3rem;
-      color: #ffffff;
-      font-family: "Lato", sans-serif;
-      font-size: clamp(1.5rem, 2.6vw, 2.3rem);
-      font-weight: 900;
-      letter-spacing: -0.035em;
-      text-transform: uppercase;
-    }
-
-    .leadership-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .leadership-item {
-      padding: 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: var(--radius-small);
-      background: rgba(255, 255, 255, 0.065);
-    }
-
-    .leadership-title {
-      margin-bottom: 0.25rem;
-      color: #ffffff;
-      font-family: "Lato", sans-serif;
-      font-size: 1rem;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-    }
-
-    .leadership-meta {
-      margin-bottom: 0.6rem;
-      color: #b8c9b9;
-      font-family: "DM Mono", monospace;
-      font-size: 0.53rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .leadership-copy {
-      color: rgba(255, 255, 255, 0.74);
-      font-size: 0.8rem;
-      line-height: 1.65;
-    }
-
-    /* Technical toolkit */
-
-    .toolkit {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .toolkit-card {
-      padding: 1.4rem;
-      border-top: 4px solid var(--green-dark);
-      border-right: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      border-left: 1px solid var(--line);
-      border-radius: 0 0 var(--radius-medium) var(--radius-medium);
-      background: rgba(255, 255, 255, 0.78);
-    }
-
-    .toolkit-title {
-      margin-bottom: 0.7rem;
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: 1rem;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-    }
-
-    .toolkit-copy {
-      color: var(--text-soft);
-      font-size: 0.83rem;
-      line-height: 1.75;
-    }
-
-    /* Education */
-
-    .education-gpa {
-      margin-top: 0.8rem;
-      color: var(--green-dark);
-      font-family: "DM Mono", monospace;
-      font-size: 0.74rem;
-      font-weight: 500;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
-    }
-
-    .education-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.25rem;
-    }
-
-    .education-card {
-      min-height: 280px;
-      display: flex;
-      flex-direction: column;
-      padding: clamp(1.6rem, 3vw, 2.2rem);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-large);
-      background: rgba(255, 255, 255, 0.8);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .education-school {
-      margin-bottom: 0.55rem;
-      color: var(--green-soft);
-      font-family: "DM Mono", monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
-    }
-
-    .education-degree {
-      margin-bottom: 0.5rem;
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: clamp(1.5rem, 2.6vw, 2.25rem);
-      font-weight: 900;
-      letter-spacing: -0.035em;
-      line-height: 1.05;
-      text-transform: uppercase;
-    }
-
-    .education-college {
-      margin-bottom: 1.15rem;
-      color: var(--text);
-      font-size: 0.93rem;
-      font-weight: 600;
-    }
-
-    .education-copy {
-      color: var(--text-soft);
-      font-size: 0.88rem;
-      line-height: 1.78;
-    }
-
-    .education-note {
-      margin-top: auto;
-      padding-top: 1.1rem;
-      color: var(--green);
-      font-family: "DM Mono", monospace;
-      font-size: 0.61rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    /* Contact */
-
-    .contact {
-      padding:
-        clamp(6rem, 10vw, 10rem)
-        0
-        clamp(5rem, 8vw, 8rem);
-      text-align: center;
-      scroll-margin-top: 80px;
-    }
-
-    .contact-inner {
-      max-width: 820px;
-      margin: 0 auto;
-    }
-
-    .contact-title {
-      margin-bottom: 1.6rem;
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: clamp(4.5rem, 11vw, 9.5rem);
-      font-weight: 900;
-      letter-spacing: -0.07em;
-      line-height: 0.84;
-      text-transform: uppercase;
-    }
-
-    .contact-copy {
-      max-width: 590px;
-      margin: 0 auto 2.2rem;
-      color: var(--text-soft);
-      font-size: 0.98rem;
-      line-height: 1.8;
-    }
-
-    .contact-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.75rem;
-    }
-
-    .contact-link {
-      padding: 0.82rem 1.05rem;
-      border: 1px solid var(--line);
-      border-radius: var(--pill);
-      color: var(--green-dark);
-      background: rgba(255, 255, 255, 0.76);
-      font-family: "DM Mono", monospace;
-      font-size: 0.63rem;
-      letter-spacing: 0.09em;
-      text-decoration: none;
-      text-transform: uppercase;
-      transition:
-        transform 0.2s ease,
-        border-color 0.2s ease,
-        background 0.2s ease;
-    }
-
-    .contact-link:hover {
-      transform: translateY(-2px);
-      border-color: var(--line-dark);
-      background: #ffffff;
-    }
-
-    /* Footer */
-
-    footer {
-      padding: 2rem 0;
-      border-top: 1px solid var(--line);
-    }
-
-    .footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      color: var(--muted);
-      font-family: "DM Mono", monospace;
-      font-size: 0.57rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    /* Reveal */
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(18px);
-      transition:
-        opacity 0.65s ease,
-        transform 0.65s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
-
-      .reveal {
-        opacity: 1;
-        transform: none;
-      }
-    }
-
-    /* Medium screens */
-
-    @media (max-width: 1120px) {
-      .container {
-        width: min(calc(100% - 3rem), 1040px);
-      }
-
-      .hero-grid {
-        grid-template-columns:
-          minmax(0, 1fr)
-          minmax(350px, 0.82fr);
-        gap: 3rem;
-      }
-
-      .hero-title {
-        font-size: clamp(4.3rem, 7.4vw, 6.7rem);
-      }
-
-      .hero-photo {
-        min-height: 520px;
-      }
-
-      .project-body {
-        grid-template-columns: 1fr;
-      }
-
-      .experience-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .experience-card:last-child {
-        grid-column: 1 / -1;
-      }
-
-      .toolkit {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    /* Tablet and browser zoom */
-
-    @media (max-width: 900px) {
-      .container {
-        width: min(calc(100% - 2.5rem), 760px);
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .mobile-links {
-        display: flex;
-      }
-
-      .hero {
-        min-height: auto;
-      }
-
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-        padding-top: 5rem;
-      }
-
-      .hero-content {
-        max-width: 700px;
-        justify-self: center;
-        order: 2;
-      }
-
-      .hero-photo-wrap {
-        width: min(100%, 540px);
-        justify-self: center;
-        order: 1;
-      }
-
-      .hero-photo {
-        height: auto;
-        min-height: 0;
-        aspect-ratio: 4 / 5;
-      }
-
-      .section-heading-row {
-        display: block;
-      }
-
-      .section-intro {
-        margin-top: 1.3rem;
-      }
-
-      .section-title {
-        font-size: clamp(3rem, 10vw, 5.3rem);
-      }
-
-      .project-header {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-      }
-
-      .project-body {
-        margin-left: 0;
-      }
-
-      .project-title-row {
-        display: block;
-      }
-
-      .project-date {
-        margin-top: 0.55rem;
-        text-align: left;
-      }
-
-      .leadership-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .education-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .education-card {
-        min-height: 0;
-      }
-    }
-
-    /* Mobile */
-
-    @media (max-width: 680px) {
-      html {
-        font-size: 15px;
-      }
-
-      .container {
-        width: min(calc(100% - 1.5rem), 560px);
-      }
-
-      .brand-copy {
-        display: none;
-      }
-
-      .mobile-links {
-        gap: 0.65rem;
-      }
-
-      .hero-grid {
-        gap: 2.4rem;
-        padding-top: 4.5rem;
-      }
-
-      .hero-title {
-        font-size: clamp(3.5rem, 17vw, 5.4rem);
-      }
-
-      .hero-intro {
-        font-size: 1.08rem;
-      }
-
-      .hero-actions,
-      .contact-links {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .button,
-      .contact-link {
-        width: 100%;
-      }
-
-      .section-title {
-        font-size: clamp(2.7rem, 14vw, 4.4rem);
-      }
-
-      .experience-grid,
-      .toolkit {
-        grid-template-columns: 1fr;
-      }
-
-      .experience-card:last-child {
-        grid-column: auto;
-      }
-
-      .footer-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        width: min(calc(100% - 1rem), 460px);
-      }
-
-      .nav-inner {
-        min-height: 64px;
-      }
-
-      .brand-mark {
-        width: 38px;
-        height: 38px;
-      }
-
-      .mobile-links a {
-        font-size: 0.51rem;
-      }
-
-      .hero-title {
-        font-size: clamp(3rem, 17vw, 4.4rem);
-      }
-
-      .hero-skills {
-        display: grid;
-        grid-template-columns: 1fr;
-      }
-
-      .hero-skills li {
-        width: 100%;
-        text-align: center;
-      }
-
-      .section-title {
-        font-size: clamp(2.55rem, 13vw, 3.8rem);
-      }
-
-      .project-card,
-      .experience-card,
-      .education-card,
-      .toolkit-card {
-        padding: 1.2rem;
-      }
-
-      .contact-title {
-        font-size: clamp(3.4rem, 18vw, 5.2rem);
-      }
-    }
-
-    /* Wide screens */
-
-    @media (min-width: 1550px) {
-      .container {
-        width: min(calc(100% - 9rem), 1440px);
-      }
-
-      .hero-title {
-        font-size: clamp(6rem, 7vw, 8.8rem);
-      }
-
-      .hero-photo-wrap {
-        max-width: 590px;
-      }
-
-      .hero-photo {
-        height: min(74vh, 760px);
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spencer Kogoma — FPGA / RTL / Digital Hardware Engineering</title>
+<meta name="description" content="Spencer Kogoma — Northwestern University Computer Engineering and Violin Performance student working in FPGA design, RTL verification, digital logic and computer architecture, ASIC-adjacent flows, embedded systems, and low-latency hardware.">
+<meta name="author" content="Spencer Kogoma">
+<meta name="theme-color" content="#0a0d12">
+<meta property="og:title" content="Spencer Kogoma — FPGA / RTL / Digital Hardware Engineering">
+<meta property="og:description" content="FPGA design and verification, RTL with SystemVerilog, digital logic and computer architecture, ASIC-adjacent flows, embedded systems, and low-latency hardware.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0d12'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='24' font-weight='700' fill='%234f8fd6' text-anchor='middle'%3ESK%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   1. DESIGN TOKENS
+   ============================================================ */
+:root{
+  --bg:#0a0d12;
+  --bg-grad:#0d1119;
+  --surface:#111722;
+  --surface-2:#151c28;
+  --surface-3:#1a2231;
+  --line:#212b3a;
+  --line-2:#2e3a4c;
+  --text:#e9edf4;
+  --text-2:#a3aebe;
+  --text-3:#6d7a8c;
+  --accent:#4f8fd6;
+  --accent-2:#d9a441;
+  --accent-soft:rgba(79,143,214,.13);
+  --accent-line:rgba(79,143,214,.38);
+  --amber-soft:rgba(217,164,65,.12);
+  --amber-line:rgba(217,164,65,.35);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 18px 40px -22px rgba(0,0,0,.85);
+
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --r-sm:8px; --r-md:12px; --r-lg:18px;
+  --maxw:1180px;
+  --pad:clamp(20px,5vw,40px);
+  --sec-y:clamp(72px,10vw,124px);
+  color-scheme:dark;
+}
+html[data-theme="light"]{
+  --bg:#f6f7f9;
+  --bg-grad:#eceff4;
+  --surface:#ffffff;
+  --surface-2:#f3f5f8;
+  --surface-3:#e9edf2;
+  --line:#dfe4ea;
+  --line-2:#c7d0da;
+  --text:#131920;
+  --text-2:#4d5866;
+  --text-3:#78838f;
+  --accent:#1f6fc0;
+  --accent-2:#9a6712;
+  --accent-soft:rgba(31,111,192,.09);
+  --accent-line:rgba(31,111,192,.3);
+  --amber-soft:rgba(154,103,18,.08);
+  --amber-line:rgba(154,103,18,.28);
+  --shadow:0 1px 2px rgba(16,24,40,.05), 0 14px 32px -20px rgba(16,24,40,.28);
+  color-scheme:light;
+}
+
+/* ============================================================
+   2. BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  pointer-events:none;z-index:0;
+  background:
+    radial-gradient(900px 520px at 78% -8%, var(--accent-soft), transparent 70%),
+    radial-gradient(700px 460px at 4% 6%, rgba(217,164,65,.06), transparent 68%),
+    linear-gradient(180deg,var(--bg-grad),var(--bg) 42%);
+}
+html[data-theme="light"] body::before{
+  background:
+    radial-gradient(900px 520px at 78% -8%, var(--accent-soft), transparent 70%),
+    linear-gradient(180deg,var(--bg-grad),var(--bg) 40%);
+}
+main{position:relative;z-index:1}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{margin:0;line-height:1.18;letter-spacing:-.02em;font-weight:650}
+p{margin:0}
+ul,dl{margin:0;padding:0;list-style:none}
+dd{margin:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+.container{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad)}
+
+.skip-link{
+  position:absolute;left:-9999px;top:0;z-index:200;
+  background:var(--accent);color:#fff;padding:10px 16px;
+  border-radius:0 0 var(--r-sm) 0;font-weight:600;
+}
+.skip-link:focus{left:0}
+
+/* ============================================================
+   3. NAVIGATION
+   ============================================================ */
+.progress-bar{
+  position:fixed;top:0;left:0;height:2px;width:0;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  z-index:120;transition:width .1s linear;
+}
+.site-nav{
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:var(--bg); /* fallback where color-mix() is unsupported */
+  background:color-mix(in srgb, var(--bg) 84%, transparent);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s ease;
+}
+.site-nav.scrolled{border-bottom-color:var(--line)}
+.nav-inner{display:flex;align-items:center;gap:20px;height:66px}
+.brand{display:flex;align-items:center;gap:12px;margin-right:auto;min-width:0}
+.brand-mark{
+  flex:none;display:grid;place-items:center;
+  width:38px;height:38px;border-radius:10px;
+  border:1px solid var(--accent-line);
+  background:var(--accent-soft);
+  color:var(--accent);
+  font-family:var(--mono);font-weight:700;font-size:14px;letter-spacing:.04em;
+}
+.brand-copy{display:flex;flex-direction:column;min-width:0}
+.brand-copy strong{font-size:14.5px;font-weight:650;letter-spacing:-.01em}
+.brand-copy span{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--text-3);white-space:nowrap;
+}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{
+  padding:8px 12px;border-radius:var(--r-sm);
+  font-size:13.5px;font-weight:500;color:var(--text-2);
+  transition:color .18s ease, background .18s ease;
+}
+.nav-links a:hover{color:var(--text);background:var(--surface-2)}
+.nav-links a.active{color:var(--accent);background:var(--accent-soft)}
+.nav-tools{display:flex;align-items:center;gap:8px}
+.icon-btn{
+  display:grid;place-items:center;width:38px;height:38px;
+  border:1px solid var(--line);border-radius:10px;
+  background:var(--surface);color:var(--text-2);cursor:pointer;
+  transition:color .18s ease,border-color .18s ease,background .18s ease;
+}
+.icon-btn:hover{color:var(--text);border-color:var(--line-2);background:var(--surface-2)}
+.icon-btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.nav-toggle{display:none}
+html[data-theme="light"] .i-sun{display:none}
+html[data-theme="dark"] .i-moon{display:none}
+
+.mobile-drawer{display:none;border-top:1px solid var(--line);background:var(--bg)}
+.mobile-drawer.open{display:block}
+.mobile-drawer ul{padding:10px var(--pad) 18px;display:grid;gap:2px}
+.mobile-drawer a{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 12px;border-radius:var(--r-sm);
+  font-size:15px;color:var(--text-2);
+}
+.mobile-drawer a:hover,.mobile-drawer a.active{color:var(--text);background:var(--surface-2)}
+.mobile-drawer .idx{font-family:var(--mono);font-size:11px;color:var(--text-3)}
+
+/* ============================================================
+   4. SHARED SECTION FURNITURE
+   ============================================================ */
+.section{padding-block:var(--sec-y);position:relative}
+.section-alt{
+  background:var(--surface-2); /* fallback where color-mix() is unsupported */
+  background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--surface) 60%,transparent) 10%,color-mix(in srgb,var(--surface) 60%,transparent) 90%,transparent);
+  border-block:1px solid var(--line);
+}
+.sec-head{display:grid;gap:18px;margin-bottom:46px}
+@media(min-width:900px){
+  .sec-head{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);align-items:end;gap:40px}
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:12px;
+}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--accent-line)}
+.sec-title{font-size:clamp(28px,4.4vw,42px);font-weight:680}
+.sec-intro{color:var(--text-2);font-size:15.5px;max-width:62ch}
+
+.tag{
+  display:inline-flex;align-items:center;
+  padding:5px 10px;border-radius:999px;
+  border:1px solid var(--line);background:var(--surface-2);
+  font-family:var(--mono);font-size:11.5px;color:var(--text-2);
+  white-space:nowrap;
+}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:12px 20px;border-radius:var(--r-sm);
+  font-size:14.5px;font-weight:600;letter-spacing:-.005em;
+  border:1px solid transparent;cursor:pointer;
+  transition:transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
+}
+.btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:color-mix(in srgb,var(--accent) 86%,#fff);transform:translateY(-1px)}
+.btn-ghost{border-color:var(--line-2);color:var(--text);background:var(--surface)}
+.btn-ghost:hover{border-color:var(--accent-line);color:var(--accent);transform:translateY(-1px)}
+
+/* ============================================================
+   5. HERO
+   ============================================================ */
+.hero{padding-block:clamp(52px,9vw,100px) clamp(52px,8vw,92px);position:relative;overflow:hidden}
+.hero-grid{display:grid;gap:clamp(36px,6vw,64px);align-items:center}
+@media(min-width:960px){.hero-grid{grid-template-columns:minmax(0,1.35fr) minmax(0,.85fr)}}
+.hero-status{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:6px 13px 6px 11px;border-radius:999px;
+  border:1px solid var(--amber-line);background:var(--amber-soft);
+  font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--accent-2);margin-bottom:22px;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--accent-2);position:relative;flex:none}
+.dot::after{
+  content:"";position:absolute;inset:-4px;border-radius:50%;
+  border:1px solid var(--accent-2);opacity:.55;animation:pulse 2.8s ease-out infinite;
+}
+@keyframes pulse{0%{transform:scale(.6);opacity:.6}70%{transform:scale(1.55);opacity:0}100%{opacity:0}}
+
+.hero-title{font-size:clamp(40px,7.4vw,74px);font-weight:700;letter-spacing:-.035em;line-height:1.03}
+.hero-title span{display:block;color:var(--text-3)}
+.hero-role{margin-top:20px;font-family:var(--mono);font-size:clamp(12px,1.6vw,13.5px);color:var(--accent);letter-spacing:.02em}
+.hero-lede{margin-top:20px;font-size:clamp(16px,1.9vw,18.5px);color:var(--text-2);max-width:58ch}
+.hero-lede strong{color:var(--text);font-weight:600}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+
+.hero-card{
+  position:relative;border:1px solid var(--line);border-radius:var(--r-lg);
+  background:var(--surface);box-shadow:var(--shadow);overflow:hidden;
+}
+.hero-card figure{margin:0;position:relative}
+.hero-card figure::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:34px 34px;opacity:.3;
+  -webkit-mask-image:radial-gradient(120% 90% at 50% 0%,#000,transparent 74%);
+  mask-image:radial-gradient(120% 90% at 50% 0%,#000,transparent 74%);
+}
+.hero-card img{width:100%;aspect-ratio:4/5;object-fit:cover;filter:saturate(.94) contrast(1.02)}
+.hero-card figcaption{
+  display:flex;justify-content:space-between;gap:12px;align-items:center;
+  padding:13px 16px;border-top:1px solid var(--line);background:var(--surface-2);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);
+}
+.hero-card figcaption b{color:var(--accent);font-weight:600}
+.hero-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line)}
+.hero-stats > div{padding:14px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.hero-stats > div:nth-child(2n){border-right:0}
+.hero-stats > div:nth-last-child(-n+2){border-bottom:0}
+.hero-stats dt{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3)}
+.hero-stats dd{margin-top:5px;font-size:14px;font-weight:600}
+
+
+/* ============================================================
+   5b. FOCUS BAND
+   ============================================================ */
+.focus-band{padding-block:clamp(56px,7vw,84px)}
+.focus-grid{display:grid;column-gap:40px}
+@media(min-width:680px){.focus-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.focus-item{
+  display:flex;align-items:baseline;gap:14px;
+  padding:14px 0;border-bottom:1px solid var(--line);
+}
+.focus-item .n{
+  font-family:var(--mono);font-size:11px;color:var(--text-3);
+  letter-spacing:.1em;flex:none;
+}
+.focus-item h3{font-size:15px;font-weight:500;letter-spacing:-.01em}
+.industries{
+  margin-top:30px;font-size:14.5px;color:var(--text-2);max-width:70ch;
+}
+.industries strong{color:var(--text);font-weight:600}
+
+/* ============================================================
+   6. CURRENTLY DOING  (flagship)
+   ============================================================ */
+.current{padding-block:var(--sec-y);position:relative}
+.current::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(760px 360px at 10% 0%,var(--amber-soft),transparent 68%);
+}
+.current > .container{position:relative}
+.current .eyebrow{color:var(--accent-2)}
+.current .eyebrow::before{background:var(--amber-line)}
+
+.current-card{
+  border:1px solid var(--line);border-radius:var(--r-lg);
+  background:var(--surface);box-shadow:var(--shadow);overflow:hidden;position:relative;
+}
+.current-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent-2),var(--accent) 55%,transparent);
+}
+.current-head{
+  display:grid;gap:20px;padding:clamp(24px,3.4vw,38px);
+  border-bottom:1px solid var(--line);background:var(--surface-2);
+}
+@media(min-width:880px){.current-head{grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:34px}}
+.current-title{font-size:clamp(24px,3.4vw,34px);letter-spacing:-.028em}
+.current-sub{margin-top:10px;font-family:var(--mono);font-size:12.5px;color:var(--accent-2)}
+.current-summary{margin-top:16px;color:var(--text-2);font-size:15.5px;max-width:68ch}
+.badge-stack{display:flex;flex-direction:column;gap:9px;align-items:flex-start}
+@media(min-width:880px){.badge-stack{align-items:flex-end}}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid var(--amber-line);background:var(--amber-soft);color:var(--accent-2);
+}
+.badge.neutral{border-color:var(--line-2);background:var(--surface-3);color:var(--text-2)}
+.current-body{padding:clamp(24px,3.4vw,38px);display:grid;gap:40px}
+
+.block-label{
+  display:flex;align-items:center;gap:12px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--text-3);margin-bottom:18px;
+}
+.block-label::after{content:"";flex:1;height:1px;background:var(--line)}
+
+.pipe-scroll{overflow-x:auto;padding-bottom:12px;-webkit-overflow-scrolling:touch}
+.pipe{display:flex;align-items:stretch;min-width:max-content}
+.stage{
+  position:relative;flex:none;width:158px;
+  border:1px solid var(--line);border-radius:var(--r-md);
+  background:var(--surface-2);padding:13px 14px;
+  transition:border-color .2s ease, background .2s ease, transform .2s ease;
+}
+.stage:hover{border-color:var(--accent-line);background:var(--surface-3);transform:translateY(-2px)}
+.stage + .stage{margin-left:26px}
+.stage + .stage::before{content:"";position:absolute;left:-26px;top:50%;width:26px;height:1px;background:var(--line-2)}
+.stage + .stage::after{
+  content:"";position:absolute;left:-9px;top:50%;transform:translateY(-50%) rotate(45deg);
+  width:5px;height:5px;border-top:1px solid var(--line-2);border-right:1px solid var(--line-2);
+}
+.stage .n{font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.1em}
+.stage h4{margin-top:7px;font-size:13.5px;font-weight:600;letter-spacing:-.01em}
+.stage p{margin-top:5px;font-family:var(--mono);font-size:10.5px;color:var(--text-3);line-height:1.5}
+.stage.gate{border-color:var(--amber-line);background:var(--amber-soft)}
+.stage.gate .n{color:var(--accent-2)}
+.pipe-note{
+  margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--text-3);
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+}
+
+.tracks{display:grid;gap:16px}
+@media(min-width:840px){.tracks{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.track{
+  border:1px solid var(--line);border-radius:var(--r-md);
+  background:var(--surface-2);padding:20px;
+  display:flex;flex-direction:column;gap:14px;
+  transition:border-color .2s ease,transform .2s ease;
+}
+.track:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.track-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.track h4{font-size:15px}
+.track .kind{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.track ul{display:grid;gap:10px}
+.track li{position:relative;padding-left:18px;font-size:14px;color:var(--text-2);line-height:1.6}
+.track li::before{
+  content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:2px;
+  border:1px solid var(--accent-line);background:var(--accent-soft);
+}
+
+.evidence{
+  border:1px solid var(--amber-line);border-radius:var(--r-md);
+  background:var(--amber-soft);padding:clamp(18px,2.6vw,26px);
+}
+.evidence-head{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:10px}
+.evidence-head h4{font-size:16px}
+.evidence-note{font-size:14px;color:var(--text-2);max-width:76ch;margin-bottom:20px}
+.evidence-note strong{color:var(--text);font-weight:600}
+.evidence-grid{display:grid;gap:10px}
+@media(min-width:760px){.evidence-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ev{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:13px 15px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);
+}
+.ev .state{
+  flex:none;margin-top:3px;font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;
+  text-transform:uppercase;padding:3px 7px;border-radius:5px;
+  border:1px solid var(--line-2);color:var(--text-3);background:var(--surface-2);
+}
+.ev .state.wip{border-color:var(--accent-line);color:var(--accent);background:var(--accent-soft)}
+.ev .t{font-size:14px;color:var(--text-2);line-height:1.55}
+.ev .t b{color:var(--text);font-weight:600;display:block}
+
+.spec{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden}
+.spec-row{display:grid;gap:4px;padding:13px 16px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+@media(min-width:640px){.spec-row{grid-template-columns:150px minmax(0,1fr);gap:18px;align-items:baseline}}
+.spec-row:last-child{border-bottom:0}
+.spec-row dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3)}
+.spec-row dd{font-size:14.5px;color:var(--text-2)}
+
+/* ============================================================
+   7. PROJECTS
+   ============================================================ */
+.filters{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:28px}
+.filter{
+  padding:8px 15px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--text-2);cursor:pointer;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+  transition:color .18s,border-color .18s,background .18s;
+}
+.filter:hover{color:var(--text);border-color:var(--line-2)}
+.filter[aria-pressed="true"]{color:var(--accent);border-color:var(--accent-line);background:var(--accent-soft)}
+.filter-count{font-family:var(--mono);font-size:11px;color:var(--text-3);margin-bottom:22px}
+
+.proj-list{display:grid;gap:20px}
+.proj{
+  border:1px solid var(--line);border-radius:var(--r-lg);
+  background:var(--surface);overflow:hidden;box-shadow:var(--shadow);
+  transition:border-color .22s ease, transform .22s ease;
+}
+.proj:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.proj[hidden]{display:none}
+.proj-head{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;
+  padding:20px clamp(20px,3vw,30px);border-bottom:1px solid var(--line);background:var(--surface-2);
+}
+.proj-num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase}
+.proj-title{font-size:clamp(19px,2.4vw,23px);flex:1 1 auto;min-width:200px}
+.proj-date{font-family:var(--mono);font-size:11.5px;color:var(--text-3);white-space:nowrap}
+.proj-body{display:grid;gap:26px;padding:clamp(20px,3vw,30px)}
+@media(min-width:920px){.proj-body{grid-template-columns:minmax(0,1.35fr) minmax(0,.85fr);gap:34px}}
+.proj-summary{font-size:15.5px;color:var(--text-2);margin-bottom:18px}
+.proj-points{display:grid;gap:11px;margin-bottom:20px}
+.proj-points li{position:relative;padding-left:20px;font-size:14.5px;color:var(--text-2);line-height:1.62}
+.proj-points li::before{content:"";position:absolute;left:0;top:11px;width:8px;height:1px;background:var(--accent)}
+.proj-points code,.tl-copy code{
+  font-family:var(--mono);font-size:.88em;color:var(--accent);
+  background:var(--accent-soft);padding:1px 5px;border-radius:4px;
+}
+.proj-sublabel{margin-top:22px}
+.proj-cta{margin-top:20px}
+.spec-row dd a{color:var(--accent);border-bottom:1px solid var(--accent-line);word-break:break-all}
+.spec-row dd a:hover{border-bottom-color:var(--accent)}
+
+/* ============================================================
+   8. SKILLS
+   ============================================================ */
+.skill-grid{display:grid;gap:16px}
+@media(min-width:700px){.skill-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1000px){.skill-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.skill{
+  border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);
+  padding:22px 20px;display:flex;flex-direction:column;gap:14px;
+  transition:border-color .2s ease,transform .2s ease;
+}
+.skill:hover{border-color:var(--accent-line);transform:translateY(-3px)}
+.skill-ico{
+  width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
+  border:1px solid var(--accent-line);background:var(--accent-soft);color:var(--accent);
+}
+.skill-ico svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.skill h3{font-size:15.5px}
+.skill .chips{margin-top:auto;padding-top:4px}
+
+/* ============================================================
+   9. EXPERIENCE
+   ============================================================ */
+.timeline{display:grid}
+.tl-item{position:relative;display:grid;gap:6px;padding:26px 0 26px 30px;border-bottom:1px solid var(--line)}
+.tl-item:last-of-type{border-bottom:0}
+@media(min-width:880px){.tl-item{grid-template-columns:190px minmax(0,1fr);gap:0 34px;align-items:start}}
+.tl-item::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--line)}
+.tl-item::after{
+  content:"";position:absolute;left:-3.5px;top:32px;width:8px;height:8px;border-radius:50%;
+  background:var(--bg);border:1px solid var(--accent);
+}
+.tl-item.live::after{background:var(--accent-2);border-color:var(--accent-2)}
+.tl-date{font-family:var(--mono);font-size:11.5px;color:var(--text-3);letter-spacing:.03em;padding-top:4px}
+.tl-head{display:flex;align-items:center;gap:13px}
+.tl-logo{
+  position:relative;flex:none;width:44px;height:44px;
+  border:1px solid var(--line);border-radius:10px;
+  background:var(--surface-2);display:grid;place-items:center;overflow:hidden;
+}
+.tl-logo img{
+  /* White plate so a logo drawn for light backgrounds stays legible in dark mode. */
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:contain;padding:6px;background:#fff;
+}
+.tl-mono{font-family:var(--mono);font-weight:700;font-size:15px;color:var(--accent);letter-spacing:.02em}
+.tl-role{font-size:17px}
+.tl-org{font-family:var(--mono);font-size:12px;color:var(--accent);margin-top:4px}
+.tl-copy{font-size:14.5px;color:var(--text-2);margin-top:10px;max-width:72ch}
+.tl-item .chips{margin-top:14px}
+
+.beyond{margin-top:44px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);padding:clamp(22px,3vw,32px)}
+.beyond > h3{font-size:17px;margin-bottom:6px}
+.beyond > p.sub{font-size:14px;color:var(--text-3);margin-bottom:24px}
+.beyond-grid{display:grid;gap:20px}
+@media(min-width:760px){.beyond-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.beyond-item{border-left:2px solid var(--accent-line);padding-left:16px}
+.beyond-item h4{font-size:15px}
+.beyond-item .meta{font-family:var(--mono);font-size:11px;color:var(--text-3);margin-top:5px}
+.beyond-item p.c{font-size:14px;color:var(--text-2);margin-top:9px}
+
+/* ============================================================
+   10. EDUCATION
+   ============================================================ */
+.edu-grid{display:grid;gap:18px}
+@media(min-width:880px){.edu-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.edu{
+  border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);
+  padding:clamp(22px,3vw,30px);display:flex;flex-direction:column;gap:12px;
+  transition:border-color .2s ease,transform .2s ease;
+}
+.edu:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.edu-top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap}
+.edu-school{font-family:var(--mono);font-size:11.5px;color:var(--accent);letter-spacing:.05em}
+.edu-year{font-family:var(--mono);font-size:11.5px;color:var(--text-3)}
+.edu h3{font-size:19px}
+.edu .college{font-size:13.5px;color:var(--text-3)}
+.edu p.c{font-size:14.5px;color:var(--text-2)}
+.edu .note{margin-top:auto;padding-top:12px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--text-3)}
+
+/* ============================================================
+   11. RESUME / LINKS
+   ============================================================ */
+.links-grid{display:grid;gap:14px}
+@media(min-width:680px){.links-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1000px){.links-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.link-card{
+  display:flex;flex-direction:column;gap:10px;
+  border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);
+  padding:20px;transition:border-color .2s ease,transform .2s ease,background .2s ease;
+}
+.link-card:hover{border-color:var(--accent-line);background:var(--surface-2);transform:translateY(-3px)}
+.link-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.link-card h3{font-size:15.5px}
+.link-card p{font-size:13.5px;color:var(--text-2)}
+.link-card .arrow{color:var(--text-3);transition:color .2s ease,transform .2s ease;display:flex}
+.link-card:hover .arrow{color:var(--accent);transform:translate(2px,-2px)}
+.link-card svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.link-meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3)}
+
+/* ============================================================
+   12. CONTACT + FOOTER
+   ============================================================ */
+.contact{padding-block:var(--sec-y);border-top:1px solid var(--line);background:linear-gradient(180deg,transparent,var(--accent-soft))}
+.contact-inner{max-width:760px}
+.contact h2{font-size:clamp(28px,4.6vw,44px)}
+.contact p.c{margin-top:18px;font-size:16px;color:var(--text-2);max-width:58ch}
+.contact-mail{
+  display:inline-flex;align-items:center;gap:10px;margin-top:26px;
+  font-family:var(--mono);font-size:clamp(13px,2vw,16px);color:var(--text);
+  border-bottom:1px solid var(--accent-line);padding-bottom:3px;
+  transition:color .2s,border-color .2s;word-break:break-all;
+}
+.contact-mail:hover{color:var(--accent);border-color:var(--accent)}
+.contact-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+
+footer{border-top:1px solid var(--line);background:var(--surface);position:relative;z-index:1}
+.footer-inner{
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
+  padding-block:26px;font-family:var(--mono);font-size:11.5px;color:var(--text-3);letter-spacing:.04em;
+}
+.footer-inner a:hover{color:var(--accent)}
+
+/* ============================================================
+   13. MOTION
+   ============================================================ */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.2,.6,.2,1),transform .6s cubic-bezier(.2,.6,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  .dot::after{animation:none}
+  *{transition-duration:.01ms !important}
+}
+
+/* ============================================================
+   14. RESPONSIVE
+   ============================================================ */
+@media(max-width:880px){
+  .nav-links{display:none}
+  .nav-toggle{display:grid}
+}
+@media(max-width:520px){
+  .nav-inner{height:60px}
+  .brand-copy span{display:none}
+  .stage{width:144px}
+}
+</style>
 </head>
-
 <body>
-  <nav class="site-nav" aria-label="Primary navigation">
-    <div class="container nav-inner">
-      <a
-        href="#home"
-        class="brand"
-        aria-label="Go to home"
-      >
-        <span class="brand-mark">SK</span>
+<div class="progress-bar" id="progress" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
 
-        <span class="brand-copy">
-          <strong>Spencer Kogoma</strong>
-          <span>FPGA | RTL | Hardware Engineering</span>
-        </span>
-      </a>
+<!-- ============================ NAV ============================ -->
+<header class="site-nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#home" class="brand" aria-label="Spencer Kogoma — home">
+      <span class="brand-mark" aria-hidden="true">SK</span>
+      <span class="brand-copy">
+        <strong>Spencer Kogoma</strong>
+        <span>FPGA / RTL / Hardware</span>
+      </span>
+    </a>
 
-      <div class="nav-links">
-        <a href="#home" class="active">Home</a>
-        <a href="#current">Current</a>
-        <a href="#projects">Projects</a>
-        <a href="#experience">Experience</a>
-        <a href="#education">Education</a>
-        <a href="#contact">Contact</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#current">Currently</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#resume">Resume</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="nav-tools">
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle color theme">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="icon-btn nav-toggle" id="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="drawer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <nav class="mobile-drawer" id="drawer" aria-label="Mobile">
+    <ul>
+      <li><a href="#current"><span class="idx">01</span> Currently</a></li>
+      <li><a href="#projects"><span class="idx">02</span> Projects</a></li>
+      <li><a href="#skills"><span class="idx">03</span> Skills</a></li>
+      <li><a href="#experience"><span class="idx">04</span> Experience</a></li>
+      <li><a href="#education"><span class="idx">05</span> Education</a></li>
+      <li><a href="#resume"><span class="idx">06</span> Resume &amp; Links</a></li>
+      <li><a href="#contact"><span class="idx">07</span> Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ============================ HERO ============================ -->
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <div class="hero-content reveal">
+        <p class="hero-status"><span class="dot" aria-hidden="true"></span> Fall 2026 — Digital Design Intern at Amentum, ES34 project</p>
+
+        <h1 class="hero-title">Spencer<span>Kogoma</span></h1>
+
+        <p class="hero-role">Computer Engineering + Violin Performance &nbsp;/&nbsp; Northwestern University</p>
+
+        <p class="hero-lede">
+          I design and verify digital hardware — FPGA and RTL design, verification, and
+          embedded systems — with a pull toward the problems where timing and determinism
+          are the hard part.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#current" class="btn btn-primary">
+            Current research
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="mailto:kogomaspencer@gmail.com" class="btn btn-ghost">Email me</a>
+        </div>
       </div>
 
-      <div class="mobile-links">
-        <a href="#current">Current</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+      <div class="hero-card reveal">
+        <figure>
+          <img src="headshot.jpg" alt="Portrait of Spencer Kogoma" width="800" height="1000" loading="eager">
+          <figcaption><span>San Ramon, CA &rarr; Evanston, IL</span> <b>Open to 2027 internships</b></figcaption>
+        </figure>
+        <dl class="hero-stats">
+          <div><dt>Now</dt><dd>Intern at Amentum</dd></div>
+          <div><dt>Focus</dt><dd>FPGA / RTL / DV</dd></div>
+          <div><dt>Expected</dt><dd>Class of 2028</dd></div>
+          <div><dt>GPA</dt><dd>3.73</dd></div>
+        </dl>
       </div>
     </div>
-  </nav>
+  </section>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="container hero-grid">
-        <div class="hero-content reveal">
-          <p class="hero-label">
-            Northwestern University | Computer Engineering | Class of 2028
-          </p>
-
-          <h1 class="hero-title">
-            Spencer
-            <span>Kogoma</span>
-          </h1>
-
-          <p class="hero-intro">
-            I build real-time digital systems across
-            <strong>FPGA design</strong>,
-            <strong>RTL verification</strong>,
-            <strong>embedded systems</strong>, and
-            <strong>hardware integration</strong>.
-          </p>
-
-          <p class="hero-about">
-            I am a Computer Engineering and Violin Performance student at
-            Northwestern University focused on turning specifications into
-            working hardware. My projects span RTL development, simulation,
-            FPGA prototyping, PCB design, embedded interfaces, and
-            <strong>system-level debugging</strong>.
-          </p>
-
-          <ul
-            class="hero-skills"
-            aria-label="Technical focus areas"
-          >
-            <li>SystemVerilog</li>
-            <li>Verilog</li>
-            <li>FPGA and SoC</li>
-            <li>Digital Verification</li>
-            <li>PCB Design</li>
-            <li>Computer Architecture</li>
-          </ul>
-
-          <div class="hero-actions">
-            <a
-              href="#projects"
-              class="button button-primary"
-            >
-              View Projects
-            </a>
-
-            <a
-              href="mailto:kogomaspencer@gmail.com"
-              class="button button-secondary"
-            >
-              Contact Me
-            </a>
-          </div>
+  <!-- ============================ FOCUS BAND ============================ -->
+  <section class="focus-band" aria-labelledby="focus-h">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow">What I work on</p>
+          <h2 class="sec-title" id="focus-h">Engineering focus</h2>
         </div>
-
-        <div class="hero-photo-wrap reveal">
-          <div class="hero-photo-card">
-            <img
-              src="headshot.jpg"
-              alt="Spencer Kogoma"
-              class="hero-photo"
-            >
-          </div>
-        </div>
+        <p class="sec-intro">
+          Building toward FPGA and digital hardware engineering. Latency-sensitive systems pull
+          me in, but the interest is the same everywhere: logic that is correct, verifiable,
+          and deterministic.
+        </p>
       </div>
-    </section>
 
-    <section class="section" id="current">
-      <div class="container">
-        <div class="section-heading-row reveal">
+      <div class="focus-grid reveal">
+        <div class="focus-item"><span class="n">01</span><h3>FPGA design and verification</h3></div>
+        <div class="focus-item"><span class="n">02</span><h3>RTL design in SystemVerilog</h3></div>
+        <div class="focus-item"><span class="n">03</span><h3>Digital logic and computer architecture</h3></div>
+        <div class="focus-item"><span class="n">04</span><h3>ASIC and silicon-adjacent engineering</h3></div>
+        <div class="focus-item"><span class="n">05</span><h3>Embedded systems and hardware/software integration</h3></div>
+        <div class="focus-item"><span class="n">06</span><h3>Low-latency networking and packet processing</h3></div>
+        <div class="focus-item"><span class="n">07</span><h3>Hardware acceleration for real-time systems</h3></div>
+        <div class="focus-item"><span class="n">08</span><h3>HFT-inspired FPGA research</h3></div>
+      </div>
+
+      <p class="industries reveal">
+        <strong>Industries:</strong> semiconductor, aerospace and defense, robotics,
+        test and measurement, embedded, and trading systems.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================== CURRENTLY DOING ====================== -->
+  <section class="current" id="current" aria-labelledby="current-h">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow">Currently doing</p>
+          <h2 class="sec-title" id="current-h">Active FPGA research project</h2>
+        </div>
+        <p class="sec-intro">
+          My main independent research project — an FPGA datapath built simulation-first,
+          using an HFT-style workload as the latency target.
+        </p>
+      </div>
+
+      <article class="current-card reveal">
+        <div class="current-head">
           <div>
-            <p class="eyebrow">Currently doing</p>
-            <h2 class="section-title">Current</h2>
+            <h3 class="current-title">10GbE FPGA Tick-to-Trade Datapath</h3>
+            <p class="current-sub">HFT-inspired FPGA research &nbsp;·&nbsp; SystemVerilog · Python · cocotb · C++20</p>
+            <p class="current-summary">
+              I am building a simulation-first FPGA datapath for low-latency market-data
+              processing and order-decision logic. The trading workload is a forcing function
+              for the real subject — deterministic networking, streaming packet parsing,
+              fixed-point decision logic, and risk checks enforced in hardware rather than
+              software — the same problems that show up in radar, avionics, robotics, and
+              network equipment.
+            </p>
           </div>
-
-          <p class="section-intro">
-            My current independent research project focuses on FPGA-based
-            networking, deterministic dataflow, and hardware acceleration for
-            latency-sensitive systems.
-          </p>
+          <div class="badge-stack">
+            <span class="badge"><span class="dot" aria-hidden="true"></span> In progress</span>
+            <span class="badge neutral">FPGA / RTL / DV</span>
+            <span class="badge neutral">Simulation-first</span>
+            <span class="badge neutral">Independent research</span>
+          </div>
         </div>
 
-        <article class="project-card reveal">
-          <div class="project-header">
-            <span class="project-number">Active project</span>
+        <div class="current-body">
 
-            <div class="project-title-row">
-              <h3 class="project-title">
-                10GbE FPGA Tick-to-Trade Datapath
-              </h3>
+          <!-- pipeline -->
+          <div>
+            <p class="block-label">Datapath architecture — RTL pipeline under development</p>
+            <div class="pipe-scroll" tabindex="0" role="group" aria-label="Datapath pipeline stages, scrollable">
+              <div class="pipe">
+                <div class="stage">
+                  <p class="n">STAGE 00</p><h4>10GbE Ingress</h4>
+                  <p>MAC/stream interface, framing</p>
+                </div>
+                <div class="stage">
+                  <p class="n">STAGE 01</p><h4>UDP / IP Parse</h4>
+                  <p>Header strip, filter, checksum</p>
+                </div>
+                <div class="stage">
+                  <p class="n">STAGE 02</p><h4>Market-Data Decode</h4>
+                  <p>Message framing, field extract</p>
+                </div>
+                <div class="stage">
+                  <p class="n">STAGE 03</p><h4>Symbol / Book State</h4>
+                  <p>Per-symbol state tracking</p>
+                </div>
+                <div class="stage">
+                  <p class="n">STAGE 04</p><h4>Decision Logic</h4>
+                  <p>Fixed-point evaluation</p>
+                </div>
+                <div class="stage gate">
+                  <p class="n">STAGE 05</p><h4>Risk Gate</h4>
+                  <p>Hardware-enforced checks</p>
+                </div>
+                <div class="stage">
+                  <p class="n">STAGE 06</p><h4>Order / Cancel Encode</h4>
+                  <p>Message build, TX egress</p>
+                </div>
+              </div>
+            </div>
+            <p class="pipe-note">
+              <span>&larr; scroll &rarr;</span>
+              <span>Streaming, back-pressure-aware stages — no stage may bypass the risk gate.</span>
+            </p>
+          </div>
 
-              <span class="project-date">
-                Current
-              </span>
+          <!-- three tracks -->
+          <div>
+            <p class="block-label">Workstreams</p>
+            <div class="tracks">
+              <div class="track">
+                <div class="track-top"><h4>RTL design</h4><span class="kind">SystemVerilog</span></div>
+                <ul>
+                  <li>SystemVerilog pipeline for UDP/IP parsing and market-data decoding</li>
+                  <li>Symbol and book state tracking with deterministic update behavior</li>
+                  <li>Fixed-point decision logic feeding a hardware risk-check stage</li>
+                  <li>Order and cancel encoding on the egress path</li>
+                </ul>
+              </div>
+              <div class="track">
+                <div class="track-top"><h4>Verification</h4><span class="kind">Python · cocotb</span></div>
+                <ul>
+                  <li>Packet generation for synthetic market-data streams</li>
+                  <li>Golden-model comparison against a Python reference implementation</li>
+                  <li>Randomized/constrained stimulus with scoreboard checking</li>
+                  <li>Latency analysis harness for cycle-accounting across stages</li>
+                </ul>
+              </div>
+              <div class="track">
+                <div class="track-top"><h4>Host tooling</h4><span class="kind">C++20</span></div>
+                <ul>
+                  <li>Replay tooling to drive simulated market data into the design</li>
+                  <li>Control-plane utilities for configuration and risk parameters</li>
+                  <li>Structured logging to collect debug evidence from runs</li>
+                  <li>Capture/inspection helpers for post-run analysis</li>
+                </ul>
+              </div>
             </div>
           </div>
 
-          <div class="project-body">
+          <!-- evidence targets -->
+          <div class="evidence">
+            <div class="evidence-head">
+              <h4>Evidence targets</h4>
+              <span class="badge">Future deliverables — not yet achieved</span>
+            </div>
+            <p class="evidence-note">
+              <strong>Status note:</strong> this is an active, in-development project. Nothing below
+              is claimed as a completed result. The design has <strong>not</strong> yet been measured
+              for latency, has <strong>not</strong> closed timing, has <strong>not</strong> run on
+              hardware, and is <strong>not</strong> connected to any live or production trading system.
+              These are the artifacts I am working toward, listed so the goalposts are explicit.
+            </p>
+            <div class="evidence-grid">
+              <div class="ev">
+                <span class="state wip">Building</span>
+                <span class="t"><b>Self-checking test suite</b>Golden-model and scoreboard checks across the parse, decode, decision, and risk stages.</span>
+              </div>
+              <div class="ev">
+                <span class="state">Target</span>
+                <span class="t"><b>Timing reports</b>Synthesis and implementation reports as an evidence artifact once the pipeline is complete.</span>
+              </div>
+              <div class="ev">
+                <span class="state">Target</span>
+                <span class="t"><b>Latency measurements</b>Cycle-level tick-to-trade accounting, first in simulation and later on hardware.</span>
+              </div>
+              <div class="ev">
+                <span class="state">Target</span>
+                <span class="t"><b>Debug captures</b>Waveforms and packet captures documenting correct and fault-path behavior.</span>
+              </div>
+              <div class="ev">
+                <span class="state">Target</span>
+                <span class="t"><b>Hardware demonstration</b>Eventual bring-up on an FPGA with a 10GbE interface, driven by replayed data.</span>
+              </div>
+              <div class="ev">
+                <span class="state">Target</span>
+                <span class="t"><b>Risk-gate proof</b>Directed tests showing that no order can reach egress while a risk condition is asserted.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- spec -->
+          <div>
+            <p class="block-label">Project specification</p>
+            <dl class="spec">
+              <div class="spec-row"><dt>Status</dt><dd>Active development — independent research</dd></div>
+              <div class="spec-row"><dt>Stack</dt><dd>SystemVerilog, Python, cocotb, C++20</dd></div>
+              <div class="spec-row"><dt>Architecture</dt><dd>10GbE ingress, UDP/IP parsing, streaming parsers, fixed-point pipeline, hardware risk gate, order/cancel encoding</dd></div>
+              <div class="spec-row"><dt>Method</dt><dd>Simulation-first: reference model, randomized stimulus, and scoreboard checking before any hardware bring-up</dd></div>
+            </dl>
+          </div>
+
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============================ PROJECTS ============================ -->
+  <section class="section section-alt" id="projects" aria-labelledby="projects-h">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow">Selected engineering work</p>
+          <h2 class="sec-title" id="projects-h">Projects</h2>
+        </div>
+        <p class="sec-intro">
+          Case studies across FPGA architecture, RTL development, signal processing, ASIC flow,
+          and embedded systems.
+        </p>
+      </div>
+
+      <div class="filters reveal" role="group" aria-label="Filter projects by area">
+        <button class="filter" type="button" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter" type="button" data-filter="fpga" aria-pressed="false">FPGA &amp; RTL</button>
+        <button class="filter" type="button" data-filter="asic" aria-pressed="false">ASIC flow</button>
+        <button class="filter" type="button" data-filter="dsp" aria-pressed="false">Signal processing</button>
+        <button class="filter" type="button" data-filter="embedded" aria-pressed="false">Embedded &amp; systems</button>
+        <button class="filter" type="button" data-filter="networking" aria-pressed="false">Networking</button>
+        <button class="filter" type="button" data-filter="verification" aria-pressed="false">Verification</button>
+      </div>
+      <p class="filter-count" id="filter-count" role="status" aria-live="polite"></p>
+
+      <div class="proj-list" id="proj-list">
+
+        <article class="proj reveal" data-tags="fpga verification embedded">
+          <div class="proj-head">
+            <span class="proj-num">Project 01</span>
+            <h3 class="proj-title">FPGA-Based Field-Oriented Control</h3>
+            <span class="proj-date">June 2026 — Present</span>
+          </div>
+          <div class="proj-body">
             <div>
-              <p class="project-summary">
-                Building a simulation-first HFT-focused FPGA datapath that
-                treats trading as the workload for real-time networking,
-                packet processing, fixed-point decision logic, and
-                hardware-enforced risk controls.
+              <p class="proj-summary">
+                Architecting a motor-control accelerator on an Arty Zynq-7000 SoC: a fully
+                pipelined Q1.15 current loop in FPGA fabric that takes raw three-phase ADC samples
+                to complementary center-aligned PWM, with the protection path implemented in
+                hardware rather than software.
               </p>
+              <ul class="proj-points">
+                <li>Built the current loop as a valid-chained pipeline — ADC scaling, Clarke and Park transforms, dual PI regulators on the d and q axes, inverse Park, and alpha/beta-to-duty conversion — with every stage carrying its own <code>*_valid</code> strobe.</li>
+                <li>Implemented all control math in Q1.15 with saturating arithmetic at each stage: products widen to full precision, shift back by 15 fractional bits, then clamp to the 16-bit range instead of wrapping.</li>
+                <li>Wrote a quarter-wave sine/cosine LUT that resolves a 16-bit electrical angle using a 64-entry quarter table, deriving quadrant and mirrored index from the angle's upper bits rather than storing a full period.</li>
+                <li>Generated complementary three-phase PWM from a center-aligned counter with programmable non-overlap (deadtime) ticks, plus a <code>configuration_error</code> output that rejects any period/deadtime combination where the high and low sides could overlap.</li>
+                <li>Enforced safety in fabric: over-current, phase-imbalance, and bus/phase voltage monitors feed a latching disable controller that gates PWM and holds the fault until an explicit clear, exposing a status code for the cause.</li>
+                <li>Verified each block with self-checking testbenches that assert on failure — including checks that HI/LO pairs never overlap, that inhibit truly shuts outputs off, and that an invalid duty raises the configuration error.</li>
+              </ul>
+              <p class="block-label proj-sublabel">Selected RTL modules</p>
+              <ul class="chips" aria-label="RTL modules">
+                <li class="tag">foc_current_loop_top</li><li class="tag">clarke_park_transform</li>
+                <li class="tag">inverse_park_transform</li><li class="tag">pi_controller_q15</li>
+                <li class="tag">sincos_lut_q15</li><li class="tag">adc_current_scaler_q15</li>
+                <li class="tag">alpha_beta_to_duty</li><li class="tag">pwm_3phase_center_aligned</li>
+                <li class="tag">hall_decoder</li><li class="tag">phase_current_limit_monitor</li>
+                <li class="tag">phase_current_balance_monitor</li><li class="tag">voltage_sense_monitor</li>
+                <li class="tag">pcb_disable_control</li>
+              </ul>
+              <a href="https://github.com/spenchh/fpga-motors" target="_blank" rel="noopener noreferrer" class="btn btn-ghost proj-cta">
+                View RTL on GitHub
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+              </a>
+            </div>
+            <dl class="spec">
+              <div class="spec-row"><dt>Platform</dt><dd>Arty Zynq-7000 SoC</dd></div>
+              <div class="spec-row"><dt>Languages</dt><dd>Verilog and SystemVerilog RTL, MATLAB, Python</dd></div>
+              <div class="spec-row"><dt>Datapath</dt><dd>12-bit ADC input, 16-bit Q1.15 signed datapath, 24-bit scale coefficient</dd></div>
+              <div class="spec-row"><dt>Protection</dt><dd>Latched hardware disable on over-current, phase imbalance, or voltage fault</dd></div>
+              <div class="spec-row"><dt>Verification</dt><dd>Per-module self-checking testbenches; MATLAB fixed-point reference model</dd></div>
+              <div class="spec-row"><dt>Source</dt><dd><a href="https://github.com/spenchh/fpga-motors" target="_blank" rel="noopener noreferrer">github.com/spenchh/fpga-motors</a></dd></div>
+            </dl>
+          </div>
+        </article>
 
-              <ul class="project-points">
-                <li>
-                  Define a SystemVerilog pipeline for UDP/IP parsing,
-                  market-data decoding, symbol and book state, decision logic,
-                  risk checks, and order/cancel encoding.
-                </li>
-
-                <li>
-                  Use Python and cocotb for packet generation, golden models,
-                  randomized tests, scoreboard checks, and latency analysis
-                  before hardware bring-up.
-                </li>
-
-                <li>
-                  Develop C++ host replay, control, and logging tools to drive
-                  simulated market data and collect debug evidence for later
-                  10GbE hardware validation.
-                </li>
+        <article class="proj reveal" data-tags="asic fpga verification">
+          <div class="proj-head">
+            <span class="proj-num">Project 02</span>
+            <h3 class="proj-title">3&times;3 Systolic MAC Array — RTL to Place-and-Route</h3>
+            <span class="proj-date">ASIC flow project</span>
+          </div>
+          <div class="proj-body">
+            <div>
+              <p class="proj-summary">
+                A 3&times;3 systolic multiply-accumulate array taken through a complete digital
+                design flow — RTL, functional verification, synthesis, and place-and-route — to
+                learn what actually governs a design once it leaves simulation.
+              </p>
+              <ul class="proj-points">
+                <li>Designed the array for signed 8-bit operands with 20-bit accumulated outputs, sized so intermediate sums cannot overflow across the accumulation chain.</li>
+                <li>Verified functional behavior in Cadence Xcelium against expected products and accumulation results.</li>
+                <li>Synthesized with Cadence Genus under SDC timing constraints, then reviewed setup and hold analysis alongside area and power reports.</li>
+                <li>Completed place-and-route in Cadence Innovus to a DRC-clean routed layout.</li>
+              </ul>
+              <ul class="chips" aria-label="Technologies">
+                <li class="tag">SystemVerilog</li><li class="tag">Xcelium</li><li class="tag">Genus</li>
+                <li class="tag">Innovus</li><li class="tag">SDC</li><li class="tag">Setup / hold</li>
+                <li class="tag">DRC-clean</li>
               </ul>
             </div>
+            <dl class="spec">
+              <div class="spec-row"><dt>Architecture</dt><dd>3&times;3 systolic multiply-accumulate array</dd></div>
+              <div class="spec-row"><dt>Datapath</dt><dd>Signed 8-bit operands, 20-bit accumulated outputs</dd></div>
+              <div class="spec-row"><dt>Verification</dt><dd>Cadence Xcelium functional simulation</dd></div>
+              <div class="spec-row"><dt>Synthesis</dt><dd>Cadence Genus with SDC constraints</dd></div>
+              <div class="spec-row"><dt>Backend</dt><dd>Cadence Innovus place-and-route, DRC-clean routing</dd></div>
+              <div class="spec-row"><dt>Analysis</dt><dd>Setup and hold timing, area and power reporting</dd></div>
+            </dl>
+          </div>
+        </article>
 
-            <div class="project-details">
-              <div class="detail-row">
-                <span class="detail-label">Status</span>
-                <span class="detail-value">
-                  Current independent FPGA research project
-                </span>
-              </div>
+        <article class="proj reveal" data-tags="fpga dsp">
+          <div class="proj-head">
+            <span class="proj-num">Project 03</span>
+            <h3 class="proj-title">FPGA Beamforming Microphone Array</h3>
+            <span class="proj-date">June 2026 — Present</span>
+          </div>
+          <div class="proj-body">
+            <div>
+              <p class="proj-summary">
+                Designing a fixed-point delay-and-sum beamforming pipeline for real-time,
+                multi-channel directional audio processing.
+              </p>
+              <ul class="proj-points">
+                <li>Implement the beamforming datapath in Verilog for deterministic real-time processing.</li>
+                <li>Integrate camera-based face tracking to steer the FPGA DSP pipeline toward a moving source.</li>
+                <li>Evaluate latency, phase alignment, numerical precision, and FPGA resource tradeoffs.</li>
+              </ul>
+              <ul class="chips" aria-label="Technologies">
+                <li class="tag">Verilog</li><li class="tag">Fixed-point DSP</li>
+                <li class="tag">Delay-and-sum</li><li class="tag">Pipelining</li>
+              </ul>
+            </div>
+            <dl class="spec">
+              <div class="spec-row"><dt>Focus</dt><dd>Real-time audio DSP</dd></div>
+              <div class="spec-row"><dt>Language</dt><dd>Verilog</dd></div>
+              <div class="spec-row"><dt>Core concepts</dt><dd>Fixed-point DSP, delay-and-sum beamforming, pipelining</dd></div>
+              <div class="spec-row"><dt>Integration</dt><dd>Camera tracking steering an FPGA signal-processing chain</dd></div>
+              <div class="spec-row"><dt>Tradeoffs</dt><dd>Latency vs. precision vs. FPGA resource utilization</dd></div>
+            </dl>
+          </div>
+        </article>
 
-              <div class="detail-row">
-                <span class="detail-label">Stack</span>
-                <span class="detail-value">
-                  SystemVerilog, Python, cocotb, C++20
-                </span>
-              </div>
+        <article class="proj reveal" data-tags="embedded">
+          <div class="proj-head">
+            <span class="proj-num">Project 04</span>
+            <h3 class="proj-title">Rear-Vision Camera and Display System</h3>
+            <span class="proj-date">March 2026 — June 2026</span>
+          </div>
+          <div class="proj-body">
+            <div>
+              <p class="proj-summary">
+                Designed and validated a low-latency rear-vision system for Northwestern's 2026
+                American Solar Challenge vehicle.
+              </p>
+              <ul class="proj-points">
+                <li>Built a sub-30 ms video pipeline using a Pi Camera 3 Wide and CSI-to-HDMI extension hardware.</li>
+                <li>Automated headless startup and recovery with Linux, Bash, and systemd.</li>
+                <li>Selected the final design through a six-candidate trade study covering latency, field of view, EMI risk, reliability, integration complexity, and cost.</li>
+              </ul>
+              <ul class="chips" aria-label="Technologies">
+                <li class="tag">Linux</li><li class="tag">systemd</li><li class="tag">Bash</li>
+                <li class="tag">CSI / HDMI</li><li class="tag">Trade study</li>
+              </ul>
+            </div>
+            <dl class="spec">
+              <div class="spec-row"><dt>Platform</dt><dd>Raspberry Pi and Pi Camera 3 Wide</dd></div>
+              <div class="spec-row"><dt>Performance</dt><dd>Sub-30 ms end-to-end latency</dd></div>
+              <div class="spec-row"><dt>Software</dt><dd>Linux, Bash, systemd</dd></div>
+              <div class="spec-row"><dt>Process</dt><dd>Architecture trade study and hardware validation</dd></div>
+              <div class="spec-row"><dt>Context</dt><dd>2026 American Solar Challenge vehicle</dd></div>
+            </dl>
+          </div>
+        </article>
 
-              <div class="detail-row">
-                <span class="detail-label">Architecture</span>
-                <span class="detail-value">
-                  10GbE, UDP/IP, streaming parsers, fixed-point pipelines,
-                  hardware risk gate
-                </span>
-              </div>
+        <article class="proj reveal" data-tags="fpga verification networking">
+          <div class="proj-head">
+            <span class="proj-num">Project 05</span>
+            <h3 class="proj-title">10GbE FPGA Tick-to-Trade Datapath</h3>
+            <span class="proj-date">Current — see full write-up</span>
+          </div>
+          <div class="proj-body">
+            <div>
+              <p class="proj-summary">
+                My primary active research project: a simulation-first FPGA datapath built around
+                streaming packet parsing, deterministic pipelines, fixed-point decision logic, and
+                hardware-enforced safety checks, using a low-latency market-data workload as the
+                driving requirement.
+              </p>
+              <ul class="proj-points">
+                <li>SystemVerilog pipeline spanning UDP/IP parsing through order and cancel encoding.</li>
+                <li>Python and cocotb verification environment with golden models and scoreboards.</li>
+                <li>C++20 host tooling for replay, control, and structured debug logging.</li>
+              </ul>
+              <ul class="chips" aria-label="Technologies">
+                <li class="tag">SystemVerilog</li><li class="tag">cocotb</li><li class="tag">C++20</li>
+                <li class="tag">10GbE</li><li class="tag">UDP/IP</li><li class="tag">Fixed-point</li>
+              </ul>
+              <a href="#current" class="btn btn-ghost">
+                Read the full write-up
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+            </div>
+            <dl class="spec">
+              <div class="spec-row"><dt>Status</dt><dd>Active development — evidence targets not yet achieved</dd></div>
+              <div class="spec-row"><dt>Stack</dt><dd>SystemVerilog, Python, cocotb, C++20</dd></div>
+              <div class="spec-row"><dt>Focus</dt><dd>Deterministic networking, streaming RTL, risk gating</dd></div>
+            </dl>
+          </div>
+        </article>
 
-              <div class="detail-row">
-                <span class="detail-label">Evidence target</span>
-                <span class="detail-value">
-                  Self-checking tests, timing reports, latency measurements,
-                  debug captures, hardware demo
-                </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ SKILLS ============================ -->
+  <section class="section" id="skills" aria-labelledby="skills-h">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow">Technical toolkit</p>
+          <h2 class="sec-title" id="skills-h">Technical skills</h2>
+        </div>
+        <p class="sec-intro">
+          Grouped the way I actually use them.
+        </p>
+      </div>
+
+      <div class="skill-grid">
+        <div class="skill reveal">
+          <span class="skill-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg></span>
+          <h3>RTL &amp; Verification</h3>
+          <ul class="chips" aria-label="RTL and verification tools">
+            <li class="tag">SystemVerilog</li><li class="tag">Verilog</li><li class="tag">RTL design</li>
+            <li class="tag">cocotb</li><li class="tag">Testbenches</li><li class="tag">Scoreboards</li>
+            <li class="tag">Waveform debug</li>
+          </ul>
+        </div>
+
+        <div class="skill reveal">
+          <span class="skill-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M4 10h3M4 14h3M17 10h3M17 14h3M10 4v3M14 4v3M10 17v3M14 17v3"/></svg></span>
+          <h3>FPGA &amp; SoC</h3>
+          <ul class="chips" aria-label="FPGA and SoC tools">
+            <li class="tag">FPGA prototyping</li><li class="tag">Zynq-7000</li><li class="tag">AXI-Lite</li>
+            <li class="tag">Vivado</li><li class="tag">Fixed-point</li><li class="tag">Timing basics</li>
+          </ul>
+        </div>
+
+        <div class="skill reveal">
+          <span class="skill-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/><path d="M7 10h2v4H7zM15 10h2v4h-2zM11 6v12"/></svg></span>
+          <h3>PCB &amp; Embedded</h3>
+          <ul class="chips" aria-label="PCB and embedded tools">
+            <li class="tag">Altium Designer</li><li class="tag">CAN</li><li class="tag">SPI</li>
+            <li class="tag">Power sequencing</li><li class="tag">Bring-up</li>
+          </ul>
+        </div>
+
+        <div class="skill reveal">
+          <span class="skill-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 18V8M9 18V5M14 18v-7M19 18v-4M3 21h18"/></svg></span>
+          <h3>Architecture &amp; ASIC Flow</h3>
+          <ul class="chips" aria-label="Architecture and ASIC topics">
+            <li class="tag">Pipelining</li><li class="tag">Memory hierarchy</li><li class="tag">Synthesis</li>
+            <li class="tag">Place &amp; route</li><li class="tag">Timing concepts</li>
+          </ul>
+        </div>
+
+        <div class="skill reveal">
+          <span class="skill-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg></span>
+          <h3>Embedded &amp; Avionics</h3>
+          <ul class="chips" aria-label="Embedded and avionics tools">
+            <li class="tag">Python</li><li class="tag">Linux</li><li class="tag">CAN / DroneCAN</li>
+            <li class="tag">MAVLink</li><li class="tag">ArduPilot</li><li class="tag">JSBSim</li>
+            <li class="tag">QGroundControl</li><li class="tag">Jetson Orin Nano</li>
+            <li class="tag">Orange Cube</li>
+          </ul>
+        </div>
+
+        <div class="skill reveal">
+          <span class="skill-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 3 10 2-5h7"/></svg></span>
+          <h3>Networking &amp; Real-Time</h3>
+          <ul class="chips" aria-label="Networking and real-time topics">
+            <li class="tag">10GbE</li><li class="tag">UDP/IP</li><li class="tag">Streaming parsers</li>
+            <li class="tag">Back-pressure</li><li class="tag">Deterministic latency</li>
+          </ul>
+        </div>
+
+        <div class="skill reveal">
+          <span class="skill-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 18l-5-6 5-6M15 6l5 6-5 6"/></svg></span>
+          <h3>Tools &amp; Software</h3>
+          <ul class="chips" aria-label="Software tools">
+            <li class="tag">Cadence Xcelium</li><li class="tag">Genus</li><li class="tag">Innovus</li>
+            <li class="tag">MATLAB</li><li class="tag">Simulink</li><li class="tag">Python</li>
+            <li class="tag">C++20</li><li class="tag">Java</li><li class="tag">Linux</li>
+            <li class="tag">Bash</li><li class="tag">systemd</li><li class="tag">Git</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ EXPERIENCE ============================ -->
+  <section class="section section-alt" id="experience" aria-labelledby="experience-h">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow">Engineering and technical leadership</p>
+          <h2 class="sec-title" id="experience-h">Experience</h2>
+        </div>
+        <p class="sec-intro">
+          Roles where I own hardware design, system integration, RTL education, testing,
+          and cross-functional engineering work.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <article class="tl-item live reveal">
+          <p class="tl-date">Fall 2026</p>
+          <div>
+            <div class="tl-head">
+              <span class="tl-logo">
+                <span class="tl-mono" aria-hidden="true">A</span>
+                <img src="amentum-logo.svg" alt="Amentum logo" loading="lazy" width="44" height="44">
+              </span>
+              <div>
+                <h3 class="tl-role">Digital Design Intern — ES34 Project</h3>
+                <p class="tl-org">Amentum</p>
               </div>
             </div>
+            <p class="tl-copy">
+              I support the ES34 project by helping design, implement, and test digital logic and
+              hardware systems. I assist with PCB schematics, component selection, FPGA/VHDL logic
+              development, lab setup, functional testing, and technical status reporting for the
+              engineering team.
+            </p>
+          </div>
+        </article>
+
+        <article class="tl-item live reveal">
+          <p class="tl-date">June 2026 — Present</p>
+          <div>
+            <div class="tl-head">
+              <span class="tl-logo"><span class="tl-mono" aria-hidden="true">N</span></span>
+              <div>
+                <h3 class="tl-role">Undergraduate Researcher</h3>
+                <p class="tl-org">Northwestern University</p>
+              </div>
+            </div>
+            <p class="tl-copy">
+              Develop FPGA-based field-oriented motor control on a Zynq-7000 SoC, including
+              deterministic PWM generation, Hall decoding, ADC sample timing, Q1.15 fixed-point
+              control, Clarke and Park transforms, PI control, AXI-Lite interfaces, and
+              fault-latched shutdown — verified with self-checking testbenches.
+            </p>
+          </div>
+        </article>
+
+        <article class="tl-item live reveal">
+          <p class="tl-date">September 2025 — Present</p>
+          <div>
+            <div class="tl-head">
+              <span class="tl-logo"><span class="tl-mono" aria-hidden="true">SC</span></span>
+              <div>
+                <h3 class="tl-role">Low-Voltage Electrical Lead</h3>
+                <p class="tl-org">Northwestern Solar Car Team</p>
+              </div>
+            </div>
+            <p class="tl-copy">
+              Lead low-voltage systems across power distribution, telemetry, and vehicle
+              integration. Develop FPGA-controlled relay sequencing and safety interlocks,
+              design multilayer Altium PCBs, and debug CAN and SPI communication during bring-up.
+            </p>
+          </div>
+        </article>
+
+        <article class="tl-item live reveal">
+          <p class="tl-date">June 2026 — Present</p>
+          <div>
+            <div class="tl-head">
+              <span class="tl-logo"><span class="tl-mono" aria-hidden="true">SI</span></span>
+              <div>
+                <h3 class="tl-role">Digital Design Lead</h3>
+                <p class="tl-org">Northwestern University Silicon Initiative / NU Silicats</p>
+              </div>
+            </div>
+            <p class="tl-copy">
+              Lead RTL onboarding for new members: teach SystemVerilog, finite-state machines,
+              testbench construction, and waveform debugging, then walk the team through
+              FPGA and ASIC flow fundamentals using Cadence Xcelium, Genus, and Innovus from
+              simulation to place-and-route.
+            </p>
           </div>
         </article>
       </div>
-    </section>
 
-    <section class="section section-alt" id="projects">
-      <div class="container">
-        <div class="section-heading-row reveal">
-          <div>
-            <p class="eyebrow">Selected engineering work</p>
-            <h2 class="section-title">Projects</h2>
+      <div class="beyond reveal">
+        <h3>Leadership beyond engineering</h3>
+        <p class="sub">Discipline, preparation, and mentorship carried over from music and scouting.</p>
+        <div class="beyond-grid">
+          <div class="beyond-item">
+            <h4>Concertmaster</h4>
+            <p class="meta">Northwestern Philharmonia</p>
+            <p class="c">Lead violinist and conductor liaison, selected through competitive audition.</p>
           </div>
-
-          <p class="section-intro">
-            My most relevant projects across FPGA architecture, RTL
-            development, real-time signal processing, embedded Linux, and
-            hardware validation.
-          </p>
-        </div>
-
-        <div class="project-list">
-          <article class="project-card reveal">
-            <div class="project-header">
-              <span class="project-number">Project 01</span>
-
-              <div class="project-title-row">
-                <h3 class="project-title">
-                  FPGA-Based Field-Oriented Control
-                </h3>
-
-                <span class="project-date">
-                  June 2026 to Present
-                </span>
-              </div>
-            </div>
-
-            <div class="project-body">
-              <div>
-                <p class="project-summary">
-                  Architecting a motor-control accelerator on an Arty
-                  Zynq-7000 SoC, with real-time control and safety functions
-                  implemented in FPGA fabric and system management handled by
-                  ARM software.
-                </p>
-
-                <ul class="project-points">
-                  <li>
-                    Develop SystemVerilog modules for 3PWM and 6PWM output,
-                    deadtime insertion, Hall-sector detection, speed
-                    estimation, ADC sample timing, and reusable PI control.
-                  </li>
-
-                  <li>
-                    Partition CAN, logging, calibration, and recovery into ARM
-                    software while keeping PWM, sensing, safety, and fixed-point
-                    control in FPGA logic.
-                  </li>
-
-                  <li>
-                    Research MATLAB, Simulink, and HDL Coder workflows for
-                    Clarke and Park transforms, SVPWM, saturation, and
-                    anti-windup behavior.
-                  </li>
-                </ul>
-              </div>
-
-              <div class="project-details">
-                <div class="detail-row">
-                  <span class="detail-label">Platform</span>
-                  <span class="detail-value">
-                    Arty Zynq-7000 SoC
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Languages</span>
-                  <span class="detail-value">
-                    SystemVerilog, Python, Bash
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Core concepts</span>
-                  <span class="detail-value">
-                    AXI-Lite, fixed-point arithmetic, PWM, FOC, fault handling
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Tools</span>
-                  <span class="detail-value">
-                    Vivado, MATLAB, Simulink, HDL Coder
-                  </span>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card reveal">
-            <div class="project-header">
-              <span class="project-number">Project 02</span>
-
-              <div class="project-title-row">
-                <h3 class="project-title">
-                  FPGA Beamforming Microphone Array
-                </h3>
-
-                <span class="project-date">
-                  June 2026 to Present
-                </span>
-              </div>
-            </div>
-
-            <div class="project-body">
-              <div>
-                <p class="project-summary">
-                  Designing a fixed-point delay-and-sum beamforming pipeline
-                  for real-time, multi-channel directional audio processing.
-                </p>
-
-                <ul class="project-points">
-                  <li>
-                    Implement the beamforming datapath in Verilog for
-                    deterministic real-time processing.
-                  </li>
-
-                  <li>
-                    Integrate camera-based face tracking to steer the FPGA DSP
-                    pipeline toward a moving source.
-                  </li>
-
-                  <li>
-                    Evaluate latency, phase alignment, numerical precision, and
-                    FPGA resource tradeoffs.
-                  </li>
-                </ul>
-              </div>
-
-              <div class="project-details">
-                <div class="detail-row">
-                  <span class="detail-label">Focus</span>
-                  <span class="detail-value">
-                    Real-time audio DSP
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Language</span>
-                  <span class="detail-value">
-                    Verilog
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Core concepts</span>
-                  <span class="detail-value">
-                    Fixed-point DSP, delay-and-sum beamforming, pipelining
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Integration</span>
-                  <span class="detail-value">
-                    Camera tracking and FPGA signal processing
-                  </span>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card reveal">
-            <div class="project-header">
-              <span class="project-number">Project 03</span>
-
-              <div class="project-title-row">
-                <h3 class="project-title">
-                  Rear-Vision Camera and Display System
-                </h3>
-
-                <span class="project-date">
-                  March 2026 to June 2026
-                </span>
-              </div>
-            </div>
-
-            <div class="project-body">
-              <div>
-                <p class="project-summary">
-                  Designed and validated a low-latency rear-vision system for
-                  Northwestern’s 2026 American Solar Challenge vehicle.
-                </p>
-
-                <ul class="project-points">
-                  <li>
-                    Built a sub-30 ms video pipeline using a Pi Camera 3 Wide
-                    and CSI-to-HDMI extension hardware.
-                  </li>
-
-                  <li>
-                    Automated headless startup and recovery with Linux, Bash,
-                    and systemd.
-                  </li>
-
-                  <li>
-                    Selected the final design through a six-candidate trade
-                    study covering latency, field of view, EMI risk,
-                    reliability, integration complexity, and cost.
-                  </li>
-                </ul>
-              </div>
-
-              <div class="project-details">
-                <div class="detail-row">
-                  <span class="detail-label">Platform</span>
-                  <span class="detail-value">
-                    Raspberry Pi and Pi Camera 3 Wide
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Performance</span>
-                  <span class="detail-value">
-                    Sub-30 ms end-to-end latency
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Software</span>
-                  <span class="detail-value">
-                    Linux, Bash, systemd
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Engineering process</span>
-                  <span class="detail-value">
-                    Architecture trade study and hardware validation
-                  </span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="experience">
-      <div class="container">
-        <div class="section-heading-row reveal">
-          <div>
-            <p class="eyebrow">Engineering and technical leadership</p>
-            <h2 class="section-title">Experience</h2>
+          <div class="beyond-item">
+            <h4>Private Violin Instructor</h4>
+            <p class="meta">Self-Employed</p>
+            <p class="c">Mentor students through auditions, competitions, and long-term technical development.</p>
           </div>
-
-          <p class="section-intro">
-            Roles where I own hardware design, system integration, RTL
-            education, testing, and cross-functional engineering work.
-          </p>
-        </div>
-
-        <div class="experience-grid">
-          <article class="experience-card reveal">
-            <span class="experience-date">
-              June 2026 to Present
-            </span>
-
-            <h3 class="experience-role">
-              Undergraduate Researcher
-            </h3>
-
-            <p class="experience-org">
-              Northwestern University
-            </p>
-
-            <p class="experience-copy">
-              Develop FPGA-based field-oriented motor control on a Zynq-7000
-              SoC, including deterministic PWM, Hall decoding, sample timing,
-              fixed-point control, AXI-Lite interfaces, and fault-latched
-              shutdown.
-            </p>
-          </article>
-
-          <article class="experience-card reveal">
-            <span class="experience-date">
-              September 2025 to Present
-            </span>
-
-            <h3 class="experience-role">
-              Low-Voltage Electrical Lead
-            </h3>
-
-            <p class="experience-org">
-              Northwestern Solar Car Team
-            </p>
-
-            <p class="experience-copy">
-              Lead low-voltage systems, develop FPGA-controlled relay
-              sequencing and safety interlocks, design multilayer Altium PCBs,
-              and debug CAN and SPI communication during vehicle integration.
-            </p>
-          </article>
-
-          <article class="experience-card reveal">
-            <span class="experience-date">
-              June 2026 to Present
-            </span>
-
-            <h3 class="experience-role">
-              Digital Design Lead
-            </h3>
-
-            <p class="experience-org">
-              Northwestern University Silicon Initiative
-            </p>
-
-            <p class="experience-copy">
-              Lead RTL onboarding through SystemVerilog lessons, testbenches,
-              waveform debugging, and Cadence Xcelium, Genus, and Innovus
-              simulation-to-place-and-route workflows.
-            </p>
-          </article>
-        </div>
-
-        <div class="leadership-panel reveal">
-          <h3 class="leadership-heading">
-            Leadership Beyond Engineering
-          </h3>
-
-          <div class="leadership-grid">
-            <div class="leadership-item">
-              <h4 class="leadership-title">
-                Concertmaster
-              </h4>
-
-              <p class="leadership-meta">
-                Northwestern Philharmonia
-              </p>
-
-              <p class="leadership-copy">
-                Lead violinist and conductor liaison, selected through
-                competitive audition.
-              </p>
-            </div>
-
-            <div class="leadership-item">
-              <h4 class="leadership-title">
-                Private Violin Instructor
-              </h4>
-
-              <p class="leadership-meta">
-                Self-Employed
-              </p>
-
-              <p class="leadership-copy">
-                Mentor students through auditions, competitions, and long-term
-                technical development.
-              </p>
-            </div>
-
-            <div class="leadership-item">
-              <h4 class="leadership-title">
-                Eagle Scout
-              </h4>
-
-              <p class="leadership-meta">
-                Scouting America
-              </p>
-
-              <p class="leadership-copy">
-                Earned the rank after sustained service, troop leadership, and
-                completion of a community project.
-              </p>
-            </div>
+          <div class="beyond-item">
+            <h4>Eagle Scout</h4>
+            <p class="meta">Scouting America</p>
+            <p class="c">Earned the rank after sustained service, troop leadership, and completion of a community project.</p>
           </div>
         </div>
       </div>
-    </section>
-
-    <section class="section section-alt" id="skills">
-      <div class="container">
-        <div class="section-heading-row reveal">
-          <div>
-            <p class="eyebrow">Technical toolkit</p>
-            <h2 class="section-title">Skills</h2>
-          </div>
-
-          <p class="section-intro">
-            Tools and technical areas developed through research, team
-            engineering, coursework, and independent projects.
-          </p>
-        </div>
-
-        <div class="toolkit">
-          <div class="toolkit-card reveal">
-            <h3 class="toolkit-title">
-              RTL and Verification
-            </h3>
-
-            <p class="toolkit-copy">
-              Verilog, SystemVerilog, digital logic, finite-state machines,
-              testbenches, simulation, waveform debugging, and RTL design.
-            </p>
-          </div>
-
-          <div class="toolkit-card reveal">
-            <h3 class="toolkit-title">
-              FPGA and SoC
-            </h3>
-
-            <p class="toolkit-copy">
-              Zynq-7000, AXI-Lite, FPGA prototyping, ARM and FPGA partitioning,
-              fixed-point arithmetic, PWM, and real-time control.
-            </p>
-          </div>
-
-          <div class="toolkit-card reveal">
-            <h3 class="toolkit-title">
-              PCB and Embedded
-            </h3>
-
-            <p class="toolkit-copy">
-              Altium Designer, schematic capture, multilayer layout, DRC and
-              ERC, CAN, SPI, power sequencing, and hardware bring-up.
-            </p>
-          </div>
-
-          <div class="toolkit-card reveal">
-            <h3 class="toolkit-title">
-              Tools and Software
-            </h3>
-
-            <p class="toolkit-copy">
-              Vivado, Cadence Xcelium, Genus, Innovus, MATLAB, Simulink,
-              Python, Java, Linux, Bash, systemd, and Git.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="education">
-      <div class="container">
-        <div class="section-heading-row reveal">
-          <div>
-            <p class="eyebrow">Academic background</p>
-            <h2 class="section-title">Education</h2>
-
-            <p class="education-gpa">
-              Cumulative GPA: 3.73
-            </p>
-          </div>
-
-          <p class="section-intro">
-            A dual-degree education combining computer engineering,
-            disciplined performance, technical communication, and creative
-            problem-solving.
-          </p>
-        </div>
-
-        <div class="education-grid">
-          <article class="education-card reveal">
-            <p class="education-school">
-              Northwestern University | Expected 2028
-            </p>
-
-            <h3 class="education-degree">
-              B.S. Computer Engineering
-            </h3>
-
-            <p class="education-college">
-              McCormick School of Engineering
-            </p>
-
-            <p class="education-copy">
-              Relevant coursework includes Computer Architecture, Embedded IoT
-              Systems and Edge Computing, Advanced Digital Design, Computer
-              Engineering, Electrical Engineering, Programming, Linear
-              Algebra, and Multivariable Calculus.
-            </p>
-
-            <p class="education-note">
-              Evanston, Illinois
-            </p>
-          </article>
-
-          <article class="education-card reveal">
-            <p class="education-school">
-              Northwestern University | Expected 2028
-            </p>
-
-            <h3 class="education-degree">
-              B.M. Violin Performance
-            </h3>
-
-            <p class="education-college">
-              Bienen School of Music
-            </p>
-
-            <p class="education-copy">
-              Conservatory-level performance training centered on disciplined
-              preparation, attention to detail, musical leadership, and
-              collaboration within high-performing ensembles.
-            </p>
-
-            <p class="education-note">
-              Student of Blair Milton
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="contact" id="contact">
-      <div class="container">
-        <div class="contact-inner reveal">
-          <p class="eyebrow">Let’s build something</p>
-
-          <h2 class="contact-title">
-            Connect
-          </h2>
-
-          <p class="contact-copy">
-            I am interested in FPGA, RTL design, digital verification,
-            embedded systems, computer architecture, and hardware engineering
-            opportunities.
-          </p>
-
-          <div class="contact-links">
-            <a
-              href="mailto:kogomaspencer@gmail.com"
-              class="contact-link"
-            >
-              kogomaspencer@gmail.com
-            </a>
-
-            <a
-              href="https://www.linkedin.com/in/spencer-kogoma"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="contact-link"
-            >
-              LinkedIn
-            </a>
-
-            <a
-              href="https://github.com/spenchh"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="contact-link"
-            >
-              GitHub
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-inner">
-      <span>
-        &copy; 2026 Spencer Kogoma
-      </span>
-
-      <span>
-        FPGA | RTL | Embedded Systems | Hardware Design
-      </span>
     </div>
-  </footer>
+  </section>
 
-  <script>
-    const navLinks = document.querySelectorAll(".nav-links a");
-    const sections = document.querySelectorAll("main section[id]");
+  <!-- ============================ EDUCATION ============================ -->
+  <section class="section" id="education" aria-labelledby="education-h">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow">Academic background</p>
+          <h2 class="sec-title" id="education-h">Education</h2>
+        </div>
+        <p class="sec-intro">
+          A dual degree across McCormick and Bienen. Cumulative GPA 3.73.
+        </p>
+      </div>
 
-    function updateActiveNavigation() {
-      const scrollPosition = window.scrollY + 190;
-      let currentSection = "home";
+      <div class="edu-grid">
+        <article class="edu reveal">
+          <div class="edu-top">
+            <p class="edu-school">Northwestern University</p>
+            <p class="edu-year">Expected 2028</p>
+          </div>
+          <h3>B.S. Computer Engineering</h3>
+          <p class="college">McCormick School of Engineering</p>
+          <p class="c">
+            Relevant coursework includes Computer Architecture, Embedded IoT Systems and Edge
+            Computing, Advanced Digital Design, Computer Engineering, Electrical Engineering,
+            Programming, Linear Algebra, and Multivariable Calculus.
+          </p>
+          <p class="note">Evanston, Illinois</p>
+        </article>
 
-      sections.forEach((section) => {
-        if (section.offsetTop <= scrollPosition) {
-          currentSection = section.id;
+        <article class="edu reveal">
+          <div class="edu-top">
+            <p class="edu-school">Northwestern University</p>
+            <p class="edu-year">Expected 2028</p>
+          </div>
+          <h3>B.M. Violin Performance</h3>
+          <p class="college">Bienen School of Music</p>
+          <p class="c">
+            Conservatory-level performance training centered on disciplined preparation,
+            attention to detail, musical leadership, and collaboration within high-performing
+            ensembles.
+          </p>
+          <p class="note">Student of Blair Milton</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ RESUME / LINKS ============================ -->
+  <section class="section section-alt" id="resume" aria-labelledby="resume-h">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow">Documents and profiles</p>
+          <h2 class="sec-title" id="resume-h">Resume &amp; links</h2>
+        </div>
+        <p class="sec-intro">
+          The short version on paper, the long version in code, and the places to reach me.
+        </p>
+      </div>
+
+      <div class="links-grid">
+        <a class="link-card reveal" href="resume.pdf" target="_blank" rel="noopener noreferrer">
+          <div class="link-top">
+            <span class="link-meta">PDF</span>
+            <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v13M7 12l5 5 5-5M5 21h14"/></svg></span>
+          </div>
+          <h3>Resume</h3>
+          <p>One-page engineering resume covering research, projects, coursework, and tooling.</p>
+        </a>
+
+        <a class="link-card reveal" href="https://github.com/spenchh" target="_blank" rel="noopener noreferrer">
+          <div class="link-top">
+            <span class="link-meta">GitHub</span>
+            <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+          </div>
+          <h3>github.com/spenchh</h3>
+          <p>RTL, verification environments, embedded tooling, and this site's source.</p>
+        </a>
+
+        <a class="link-card reveal" href="https://www.linkedin.com/in/spencer-kogoma" target="_blank" rel="noopener noreferrer">
+          <div class="link-top">
+            <span class="link-meta">LinkedIn</span>
+            <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+          </div>
+          <h3>Spencer Kogoma</h3>
+          <p>Professional background, roles, and internship availability.</p>
+        </a>
+
+        <a class="link-card reveal" href="mailto:kogomaspencer@gmail.com">
+          <div class="link-top">
+            <span class="link-meta">Email</span>
+            <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+          </div>
+          <h3>kogomaspencer@gmail.com</h3>
+          <p>Fastest way to reach me about FPGA, RTL, DV, and embedded roles.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ CONTACT ============================ -->
+  <section class="contact" id="contact" aria-labelledby="contact-h">
+    <div class="container">
+      <div class="contact-inner reveal">
+        <p class="eyebrow">Let's build something</p>
+        <h2 id="contact-h">Connect</h2>
+        <p class="c">
+          I am looking for internships and opportunities in FPGA design, RTL development,
+          digital verification, ASIC and silicon-adjacent engineering, computer architecture,
+          and embedded systems — across semiconductor, aerospace and defense, robotics,
+          test and measurement, trading systems, and anywhere else the hard part is making
+          hardware behave deterministically.
+        </p>
+        <a class="contact-mail" href="mailto:kogomaspencer@gmail.com">
+          kogomaspencer@gmail.com
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <div class="contact-actions">
+          <a href="https://www.linkedin.com/in/spencer-kogoma" target="_blank" rel="noopener noreferrer" class="btn btn-primary">LinkedIn</a>
+          <a href="https://github.com/spenchh" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">GitHub</a>
+          <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">Resume</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <span>&copy; 2026 Spencer Kogoma</span>
+    <span>FPGA / RTL / Embedded Systems / Hardware Design</span>
+    <span><a href="#home">Back to top &uarr;</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- theme ---------- */
+  var root = document.documentElement;
+  var stored = null;
+  try { stored = localStorage.getItem('sk-theme'); } catch (e) {}
+  if (stored === 'light' || stored === 'dark') {
+    root.setAttribute('data-theme', stored);
+  } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+    root.setAttribute('data-theme', 'light');
+  }
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('sk-theme', next); } catch (e) {}
+  });
+
+  /* ---------- mobile nav ---------- */
+  var toggle = document.getElementById('nav-toggle');
+  var drawer = document.getElementById('drawer');
+  function setDrawer(open) {
+    drawer.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+  }
+  toggle.addEventListener('click', function () {
+    setDrawer(!drawer.classList.contains('open'));
+  });
+  drawer.addEventListener('click', function (e) {
+    if (e.target.closest('a')) setDrawer(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && drawer.classList.contains('open')) {
+      setDrawer(false);
+      toggle.focus();
+    }
+  });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 880 && drawer.classList.contains('open')) setDrawer(false);
+  });
+
+  /* ---------- scroll progress + nav border ---------- */
+  var nav = document.getElementById('nav');
+  var bar = document.getElementById('progress');
+  var ticking = false;
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+    bar.style.width = pct + '%';
+    nav.classList.toggle('scrolled', window.scrollY > 8);
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  onScroll();
+
+  /* ---------- reveal on scroll ---------- */
+  var revealables = document.querySelectorAll('.reveal');
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealables.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          revealObserver.unobserve(entry.target);
         }
       });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    revealables.forEach(function (el) { revealObserver.observe(el); });
+  }
 
-      navLinks.forEach((link) => {
-        const target = link
-          .getAttribute("href")
-          .replace("#", "");
+  /* ---------- active section highlighting ---------- */
+  var navAnchors = Array.prototype.slice.call(
+    document.querySelectorAll('.nav-links a, .mobile-drawer a')
+  );
+  var sections = navAnchors
+    .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+    .filter(function (el, i, arr) { return el && arr.indexOf(el) === i; });
 
-        link.classList.toggle(
-          "active",
-          target === currentSection
-        );
+  if ('IntersectionObserver' in window && sections.length) {
+    var visible = {};
+    var sectionObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        visible[entry.target.id] = entry.isIntersecting ? entry.intersectionRatio : 0;
       });
-    }
-
-    window.addEventListener(
-      "scroll",
-      updateActiveNavigation
-    );
-
-    window.addEventListener(
-      "load",
-      updateActiveNavigation
-    );
-
-    const revealElements =
-      document.querySelectorAll(".reveal");
-
-    if ("IntersectionObserver" in window) {
-      const revealObserver =
-        new IntersectionObserver(
-          (entries, observer) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          {
-            threshold: 0.08
-          }
-        );
-
-      revealElements.forEach((element) => {
-        revealObserver.observe(element);
+      var bestId = null, bestRatio = 0;
+      Object.keys(visible).forEach(function (id) {
+        if (visible[id] > bestRatio) { bestRatio = visible[id]; bestId = id; }
       });
-    } else {
-      revealElements.forEach((element) => {
-        element.classList.add("visible");
+      navAnchors.forEach(function (a) {
+        a.classList.toggle('active', bestId !== null && a.getAttribute('href') === '#' + bestId);
       });
-    }
-  </script>
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: [0, 0.25, 0.5, 1] });
+    sections.forEach(function (s) { sectionObserver.observe(s); });
+  }
+
+  /* ---------- logo fallback ----------
+     If a logo file is absent, drop the <img> so the monogram tile shows
+     instead of a broken-image icon. Add a logo to any entry by dropping the
+     file next to index.html and adding:
+       <img src="your-logo.svg" alt="Org logo" width="44" height="44">
+     inside that entry's .tl-logo element. */
+  Array.prototype.forEach.call(document.querySelectorAll('.tl-logo img'), function (img) {
+    img.addEventListener('error', function () { img.remove(); });
+    if (img.complete && img.naturalWidth === 0) img.remove();
+  });
+
+  /* ---------- project filtering ---------- */
+  var filters = Array.prototype.slice.call(document.querySelectorAll('.filter'));
+  var projects = Array.prototype.slice.call(document.querySelectorAll('#proj-list .proj'));
+  var countEl = document.getElementById('filter-count');
+
+  function applyFilter(key) {
+    var shown = 0;
+    projects.forEach(function (card) {
+      var tags = (card.getAttribute('data-tags') || '').split(/\s+/);
+      var match = key === 'all' || tags.indexOf(key) !== -1;
+      card.hidden = !match;
+      if (match) shown++;
+    });
+    filters.forEach(function (btn) {
+      btn.setAttribute('aria-pressed', String(btn.getAttribute('data-filter') === key));
+    });
+    countEl.textContent =
+      'Showing ' + shown + ' of ' + projects.length + ' projects' +
+      (key === 'all' ? '' : ' — filter: ' + key);
+  }
+
+  filters.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      applyFilter(btn.getAttribute('data-filter'));
+    });
+  });
+  applyFilter('all');
+})();
+</script>
 </body>
 </html>
