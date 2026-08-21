@@ -642,7 +642,7 @@ footer{padding-block:2rem;border-top:1px solid var(--line)}
   transform:scale(1.4);
 }
 @media(max-width:64rem){.rail{display:none}}
-@media(min-width:64.01rem){.has-rail .bar{display:none}}
+
 @media(prefers-reduced-motion:reduce){
   .rail .rail-t{opacity:1;transform:none}
 }
@@ -1131,3 +1131,37 @@ html:not(.snapping) body{padding-top:var(--head-h)}
 
 /* the chip also carries stroke-drawn icons, not just filled marks */
 .gh svg[stroke]{fill:none;stroke:currentColor}
+
+/* ============================================================
+   MOBILE
+   Two problems, both specific to touch:
+
+   1. Sections were sized in svh, the viewport with browser chrome
+      showing. When the address bar collapses mid-scroll the viewport
+      grows, so every snap point below shifts and a section lands off
+      centre until you nudge it. dvh tracks the live viewport instead,
+      so the snap points stay put.
+
+   2. The rail was hidden below 64rem. It now shows as dots only, with
+      the labels and numbers dropped so it stays out of the way.
+   ============================================================ */
+@media(pointer:coarse){
+  .snap,.snap:not(.hero){height:100dvh}
+  .hero{height:calc(100dvh - var(--head-h))}
+}
+
+@media(max-width:64rem){
+  .rail{
+    display:flex;
+    right:clamp(.55rem,2.2vw,1rem);
+    gap:clamp(.6rem,1.8vh,.95rem);
+    padding-right:.8rem;
+  }
+  .rail-t,.rail-n{display:none}
+  .rail a{width:.9rem;height:.9rem}
+  .rail a::after{right:.22rem;width:.42rem;height:.42rem}
+  .rail-track{right:.42rem;top:.25rem;bottom:.25rem}
+}
+
+/* the rail reports position on every size now, so the top bar stands down */
+.has-rail .bar{display:none}
