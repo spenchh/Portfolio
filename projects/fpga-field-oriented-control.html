@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/site.css?v=0806947d">
+<link rel="stylesheet" href="../assets/site.css?v=fb2d5afe">
 </head>
 <body>
 <div class="bar" aria-hidden="true"><span id="bar"></span></div>
@@ -79,24 +79,24 @@
             <span>pi_controller_q15.sv</span>
             <span>Q1.15 saturation</span>
           </figcaption>
-          <pre><code>function signed [DATA_WIDTH-1:0] clamp_data;
-    input signed [PRODUCT_WIDTH-1:0] value;
-    input signed [DATA_WIDTH-1:0] lo;
-    input signed [DATA_WIDTH-1:0] hi;
-    logic signed [PRODUCT_WIDTH-1:0] lo_ext;
-    logic signed [PRODUCT_WIDTH-1:0] hi_ext;
-    begin
-        lo_ext = {{(PRODUCT_WIDTH-DATA_WIDTH){lo[DATA_WIDTH-1]}}, lo};
-        hi_ext = {{(PRODUCT_WIDTH-DATA_WIDTH){hi[DATA_WIDTH-1]}}, hi};
+          <pre><code><span class="tk">function</span> <span class="tk">signed</span> <span class="tp">[</span>DATA_WIDTH<span class="tp">-</span><span class="tn">1</span><span class="tp">:</span><span class="tn">0</span><span class="tp">]</span> clamp_data<span class="tp">;</span>
+    <span class="tk">input</span> <span class="tk">signed</span> <span class="tp">[</span>PRODUCT_WIDTH<span class="tp">-</span><span class="tn">1</span><span class="tp">:</span><span class="tn">0</span><span class="tp">]</span> value<span class="tp">;</span>
+    <span class="tk">input</span> <span class="tk">signed</span> <span class="tp">[</span>DATA_WIDTH<span class="tp">-</span><span class="tn">1</span><span class="tp">:</span><span class="tn">0</span><span class="tp">]</span> lo<span class="tp">;</span>
+    <span class="tk">input</span> <span class="tk">signed</span> <span class="tp">[</span>DATA_WIDTH<span class="tp">-</span><span class="tn">1</span><span class="tp">:</span><span class="tn">0</span><span class="tp">]</span> hi<span class="tp">;</span>
+    <span class="tk">logic</span> <span class="tk">signed</span> <span class="tp">[</span>PRODUCT_WIDTH<span class="tp">-</span><span class="tn">1</span><span class="tp">:</span><span class="tn">0</span><span class="tp">]</span> lo_ext<span class="tp">;</span>
+    <span class="tk">logic</span> <span class="tk">signed</span> <span class="tp">[</span>PRODUCT_WIDTH<span class="tp">-</span><span class="tn">1</span><span class="tp">:</span><span class="tn">0</span><span class="tp">]</span> hi_ext<span class="tp">;</span>
+    <span class="tk">begin</span>
+        lo_ext <span class="tp">=</span> <span class="tp">{{(</span>PRODUCT_WIDTH<span class="tp">-</span>DATA_WIDTH<span class="tp">){</span>lo<span class="tp">[</span>DATA_WIDTH<span class="tp">-</span><span class="tn">1</span><span class="tp">]}},</span> lo<span class="tp">};</span>
+        hi_ext <span class="tp">=</span> <span class="tp">{{(</span>PRODUCT_WIDTH<span class="tp">-</span>DATA_WIDTH<span class="tp">){</span>hi<span class="tp">[</span>DATA_WIDTH<span class="tp">-</span><span class="tn">1</span><span class="tp">]}},</span> hi<span class="tp">};</span>
 
-        if (value &gt; hi_ext)
-            clamp_data = hi;
-        else if (value &lt; lo_ext)
-            clamp_data = lo;
-        else
-            clamp_data = value[DATA_WIDTH-1:0];
-    end
-endfunction</code></pre>
+        <span class="tk">if</span> <span class="tp">(</span>value <span class="tp">&gt;</span> hi_ext<span class="tp">)</span>
+            clamp_data <span class="tp">=</span> hi<span class="tp">;</span>
+        <span class="tk">else</span> <span class="tk">if</span> <span class="tp">(</span>value <span class="tp">&lt;</span> lo_ext<span class="tp">)</span>
+            clamp_data <span class="tp">=</span> lo<span class="tp">;</span>
+        <span class="tk">else</span>
+            clamp_data <span class="tp">=</span> value<span class="tp">[</span>DATA_WIDTH<span class="tp">-</span><span class="tn">1</span><span class="tp">:</span><span class="tn">0</span><span class="tp">];</span>
+    <span class="tk">end</span>
+<span class="tk">endfunction</span></code></pre>
         </figure>
 
         <p>
@@ -127,21 +127,21 @@ endfunction</code></pre>
             <span>pwm_3phase_center_aligned.v</span>
             <span>Shoot-through guard</span>
           </figcaption>
-          <pre><code>wire [COUNTER_WIDTH:0] two_nonoverlap_shadow_ext =
-    {1'b0, nonoverlap_shadow} &lt;&lt; 1;
+          <pre><code><span class="tk">wire</span> <span class="tp">[</span>COUNTER_WIDTH<span class="tp">:</span><span class="tn">0</span><span class="tp">]</span> two_nonoverlap_shadow_ext <span class="tp">=</span>
+    <span class="tp">{</span><span class="tn">1'b0</span><span class="tp">,</span> nonoverlap_shadow<span class="tp">}</span> <span class="tp">&lt;&lt;</span> <span class="tn">1</span><span class="tp">;</span>
 
-wire shadow_config_valid =
-    (period_shadow != {COUNTER_WIDTH{1'b0}}) &amp;&amp;
-    (nonoverlap_shadow &lt; period_shadow)      &amp;&amp;
-    (two_nonoverlap_shadow_ext &lt; period_shadow_ext) &amp;&amp;
-    (duty_a_shadow &lt;= period_shadow) &amp;&amp;
-    (duty_b_shadow &lt;= period_shadow) &amp;&amp;
-    (duty_c_shadow &lt;= period_shadow);
+<span class="tk">wire</span> shadow_config_valid <span class="tp">=</span>
+    <span class="tp">(</span>period_shadow <span class="tp">!=</span> <span class="tp">{</span>COUNTER_WIDTH<span class="tp">{</span><span class="tn">1'b0</span><span class="tp">}})</span> <span class="tp">&amp;&amp;</span>
+    <span class="tp">(</span>nonoverlap_shadow <span class="tp">&lt;</span> period_shadow<span class="tp">)</span>      <span class="tp">&amp;&amp;</span>
+    <span class="tp">(</span>two_nonoverlap_shadow_ext <span class="tp">&lt;</span> period_shadow_ext<span class="tp">)</span> <span class="tp">&amp;&amp;</span>
+    <span class="tp">(</span>duty_a_shadow <span class="tp">&lt;=</span> period_shadow<span class="tp">)</span> <span class="tp">&amp;&amp;</span>
+    <span class="tp">(</span>duty_b_shadow <span class="tp">&lt;=</span> period_shadow<span class="tp">)</span> <span class="tp">&amp;&amp;</span>
+    <span class="tp">(</span>duty_c_shadow <span class="tp">&lt;=</span> period_shadow<span class="tp">);</span>
 
-wire active = enable &amp;&amp; !pwm_inhibit &amp;&amp; !configuration_error;
+<span class="tk">wire</span> active <span class="tp">=</span> enable <span class="tp">&amp;&amp;</span> <span class="tp">!</span>pwm_inhibit <span class="tp">&amp;&amp;</span> <span class="tp">!</span>configuration_error<span class="tp">;</span>
 
-wire hi_a_next = active &amp;&amp; ((counter_ext + nonoverlap_ext) &lt; duty_a_ext);
-wire lo_a_next = active &amp;&amp; (counter_ext &gt; (duty_a_ext + nonoverlap_ext));</code></pre>
+<span class="tk">wire</span> hi_a_next <span class="tp">=</span> active <span class="tp">&amp;&amp;</span> <span class="tp">((</span>counter_ext <span class="tp">+</span> nonoverlap_ext<span class="tp">)</span> <span class="tp">&lt;</span> duty_a_ext<span class="tp">);</span>
+<span class="tk">wire</span> lo_a_next <span class="tp">=</span> active <span class="tp">&amp;&amp;</span> <span class="tp">(</span>counter_ext <span class="tp">&gt;</span> <span class="tp">(</span>duty_a_ext <span class="tp">+</span> nonoverlap_ext<span class="tp">));</span></code></pre>
         </figure>
 
         <p>

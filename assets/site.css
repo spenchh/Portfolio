@@ -672,3 +672,9 @@ footer{padding-block:2rem;border-top:1px solid var(--line)}
 }
 .gh svg{width:1.15em;height:1.15em;fill:currentColor;flex:none}
 .gh:hover{background:var(--green);color:#fff;border-color:var(--green);transform:translateY(-.12rem)}
+
+/* code tokens — green for keywords, deeper green for literals */
+.code .tk{color:var(--green);font-weight:600}
+.code .tn{color:var(--green-deep);font-weight:500}
+.code .tp{color:var(--text-dim)}
+.code .tc{color:var(--text-dim);font-style:italic}
