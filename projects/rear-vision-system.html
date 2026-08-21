@@ -73,9 +73,17 @@
 
         <h2>Unattended operation</h2>
         <p>
-          Nobody logs into the vehicle to start a video feed. Startup and recovery are
-          automated with Linux, Bash, and systemd, so the display comes up headless with
-          power and restarts itself if the pipeline dies.
+          Nobody logs into the vehicle to start a video feed. I wrote the startup
+          scripting that brings the system up headless on power, applying the camera and
+          display settings chosen during the trade study rather than whatever the device
+          defaults to, and a systemd unit supervises it so the feed restarts itself if the
+          pipeline dies.
+        </p>
+        <p>
+          That matters because the settings are the design. Resolution, framerate, and
+          the display path were picked to hold the latency budget, so a boot that quietly
+          fell back to defaults would give the driver a working picture with the wrong
+          delay.
         </p>
 
         <h2>Choosing the design</h2>
