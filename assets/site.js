@@ -188,4 +188,131 @@
     }, { rootMargin: '-45% 0px -45% 0px', threshold: [0, 0.3, 0.7, 1] });
     secs.forEach(function (s) { so.observe(s); });
   }
+  /* ---------- waveform canvas ----------
+     A scrolling timing diagram drawn with the Canvas API: clock, a valid
+     strobe, and a data bus that opens only while valid is asserted. The
+     pattern is generated from the cycle index, so it stays stable as it
+     scrolls and survives a resize without jumping. */
+  var wave = document.getElementById('wave');
+  if (wave && wave.getContext) {
+    var ctx = wave.getContext('2d');
+    var W = 0, H = 0, dpr = 1;
+    var CYCLE = 38;
+    var LABEL = 58;
+    var NAMES = ['CLK', 'VALID', 'DATA'];
+    var visible = true;
+
+    function fit() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var r = wave.getBoundingClientRect();
+      W = Math.max(1, Math.round(r.width));
+      H = Math.max(1, Math.round(r.height));
+      wave.width = Math.round(W * dpr);
+      wave.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    /* deterministic per-cycle bit, so the waveform is repeatable */
+    function bit(n) {
+      var x = Math.sin(n * 12.9898) * 43758.5453;
+      return (x - Math.floor(x)) > 0.52;
+    }
+
+    function draw(offset) {
+      ctx.clearRect(0, 0, W, H);
+
+      var rows = NAMES.length;
+      var pad = Math.max(6, H * 0.1);
+      var rowH = (H - pad * 2) / rows;
+      var amp = Math.min(rowH * 0.3, 10);
+
+      ctx.font = '600 9px Inter, system-ui, -apple-system, sans-serif';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = 'rgba(154,157,162,1)';
+      for (var r = 0; r < rows; r++) {
+        ctx.fillText(NAMES[r], 0, pad + rowH * r + rowH / 2);
+      }
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(LABEL, 0, Math.max(0, W - LABEL), H);
+      ctx.clip();
+      ctx.lineWidth = 1.4;
+      ctx.lineJoin = 'round';
+
+      var c0 = Math.floor(offset / CYCLE);
+      var xoff = LABEL - (offset % CYCLE);
+      var count = Math.ceil((W - LABEL) / CYCLE) + 2;
+
+      for (var row = 0; row < rows; row++) {
+        var mid = pad + rowH * row + rowH / 2;
+        var hi = mid - amp, lo = mid + amp;
+        ctx.beginPath();
+        ctx.strokeStyle = row === 0 ? 'rgba(47,97,53,.45)'
+                        : row === 1 ? 'rgba(47,97,53,.8)'
+                                    : 'rgba(23,24,26,.3)';
+
+        for (var i = 0; i < count; i++) {
+          var c = c0 + i;
+          var x = xoff + i * CYCLE;
+          var xe = x + CYCLE;
+
+          if (row === 0) {
+            /* clock: high for the first half of every cycle */
+            var xm = x + CYCLE / 2;
+            ctx.moveTo(x, hi); ctx.lineTo(xm, hi);
+            ctx.lineTo(xm, lo); ctx.lineTo(xe, lo);
+            ctx.lineTo(xe, hi);
+          } else if (row === 1) {
+            /* valid: level per cycle, with the edge drawn at the boundary */
+            var v = bit(c), vn = bit(c + 1);
+            var y = v ? hi : lo;
+            ctx.moveTo(x, y); ctx.lineTo(xe, y);
+            if (v !== vn) { ctx.moveTo(xe, hi); ctx.lineTo(xe, lo); }
+          } else {
+            /* data: a bus that opens while valid, and idles as one line */
+            var d = bit(c), dn = bit(c + 1);
+            var k = Math.min(4, CYCLE * 0.16);
+            if (d) {
+              ctx.moveTo(x + k, hi); ctx.lineTo(xe - k, hi);
+              ctx.moveTo(x + k, lo); ctx.lineTo(xe - k, lo);
+              ctx.moveTo(x, mid); ctx.lineTo(x + k, hi);
+              ctx.moveTo(x, mid); ctx.lineTo(x + k, lo);
+              if (!dn) {
+                ctx.moveTo(xe - k, hi); ctx.lineTo(xe, mid);
+                ctx.moveTo(xe - k, lo); ctx.lineTo(xe, mid);
+              } else {
+                ctx.moveTo(xe - k, hi); ctx.lineTo(xe, mid); ctx.lineTo(xe - k, lo);
+              }
+            } else {
+              ctx.moveTo(x, mid); ctx.lineTo(xe, mid);
+            }
+          }
+        }
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    fit();
+    window.addEventListener('resize', function () { fit(); if (reduce) draw(0); });
+
+    if (reduce) {
+      draw(0);
+    } else {
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          visible = es[0].isIntersecting;
+        }, { threshold: 0 }).observe(wave);
+      }
+      var last = 0, off = 0;
+      (function tickWave(t) {
+        var dt = last ? Math.min(t - last, 64) : 16;
+        last = t;
+        if (visible) { off = (off + dt * 0.022) % 1e7; draw(off); }
+        window.requestAnimationFrame(tickWave);
+      })(0);
+    }
+  }
+
 })();
