@@ -4,17 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>10GbE FPGA Tick-to-Trade Datapath &mdash; Spencer Kogoma</title>
-<meta name="description" content="A simulation-first FPGA datapath studying deterministic networking, streaming packet parsing, fixed-point decision logic, and hardware-enforced risk checks.">
+<meta name="description" content="A SystemVerilog datapath that parses 10G market data, tracks book state, runs fixed-point decision and risk logic in fabric, and targets measured latency on real hardware.">
 <meta name="author" content="Spencer Kogoma">
 <meta name="theme-color" content="#ffffff">
 <meta property="og:title" content="10GbE FPGA Tick-to-Trade Datapath">
-<meta property="og:description" content="A simulation-first FPGA datapath studying deterministic networking, streaming packet parsing, fixed-point decision logic, and hardware-enforced risk checks.">
+<meta property="og:description" content="A SystemVerilog datapath that parses 10G market data, tracks book state, runs fixed-point decision and risk logic in fabric, and targets measured latency on real hardware.">
 <meta property="og:type" content="article">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6135'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='24' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ESK%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/site.css?v=ec27989a">
+<link rel="stylesheet" href="../assets/site.css?v=9d262e20">
 </head>
 <body>
 <div class="bar" aria-hidden="true"><span id="bar"></span></div>
@@ -33,14 +33,19 @@
 <main>
   <section class="ph">
     <div class="shell">
-      <a class="back" href="../index.html#work">&larr; All work</a>
+      <a class="back" href="../work.html">&larr; All work</a>
       <span class="label">Project 01 / SystemVerilog / Active</span>
       <h1>10GbE FPGA<br>Tick-to-Trade Datapath</h1>
-      <p class="sub">A simulation-first FPGA datapath for low-latency market-data processing and order-decision logic. The trading workload is a forcing function for the real subject: deterministic networking, streaming packet parsing, fixed-point decision logic, and risk checks enforced in hardware rather than software.</p>
+      <p class="sub">
+        A SystemVerilog hardware and software system that takes market-data packets off a
+        10G network path, parses them, updates book state, runs fixed-point decision and
+        risk logic, emits simulated order messages, and proves latency and timing on real
+        hardware.
+      </p>
       <dl class="facts">
         <div><dt>Stack</dt><dd>SystemVerilog, Python, cocotb, C++20</dd></div>
-        <div><dt>Focus</dt><dd>10GbE, UDP/IP, streaming parsers, risk gating</dd></div>
-        <div><dt>Method</dt><dd>Simulation-first, reference model and scoreboard</dd></div>
+        <div><dt>Target hardware</dt><dd>Kria KR260, SFP+ 10G</dd></div>
+        <div><dt>Method</dt><dd>Simulation-first, then hardware bring-up</dd></div>
         <div><dt>Status</dt><dd>Active development</dd></div>
       </dl>
     </div>
@@ -51,63 +56,115 @@
       <div class="prose">
         <div class="callout">
           <p>
-            <strong>Status.</strong> This project is in active development. No latency
-            has been measured, no timing has been closed, nothing has run on hardware,
-            and nothing is connected to any live or production trading system. The
-            evidence listed at the bottom of this page consists of <strong>targets</strong>,
-            not results.
+            <strong>Status.</strong> This project is in active development. Timing has not
+            been closed, nothing has run on hardware, no latency has been measured, and
+            nothing is connected to any live or production trading system. Everything under
+            <em>Evidence</em> and <em>Acceptance criteria</em> below is a
+            <strong>target</strong>, written down so the goalposts cannot move.
           </p>
         </div>
 
         <h2>Why this workload</h2>
         <p>
-          Market data is one of the most demanding latency targets available to study,
-          which makes it a useful forcing function. The engineering problems underneath
-          are general: parse a protocol at line rate, keep a pipeline from stalling
-          unpredictably, do arithmetic in fixed point inside fabric, and enforce an
-          interlock that software cannot override. The same problems appear in radar and
-          avionics front ends, robotics, industrial control, and network equipment.
+          Market data is one of the most demanding latency targets available to study, which
+          makes it a useful forcing function. The engineering problems underneath are general:
+          parse a protocol at line rate, keep a pipeline from stalling unpredictably, do
+          arithmetic in fixed point inside fabric, and enforce an interlock that software
+          cannot override. The same problems appear in radar and avionics front ends,
+          robotics, industrial control, and network equipment.
         </p>
 
-        <h2>The pipeline</h2>
-        <ul>
-          <li><strong>10GbE ingress.</strong> MAC and stream interface, framing.</li>
-          <li><strong>UDP/IP parse.</strong> Header strip, filtering, checksum.</li>
-          <li><strong>Market-data decode.</strong> Message framing and field extraction.</li>
-          <li><strong>Symbol and book state.</strong> Per-symbol tracking with deterministic update behavior.</li>
-          <li><strong>Decision logic.</strong> Fixed-point evaluation.</li>
-          <li><strong>Risk gate.</strong> Hardware-enforced checks that no order may bypass.</li>
-          <li><strong>Order and cancel encode.</strong> Message build and TX egress.</li>
-        </ul>
+        <h2>Scope discipline</h2>
         <p>
-          Stages are streaming and back-pressure aware. The structural rule is that no
-          path reaches egress without passing the risk gate.
+          The plan is deliberately narrow. No reinforcement learning, no full exchange
+          protocol coverage, and no TCP stack. Each of those would widen the surface area
+          faster than it could be verified, and an unfocused system is easier to dismiss than
+          a small one that is measured end to end. The target is a clean, verified,
+          hardware-tested networking datapath.
+        </p>
+
+        <h2>The datapath</h2>
+        <p>
+          Every stage in the critical path is original RTL rather than assembled IP. That is
+          the point of the exercise &mdash; the interesting decisions live in the parser and
+          the pipeline, not in the wiring.
+        </p>
+        <ul>
+          <li><strong>10G ingress.</strong> SFP+ path into a MAC and streaming interface.</li>
+          <li><strong>UDP/IP parse.</strong> Header strip, filtering, checksum, framing.</li>
+          <li><strong>Market-data decode.</strong> Message framing and field extraction.</li>
+          <li><strong>Book state.</strong> Per-symbol tracking with deterministic top-of-book updates.</li>
+          <li><strong>Decision logic.</strong> Fixed-point evaluation in the datapath.</li>
+          <li><strong>Risk gate.</strong> Hardware-enforced checks that no order may bypass.</li>
+          <li><strong>Order encode.</strong> Message build and TX egress.</li>
+          <li><strong>Latency counters.</strong> Cycle stamps at each stage boundary, for accounting rather than estimation.</li>
+        </ul>
+
+        <h2>Target hardware</h2>
+        <p>
+          A Kria KR260 is the intended board: it carries an SFP+ cage alongside four RJ45
+          ports at a price that makes a personal project realistic. Alveo-class cards are
+          closer to production trading hardware and correspondingly far more expensive; the
+          engineering being demonstrated does not depend on the price of the board.
         </p>
 
         <h2>Verification</h2>
         <p>
-          Python and cocotb drive the environment: packet generation for synthetic
-          market data, golden-model comparison against a Python reference, randomized
-          and constrained stimulus, scoreboard checking, and a harness for cycle-level
-          latency accounting across stages.
+          Python and cocotb drive the environment, and the failure cases matter more than the
+          happy path:
         </p>
+        <ul>
+          <li>Randomized packet streams compared against a Python golden model.</li>
+          <li>Malformed packets, truncated frames, and bad checksums.</li>
+          <li>Sequence gaps, so recovery behaviour is defined rather than discovered.</li>
+          <li>Reset behaviour mid-stream.</li>
+          <li>Back-pressure, so a stalled downstream cannot corrupt book state.</li>
+        </ul>
 
         <h2>Host tooling</h2>
         <p>
-          C++20 tools handle replay, control, and logging, driving simulated market data
-          into the design, configuring risk parameters, and collecting structured debug
-          evidence from runs.
+          C++20 software on the host side: packet replay, control register access, risk
+          parameter configuration, structured logging, and a simulated exchange and order
+          sink so the egress path has somewhere to land.
         </p>
 
-        <h2>Evidence targets</h2>
-        <p>Artifacts I am working toward, stated so the goalposts are explicit:</p>
+        <h2>Evidence</h2>
+        <p>Artifacts the project is working toward, none of them yet produced:</p>
         <ul>
-          <li>Self-checking test suite across the parse, decode, decision, and risk stages.</li>
-          <li>Synthesis and implementation timing reports.</li>
-          <li>Cycle-level tick-to-trade latency accounting, first in simulation.</li>
-          <li>Waveform and packet captures documenting correct and fault-path behavior.</li>
-          <li>Directed tests proving no order reaches egress while a risk condition is asserted.</li>
-          <li>Eventual bring-up on an FPGA with a 10GbE interface.</li>
+          <li>Synthesis and implementation timing reports at the target clock.</li>
+          <li>Resource utilisation reports.</li>
+          <li>Waveform captures from simulation, and ILA captures from hardware.</li>
+          <li>Packet-to-decision latency in both cycles and nanoseconds.</li>
+          <li>A technical write-up covering architecture, the latency breakdown, verification
+              strategy, limitations, and next steps.</li>
+        </ul>
+
+        <h2>Acceptance criteria</h2>
+        <p>
+          The project is finished when every line below can be stated as fact. Until then
+          they are open items.
+        </p>
+        <ul class="crit">
+          <li>Closes timing at the target clock frequency.</li>
+          <li>Runs on real FPGA hardware.</li>
+          <li>Parses market-data-style UDP packets.</li>
+          <li>Maintains deterministic book and top-of-book state.</li>
+          <li>Enforces hardware risk checks that cannot be bypassed.</li>
+          <li>Verified with randomized cocotb tests against a Python golden model.</li>
+          <li>Controlled and replayed from C++ host software.</li>
+          <li>Packet-to-decision latency measured in cycles and nanoseconds.</li>
+          <li>Timing, resource, and latency tradeoffs documented in a technical report.</li>
+        </ul>
+
+        <h2>References</h2>
+        <p>
+          Latency claims should be measured against published baselines rather than asserted,
+          so these are the references the work is being checked against:
+        </p>
+        <ul>
+          <li><a href="https://docs.amd.com/r/en-US/pg210-25g-ethernet/Latency" target="_blank" rel="noopener noreferrer">AMD PG210 &mdash; 10G/25G Ethernet latency</a>, for MAC and PCS latency figures.</li>
+          <li><a href="https://www.amd.com/en/products/system-on-modules/kria/k26/kr260-robotics-starter-kit.html" target="_blank" rel="noopener noreferrer">Kria KR260 specifications</a>, for the SFP+ and Ethernet interfaces.</li>
+          <li><a href="https://docs.corundum.io/en/latest/modules/mqnic_app_block.html" target="_blank" rel="noopener noreferrer">Corundum application block</a>, for low-latency streaming and AXI-Lite control patterns around custom logic.</li>
         </ul>
       </div>
     </div>
@@ -115,7 +172,7 @@
 
   <div class="shell">
     <div class="pager">
-      <a class="back" href="../index.html#work">&larr; All work</a>
+      <a class="back" href="../work.html">&larr; All work</a>
       <a class="out" href="fpga-field-oriented-control.html">Next: Field-oriented control &rarr;</a>
     </div>
   </div>

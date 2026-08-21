@@ -1170,3 +1170,11 @@ html:not(.snapping) body{padding-top:var(--head-h)}
    the clip box or the top of the tile is cut off */
 .belt{padding-block:.6rem}
 .belt-item:hover .belt-ico{transform:translateY(-.12rem)}
+
+/* acceptance criteria read as a checklist of open items */
+.prose ul.crit{gap:.55rem}
+.prose ul.crit li{padding-left:1.6rem;font-size:.92rem}
+.prose ul.crit li::before{
+  content:"";position:absolute;left:0;top:.42em;width:.75rem;height:.75rem;
+  border:1px solid var(--line-strong);border-radius:.2rem;background:none;
+}
