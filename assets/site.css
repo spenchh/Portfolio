@@ -1195,3 +1195,19 @@ html:not(.snapping) body{padding-top:var(--head-h)}
 /* a course dropdown carries no role line, so the title takes the space */
 .drop summary .drop-t{margin-right:auto;text-align:left}
 .drop summary{justify-content:space-between}
+
+/* project state, inline with the title so no row is added */
+.row-title{display:flex;align-items:center;justify-content:center;gap:.55rem;flex-wrap:wrap}
+.row-state{
+  display:inline-flex;align-items:center;gap:.35rem;
+  padding:.12rem .5rem;border:1px solid var(--line);border-radius:999px;
+  font-family:var(--sans);font-size:.56rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;line-height:1.7;color:var(--text-dim);
+  white-space:nowrap;
+}
+.row-state::before{
+  content:"";width:.34rem;height:.34rem;border-radius:50%;
+  background:var(--text-dim);flex:none;
+}
+.row-state.is-active{color:var(--green);border-color:rgba(47,97,53,.32)}
+.row-state.is-active::before{background:var(--green)}
