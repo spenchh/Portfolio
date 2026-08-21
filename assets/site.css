@@ -1171,10 +1171,6 @@ html:not(.snapping) body{padding-top:var(--head-h)}
 .belt{padding-block:.6rem}
 .belt-item:hover .belt-ico{transform:translateY(-.12rem)}
 
-/* acceptance criteria read as a checklist of open items */
-.prose ul.crit{gap:.55rem}
-.prose ul.crit li{padding-left:1.6rem;font-size:.92rem}
-.prose ul.crit li::before{
   content:"";position:absolute;left:0;top:.42em;width:.75rem;height:.75rem;
   border:1px solid var(--line-strong);border-radius:.2rem;background:none;
 }
@@ -1190,3 +1186,7 @@ html:not(.snapping) body{padding-top:var(--head-h)}
   stroke-linecap:round;stroke-linejoin:round;
   height:clamp(.85rem,2vw,1.05rem);width:auto;
 }
+
+/* the source button, sitting with the page header */
+.ph-cta{margin-top:clamp(1.2rem,3vw,1.8rem)}
+.ph-cta .gh{margin-top:0}
