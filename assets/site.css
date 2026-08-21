@@ -896,7 +896,7 @@ html{scroll-padding-top:var(--head-h)}
 /* --- Northwestern block --- */
 .edu-grid{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden}
 @media(min-width:36rem){.edu-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(min-width:60rem){.edu-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:60rem){.edu-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .edu-card{background:var(--bg);padding:clamp(1.1rem,2.6vw,1.6rem)}
 .edu-card h3{
   font-family:var(--display);font-weight:900;text-transform:uppercase;
