@@ -1141,3 +1141,7 @@ html:not(.snapping) body{padding-top:var(--head-h)}
    margin; the fixed header is already handled by their padding.
    ============================================================ */
 .snap{scroll-margin:0}
+
+/* the conveyor points at where the tools are actually used */
+.see-wrap{text-align:center;margin-top:clamp(1.2rem,3.5vh,2.2rem)}
+.see-wrap .out{margin-top:0}
