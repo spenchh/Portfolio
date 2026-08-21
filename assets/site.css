@@ -1130,3 +1130,14 @@ html{scroll-padding-top:0}
 
 /* pages that do not snap still need clearance under the fixed header */
 html:not(.snapping) body{padding-top:var(--head-h)}
+
+/* ============================================================
+   THE ACTUAL OFF-CENTRE CAUSE
+   .sec carries scroll-margin-top:4.5rem, meant for anchor jumps on the
+   sub-pages. Technical and More also carry .sec, and scroll-margin
+   expands an element's snap area, so the browser stopped 4.5rem short
+   and their content sat that much lower. The hero has no .sec class,
+   which is why it alone looked right. Snapped sections take no scroll
+   margin; the fixed header is already handled by their padding.
+   ============================================================ */
+.snap{scroll-margin:0}
