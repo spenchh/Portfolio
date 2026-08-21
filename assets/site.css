@@ -978,3 +978,44 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0;display:none}
 /* the band, opening a sub-page */
 .page-intro{padding-block:clamp(1.5rem,5vh,2.5rem) 0}
 .page-intro .band{border:0;padding-block:0;margin:0}
+
+/* ============================================================
+   SNAPPING, ON THE ACTUAL SCROLL CONTAINER
+   This was previously set on <body>, which is not the scroller, so it
+   never took effect. scroll-snap-stop:always is what makes a section
+   hold before the next one is allowed.
+   ============================================================ */
+html.snapping{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+@media(max-height:38rem){html.snapping{scroll-snap-type:none}}
+@media(prefers-reduced-motion:reduce){html.snapping{scroll-snap-type:none}}
+
+/* ============================================================
+   HERO FITS ONE SCREEN
+   Sizes are capped by viewport height as well as width, so on a short
+   laptop window the type shrinks rather than pushing the waveform off
+   the bottom of the first screen.
+   ============================================================ */
+.hero{
+  height:100svh;
+  padding-block:clamp(3.2rem,6.5vh,4.5rem) 0;
+  justify-content:space-between;
+}
+.hero > .shell{flex:1 1 auto;min-height:0;justify-content:center}
+.name{
+  font-size:clamp(2.4rem,min(14vw,10.5vh),7rem);
+  line-height:.88;
+}
+.hero .intro{
+  font-size:clamp(.9rem,min(3.4vw,2vh),1.1rem);
+  margin-top:clamp(.7rem,1.8vh,1.3rem);
+}
+.at{margin-top:clamp(.9rem,2.4vh,1.7rem)}
+.at-mark{height:clamp(1.15rem,min(4.4vw,2.6vh),1.6rem)}
+.at-text{font-size:clamp(.62rem,min(2.4vw,1.5vh),.76rem)}
+.hero .big-links{margin-top:clamp(1rem,3vh,2.2rem);gap:clamp(.35rem,1.1vh,.7rem)}
+.hero .big-link{font-size:clamp(.95rem,min(4.2vw,2.7vh),1.5rem)}
+.wave{flex:none;margin-top:clamp(.7rem,2vh,1.6rem)}
+.wave canvas{height:clamp(3.2rem,8vh,5.5rem)}
+@media(max-height:38rem){
+  .hero{height:auto;min-height:0;padding-block:clamp(3rem,8vh,4.5rem)}
+}
