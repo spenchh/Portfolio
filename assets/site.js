@@ -186,68 +186,6 @@
     }, { rootMargin: '-45% 0px -45% 0px', threshold: [0, 0.3, 0.7, 1] });
     secs.forEach(function (s) { so.observe(s); });
   }
-  /* ---------- sectioned scrolling ----------
-     Native snap stops at each section but arrives instantly. On a
-     desktop pointer this takes over and eases between sections over
-     ~820ms, holding briefly before the next move is accepted. Touch
-     and short viewports keep the native behaviour. */
-  var snapEls = Array.prototype.slice.call(document.querySelectorAll('.snap'));
-  if (snapEls.length > 1 && !reduce &&
-      window.matchMedia('(pointer: fine)').matches &&
-      window.innerHeight > 620) {
-
-    document.body.classList.remove('snapping');   /* JS drives it now */
-
-    var busy = false;
-    var DUR = 820;
-    var HOLD = 260;
-
-    function nearestIndex() {
-      var y = window.scrollY, best = 0, d = Infinity;
-      snapEls.forEach(function (el, i) {
-        var dist = Math.abs(el.offsetTop - y);
-        if (dist < d) { d = dist; best = i; }
-      });
-      return best;
-    }
-
-    function easeInOutCubic(x) {
-      return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
-    }
-
-    function goTo(i) {
-      i = Math.max(0, Math.min(snapEls.length - 1, i));
-      var from = window.scrollY;
-      var to = snapEls[i].offsetTop;
-      if (Math.abs(to - from) < 2) return;
-      busy = true;
-      var t0 = 0;
-      (function step(t) {
-        if (!t0) t0 = t;
-        var k = Math.min(1, (t - t0) / DUR);
-        window.scrollTo(0, from + (to - from) * easeInOutCubic(k));
-        if (k < 1) window.requestAnimationFrame(step);
-        else setTimeout(function () { busy = false; }, HOLD);
-      })(0);
-    }
-
-    window.addEventListener('wheel', function (e) {
-      if (Math.abs(e.deltaY) < 4) return;
-      if (e.ctrlKey) return;                       /* leave pinch-zoom alone */
-      e.preventDefault();
-      if (busy) return;
-      goTo(nearestIndex() + (e.deltaY > 0 ? 1 : -1));
-    }, { passive: false });
-
-    window.addEventListener('keydown', function (e) {
-      if (busy) return;
-      if (e.key === 'PageDown' || e.key === 'PageUp') {
-        e.preventDefault();
-        goTo(nearestIndex() + (e.key === 'PageDown' ? 1 : -1));
-      }
-    });
-  }
-
   /* ---------- waveform canvas ----------
      A scrolling timing diagram drawn with the Canvas API: clock, a valid
      strobe, and a data bus that opens only while valid is asserted. The

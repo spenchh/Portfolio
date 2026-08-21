@@ -717,7 +717,7 @@ footer{padding-block:2rem;border-top:1px solid var(--line)}
    viewport is too short to hold a section, so nothing gets trapped.
    ============================================================ */
 html{scroll-padding-top:var(--head-h)}
-.snapping{scroll-snap-type:y mandatory}
+.snapping{scroll-snap-type:y mandatory;scroll-behavior:smooth}
 .snap{
   min-height:100vh;
   min-height:100svh;
@@ -894,3 +894,15 @@ html{scroll-padding-top:var(--head-h)}
 /* sub-pages: no snapping, room to breathe */
 .page-sec{padding-block:clamp(1.5rem,5vh,2.5rem) 0;text-align:center}
 .sec-flush{padding-top:clamp(1.5rem,4vh,2.5rem)}
+
+/* --- hero children centre properly inside the flex column --- */
+.hero > .shell{align-items:center}
+.hero > .shell > *{max-width:100%}
+.hero .name,.hero .intro,.hero .big-links{width:100%}
+
+/* --- the band now introduces the conveyor --- */
+.sec .band{
+  border:0;padding-block:0;
+  margin-top:clamp(.6rem,2vh,1.2rem);
+  margin-bottom:clamp(.4rem,1.5vh,1rem);
+}
