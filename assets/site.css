@@ -338,11 +338,11 @@ footer{padding-block:2rem;border-top:1px solid var(--line)}
   font-size:clamp(2rem,6.4vw,4.3rem);
   font-weight:700;letter-spacing:-.045em;line-height:1.28;
 }
-.rot-i{display:block;position:relative;transition:transform .9s var(--spring)}
+.rot-i{display:block;position:relative;transition:transform .62s var(--spring)}
 .rot-i b{
   display:block;height:1.28em;line-height:1.28em;font-weight:600;
   padding-inline:.06em;color:var(--green);white-space:nowrap;
-  transition:opacity .55s var(--ease),filter .55s var(--ease);
+  transition:opacity .4s var(--ease),filter .4s var(--ease);
 }
 .rot-i b[data-off]{opacity:.18;filter:blur(.07em)}
 

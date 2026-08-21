@@ -126,7 +126,7 @@
         idx = (idx + 1) % words.length;
         inner.style.transform = 'translateY(-' + (idx * 1.28) + 'em)';
         words[idx].removeAttribute('data-off');
-      }, 2900);
+      }, 1900);
     }
   }
 
