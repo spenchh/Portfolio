@@ -1182,3 +1182,11 @@ html:not(.snapping) body{padding-top:var(--head-h)}
 /* org mark beside a panel heading */
 .panel-org{display:flex;align-items:center;justify-content:center;gap:.55rem;flex-wrap:wrap}
 .panel-mark{height:clamp(1.1rem,2.6vw,1.45rem);width:auto;display:block}
+
+/* a drawn glyph stands in where a project has no logo, at the same
+   weight as an org mark so the two panels read as a pair */
+.panel-glyph{
+  fill:none;stroke:var(--green);stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;
+  height:clamp(.85rem,2vw,1.05rem);width:auto;
+}
