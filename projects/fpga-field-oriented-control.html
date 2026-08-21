@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FPGA-Based Field-Oriented Control &mdash; Spencer Kogoma</title>
+<title>FPGA-Based Field-Oriented Control / Spencer Kogoma</title>
 <meta name="description" content="A pipelined Q1.15 field-oriented motor control loop in FPGA fabric on an Arty Zynq-7000 SoC, with the protection path enforced in hardware.">
 <meta name="author" content="Spencer Kogoma">
 <meta name="theme-color" content="#ffffff">
@@ -34,18 +34,18 @@
   <section class="ph">
     <div class="shell">
       <a class="back" href="../index.html#work">&larr; All work</a>
-      <span class="label">Project 02 / Zynq-7000 / June &ndash; Aug 2026</span>
+      <span class="label">Project 02 / Zynq-7000 / Completed Aug 2026</span>
       <h1>FPGA-Based<br>Field-Oriented Control</h1>
       <p class="sub">A Zynq-based FPGA motor-control pipeline for a three-phase electric-vehicle
         motor controller. Fixed-point SystemVerilog RTL for current scaling, Clarke and Park
         transforms, PI current control, inverse Park, duty generation, protection gating, and
-        center-aligned PWM &mdash; with the protection path in fabric rather than software.</p>
+        center-aligned PWM, with the protection path in fabric rather than software.</p>
       <dl class="facts">
         <div><dt>Platform</dt><dd>Arty Zynq-7000 SoC</dd></div>
         <div><dt>Languages</dt><dd>SystemVerilog, Verilog, MATLAB and Simulink, Python</dd></div>
         <div><dt>Role</dt><dd>FPGA and motor-control RTL</dd></div>
         <div><dt>Datapath</dt><dd>12-bit ADC in, 16-bit Q1.15 signed, 24-bit scale</dd></div>
-        <div><dt>Status</dt><dd>Concluded August 2026 &mdash; RTL and simulation, no hardware bring-up</dd></div>
+        <div><dt>Completed</dt><dd>August 2026</dd></div>
       </dl>
     </div>
   </section>
@@ -159,8 +159,7 @@
         <p>
           Two deadtimes have to fit inside one period, or the high and low sides of a
           leg could conduct together. That condition gates <code>active</code>, so an
-          invalid configuration cannot drive the outputs at all &mdash; the check is
-          structural, not a runtime warning.
+          invalid configuration cannot drive the outputs at all. The check is structural, not a runtime warning.
         </p>
 
         <h2>Protection in fabric</h2>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>10GbE FPGA Tick-to-Trade Datapath &mdash; Spencer Kogoma</title>
+<title>10GbE FPGA Tick-to-Trade Datapath / Spencer Kogoma</title>
 <meta name="description" content="A SystemVerilog datapath that parses 10G market data, tracks book state, runs fixed-point decision and risk logic in fabric, and targets measured latency on real hardware.">
 <meta name="author" content="Spencer Kogoma">
 <meta name="theme-color" content="#ffffff">
@@ -92,8 +92,7 @@
 
         <h2>The datapath</h2>
         <p>
-          Every stage in the critical path is original RTL rather than assembled IP. That is
-          the point of the exercise &mdash; the interesting decisions live in the parser and
+          Every stage in the critical path is original RTL rather than assembled IP. That is the point of the exercise: the interesting decisions live in the parser and
           the pipeline, not in the wiring.
         </p>
         <ul>
