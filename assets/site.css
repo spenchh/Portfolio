@@ -1030,12 +1030,7 @@ html.snapping{scroll-snap-type:y mandatory;scroll-behavior:smooth}
   margin-bottom:clamp(1rem,2.5vw,1.5rem);
 }
 
-.courses{display:grid;gap:clamp(1.1rem,2.6vw,1.6rem)}
-@media(min-width:44rem){.courses{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(2rem,4vw,3rem)}}
-.course h4{
-  font-size:.92rem;font-weight:600;letter-spacing:-.01em;color:var(--text);
-}
-.course p{margin-top:.35rem;font-size:.85rem;line-height:1.65;color:var(--text-soft);max-width:46ch;margin-inline:auto}
+@media(min-width:44rem){}
 
 /* dropdowns */
 .drops{border-top:1px solid var(--line)}
@@ -1196,3 +1191,7 @@ html:not(.snapping) body{padding-top:var(--head-h)}
 @media(max-width:34rem){
   .pager{flex-wrap:wrap;justify-content:center;gap:.9rem}
 }
+
+/* a course dropdown carries no role line, so the title takes the space */
+.drop summary .drop-t{margin-right:auto;text-align:left}
+.drop summary{justify-content:space-between}
