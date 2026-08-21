@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=94e6ffd7">
+<link rel="stylesheet" href="assets/site.css?v=d041a8e8">
 </head>
 <body>
 <div class="bar" aria-hidden="true"><span id="bar"></span></div>
@@ -35,9 +35,9 @@
 
   <section class="sec sec-flush">
     <div class="shell">
-      <div class="sec-head rv">
-        <span class="label">Northwestern University</span>
-        <h2>At Northwestern</h2>
+      <div class="sec-head nu-head rv">
+        <h2>Northwestern University</h2>
+        <p class="nu-place">Evanston, IL</p>
         <span class="line"></span>
       </div>
 
@@ -55,35 +55,87 @@
         <div class="edu-card">
           <span class="label">Cumulative GPA</span>
           <h3>3.73</h3>
-          <p>Through the current term</p>
         </div>
         <div class="edu-card">
           <span class="label">Expected</span>
           <h3>June 2028</h3>
-          <p>Dual degree, Evanston, Illinois</p>
         </div>
       </div>
 
-      <div class="edu-cols rv">
-        <div>
-          <h3>Coursework</h3>
-          <ul>
-            <li>Computer Architecture</li>
-            <li>Advanced Digital Design</li>
-            <li>Embedded IoT Systems and Edge Computing</li>
-            <li>Electrical Engineering</li>
-            <li>Linear Algebra</li>
-            <li>Multivariable Calculus</li>
-          </ul>
+      <div class="nu-block rv">
+        <h3 class="nu-sub">Coursework</h3>
+        <div class="courses">
+          <div class="course">
+            <h4>Computer Architecture</h4>
+            <p>Pipelining, memory hierarchy, caching, and the tradeoffs behind instruction-level parallelism.</p>
+          </div>
+          <div class="course">
+            <h4>Advanced Digital Design</h4>
+            <p>RTL design of synchronous systems, timing analysis, and verifying a design before it reaches silicon.</p>
+          </div>
+          <div class="course">
+            <h4>Embedded IoT Systems and Edge Computing</h4>
+            <p>Microcontrollers, sensor interfaces, and networked devices that compute at the edge rather than in a data centre.</p>
+          </div>
+          <div class="course">
+            <h4>Electrical Engineering</h4>
+            <p>Circuit analysis, signals, and the device physics underneath the digital abstraction.</p>
+          </div>
+          <div class="course">
+            <h4>Linear Algebra</h4>
+            <p>Vector spaces, matrix transformations, and decompositions &mdash; the maths behind every fixed-point datapath I write.</p>
+          </div>
+          <div class="course">
+            <h4>Multivariable Calculus</h4>
+            <p>Vector calculus and integration across several dimensions, applied to fields and continuous systems.</p>
+          </div>
         </div>
-        <div>
-          <h3>Clubs and ensembles</h3>
-          <ul>
-            <li>NU Silicon Initiative &mdash; Digital Design Lead</li>
-            <li>Northwestern Solar Car &mdash; Low-Voltage Electrical Lead</li>
-            <li>Northwestern Philharmonia &mdash; Concertmaster</li>
-            <li>Studio of Blair Milton</li>
-          </ul>
+      </div>
+
+      <div class="nu-block rv">
+        <h3 class="nu-sub">Clubs and ensembles</h3>
+        <div class="drops">
+          <details class="drop">
+            <summary>
+              <span class="drop-t">NU Silicon Initiative</span>
+              <span class="drop-r">Digital Design Lead</span>
+              <span class="drop-s" aria-hidden="true">+</span>
+            </summary>
+            <div class="drop-body">
+              <p>I lead RTL onboarding for new members: SystemVerilog, finite-state machines, testbench construction, waveform debugging, and the Cadence flow from simulation through place-and-route.</p>
+              <a class="gh gh-sm" href="https://github.com/Northwestern-Silicats/digital-design-onboarding" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg> Onboarding curriculum</a>
+            </div>
+          </details>
+          <details class="drop">
+            <summary>
+              <span class="drop-t">Northwestern Solar Car</span>
+              <span class="drop-r">Low-Voltage Electrical Lead</span>
+              <span class="drop-s" aria-hidden="true">+</span>
+            </summary>
+            <div class="drop-body">
+              <p>I own the low-voltage side of the car: power distribution, telemetry, and vehicle integration, with multilayer Altium boards, FPGA-controlled relay sequencing, and CAN and SPI debugging during bring-up.</p>
+            </div>
+          </details>
+          <details class="drop">
+            <summary>
+              <span class="drop-t">Northwestern Philharmonia</span>
+              <span class="drop-r">Concertmaster</span>
+              <span class="drop-s" aria-hidden="true">+</span>
+            </summary>
+            <div class="drop-body">
+              <p>Lead violinist and liaison to the conductor, selected by competitive audition. The seat is largely about preparation and about getting a section to agree on one interpretation.</p>
+            </div>
+          </details>
+          <details class="drop">
+            <summary>
+              <span class="drop-t">Bienen School of Music</span>
+              <span class="drop-r">Studio of Blair Milton</span>
+              <span class="drop-s" aria-hidden="true">+</span>
+            </summary>
+            <div class="drop-body">
+              <p>Conservatory violin study alongside the engineering degree, which is where most of my habits around slow, deliberate practice come from.</p>
+            </div>
+          </details>
         </div>
       </div>
     </div>

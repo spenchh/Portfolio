@@ -1028,3 +1028,57 @@ html.snapping{scroll-snap-type:y mandatory;scroll-behavior:smooth}
   min-height:calc(100vh - var(--head-h));
   min-height:calc(100svh - var(--head-h));
 }
+
+/* ============================================================
+   NORTHWESTERN PAGE
+   ============================================================ */
+.nu-head{flex-direction:column;align-items:center;gap:.45rem}
+.nu-head h2{color:var(--green)}
+.nu-place{
+  font-size:.68rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--text-dim);
+}
+.nu-head .line{width:min(100%,7rem);margin-top:.5rem}
+
+.nu-block{margin-top:clamp(2.2rem,5vw,3.4rem)}
+.nu-sub{
+  font-size:.72rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--text-dim);padding-bottom:.7rem;border-bottom:1px solid var(--line);
+  margin-bottom:clamp(1rem,2.5vw,1.5rem);
+}
+
+.courses{display:grid;gap:clamp(1.1rem,2.6vw,1.6rem)}
+@media(min-width:44rem){.courses{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(2rem,4vw,3rem)}}
+.course h4{
+  font-size:.92rem;font-weight:600;letter-spacing:-.01em;color:var(--text);
+}
+.course p{margin-top:.35rem;font-size:.85rem;line-height:1.65;color:var(--text-soft);max-width:46ch;margin-inline:auto}
+
+/* dropdowns */
+.drops{border-top:1px solid var(--line)}
+.drop{border-bottom:1px solid var(--line)}
+.drop summary{
+  display:flex;align-items:baseline;justify-content:center;
+  gap:clamp(.6rem,2vw,1.1rem);
+  padding:clamp(.85rem,2.2vw,1.2rem) 0;
+  cursor:pointer;list-style:none;
+  transition:padding-left .5s var(--spring);
+}
+.drop summary::-webkit-details-marker{display:none}
+.drop summary:hover{padding-left:.7rem}
+.drop-t{
+  font-family:var(--display);font-weight:900;text-transform:uppercase;
+  font-size:clamp(.92rem,1.9vw,1.2rem);letter-spacing:-.03em;color:var(--text);
+}
+.drop-r{
+  font-size:.66rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-dim);
+}
+.drop-s{
+  font-size:.95rem;color:var(--text-dim);line-height:1;
+  transition:transform .55s var(--spring),color .4s var(--ease);
+}
+.drop[open] .drop-s{transform:rotate(135deg);color:var(--green)}
+.drop[open] .drop-t{color:var(--green)}
+.drop-body{padding:0 0 clamp(1rem,2.5vw,1.5rem)}
+.drop-body p{font-size:.88rem;line-height:1.7;color:var(--text-soft);max-width:56ch;margin-inline:auto}
