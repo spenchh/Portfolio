@@ -1165,3 +1165,8 @@ html:not(.snapping) body{padding-top:var(--head-h)}
 
 /* the rail reports position on every size now, so the top bar stands down */
 .has-rail .bar{display:none}
+
+/* the conveyor clips for its loop, so the hover lift needs room inside
+   the clip box or the top of the tile is cut off */
+.belt{padding-block:.6rem}
+.belt-item:hover .belt-ico{transform:translateY(-.12rem)}
