@@ -906,3 +906,27 @@ html{scroll-padding-top:var(--head-h)}
   margin-top:clamp(.6rem,2vh,1.2rem);
   margin-bottom:clamp(.4rem,1.5vh,1rem);
 }
+
+/* --- Northwestern block --- */
+.edu-grid{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden}
+@media(min-width:36rem){.edu-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:60rem){.edu-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.edu-card{background:var(--bg);padding:clamp(1.1rem,2.6vw,1.6rem)}
+.edu-card h3{
+  font-family:var(--display);font-weight:900;text-transform:uppercase;
+  font-size:clamp(1rem,2vw,1.35rem);letter-spacing:-.03em;line-height:1.1;margin-top:.5rem;
+}
+.edu-card p{margin-top:.4rem;font-size:.82rem;color:var(--text-soft)}
+.edu-cols{display:grid;gap:clamp(1.6rem,4vw,2.6rem);margin-top:clamp(1.8rem,4vw,2.6rem)}
+@media(min-width:44rem){.edu-cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.edu-cols h3{
+  font-size:.72rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--text-dim);padding-bottom:.7rem;border-bottom:1px solid var(--line);margin-bottom:.8rem;
+}
+.edu-cols li{font-size:.9rem;line-height:2;color:var(--text-soft)}
+
+/* --- hero: keep the whole waveform on screen --- */
+.hero{padding-block:clamp(3.5rem,7vh,5rem) 0}
+.hero > .shell{min-height:0}
+.wave{flex:none;margin-top:clamp(1rem,3vh,2rem)}
+.wave canvas{height:clamp(3.8rem,9vh,6rem)}
