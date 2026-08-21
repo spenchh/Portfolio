@@ -1082,3 +1082,19 @@ html.snapping{scroll-snap-type:y mandatory;scroll-behavior:smooth}
 .drop[open] .drop-t{color:var(--green)}
 .drop-body{padding:0 0 clamp(1rem,2.5vw,1.5rem)}
 .drop-body p{font-size:.88rem;line-height:1.7;color:var(--text-soft);max-width:56ch;margin-inline:auto}
+
+/* ============================================================
+   CENTRING THE SNAPPED SECTIONS
+   The sticky header overlays the top of each snapped section, so
+   padding split evenly left the content group sitting low. These
+   sections carry a shorter top pad to compensate, and the heading and
+   conveyor are treated as one centred group.
+   ============================================================ */
+.snap:not(.hero){
+  justify-content:center;
+  padding-block:clamp(1.5rem,4vh,3rem) clamp(3rem,7vh,5rem);
+}
+.snap:not(.hero) > .shell{flex:none}
+.snap .sec-head{margin-bottom:clamp(1.2rem,3vh,2rem)}
+.sec .belt{margin-top:clamp(.8rem,2.5vh,1.6rem)}
+.snap .lede{margin-bottom:clamp(1.2rem,3vh,2rem)}
