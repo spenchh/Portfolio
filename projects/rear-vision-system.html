@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rear-Vision Camera and Display System &mdash; Spencer Kogoma</title>
+<meta name="description" content="A sub-30 ms rear-vision video pipeline for Northwestern's 2026 American Solar Challenge vehicle, selected through a six-candidate trade study.">
+<meta name="author" content="Spencer Kogoma">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="Rear-Vision Camera and Display System">
+<meta property="og:description" content="A sub-30 ms rear-vision video pipeline for Northwestern's 2026 American Solar Challenge vehicle, selected through a six-candidate trade study.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6135'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='24' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ESK%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css?v=0806947d">
+</head>
+<body>
+<div class="bar" aria-hidden="true"><span id="bar"></span></div>
+
+<header class="head" id="head">
+  <div class="shell head-in">
+    <a href="../index.html" class="mark">SPENCER KOGOMA <i>/ SK</i></a>
+    <nav aria-label="Sections">
+      <a href="../index.html#work">Work</a>
+      <a href="../index.html#stack">Stack</a>
+      <a href="../index.html#background">Background</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="ph">
+    <div class="shell">
+      <a class="back" href="../index.html#work">&larr; All work</a>
+      <span class="label">Project 03 / Embedded Linux / 2026</span>
+      <h1>Rear-Vision<br>Camera and Display</h1>
+      <p class="sub">A low-latency rear-vision system for Northwestern's 2026 American Solar Challenge vehicle, designed and validated end to end.</p>
+      <dl class="facts">
+        <div><dt>Platform</dt><dd>Raspberry Pi, Pi Camera 3 Wide</dd></div>
+        <div><dt>Performance</dt><dd>Sub-30 ms end to end</dd></div>
+        <div><dt>Software</dt><dd>Linux, Bash, systemd</dd></div>
+        <div><dt>Status</dt><dd>Delivered, March to June 2026</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sec sec-flush">
+    <div class="shell">
+      <div class="prose">
+        <h2>The requirement</h2>
+        <p>
+          A solar vehicle has no rear window. The driver depends entirely on a camera
+          feed, which makes latency a safety parameter rather than a comfort one. A
+          lagging image is worse than a small one, because the driver acts on stale
+          information at speed.
+        </p>
+
+        <h2>The pipeline</h2>
+        <p>
+          A Pi Camera 3 Wide feeds a Raspberry Pi over CSI, with CSI-to-HDMI extension
+          hardware carrying the signal the length of the vehicle. The delivered pipeline
+          runs under 30 ms end to end.
+        </p>
+
+        <h2>Unattended operation</h2>
+        <p>
+          Nobody logs into the vehicle to start a video feed. Startup and recovery are
+          automated with Linux, Bash, and systemd, so the display comes up headless with
+          power and restarts itself if the pipeline dies.
+        </p>
+
+        <h2>Choosing the design</h2>
+        <p>
+          The final architecture came out of a six-candidate trade study scored across
+          latency, field of view, EMI risk, reliability, integration complexity, and
+          cost. EMI mattered more than it might elsewhere: a solar car is a rolling
+          high-current DC system, and a video link routed the length of the chassis sits
+          in that environment for the whole race.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="shell">
+    <div class="pager">
+      <a class="back" href="../index.html#work">&larr; All work</a>
+      <a class="out" href="fpga-field-oriented-control.html">Next: Field-oriented control &rarr;</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="shell foot">
+    <span>&copy; 2026 Spencer Kogoma</span>
+    <span>FPGA / RTL / Digital hardware</span>
+    <span>San Ramon, CA</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js?v=58736d6b"></script>
+</body>
+</html>

@@ -1,2218 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Spencer Kogoma | FPGA and Hardware Engineering</title>
-
-  <meta
-    name="description"
-    content="Spencer Kogoma is a Northwestern University Computer Engineering and Violin Performance student focused on FPGA design, RTL verification, embedded systems, hardware integration, and a current 10GbE FPGA tick-to-trade datapath project."
-  >
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Lato:wght@700;900&display=swap"
-    rel="stylesheet"
-  >
-
-  <style>
-    :root {
-      --background: #faf9f5;
-      --background-alt: #f2f0e9;
-      --card: #ffffff;
-      --green-dark: #123816;
-      --green: #2f6135;
-      --green-soft: #769178;
-      --green-pale: #eaf0e8;
-      --text: #1e1c19;
-      --text-soft: #615c55;
-      --muted: #9c958b;
-      --line: #e4ded4;
-      --line-dark: rgba(18, 56, 22, 0.18);
-      --shadow: 0 24px 70px rgba(31, 28, 23, 0.09);
-      --shadow-soft: 0 12px 36px rgba(31, 28, 23, 0.055);
-      --radius-large: 30px;
-      --radius-medium: 20px;
-      --radius-small: 14px;
-      --pill: 999px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-      font-size: clamp(14px, 0.18vw + 13.5px, 17px);
-    }
-
-    body {
-      width: 100%;
-      min-height: 100vh;
-      overflow-x: hidden;
-      color: var(--text);
-      background:
-        radial-gradient(
-          circle at 12% 8%,
-          rgba(47, 97, 53, 0.12),
-          transparent 31rem
-        ),
-        linear-gradient(
-          180deg,
-          var(--background) 0%,
-          #f7f4ee 100%
-        );
-      font-family: "DM Sans", sans-serif;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    ::selection {
-      color: #ffffff;
-      background: var(--green-dark);
-    }
-
-    a {
-      color: inherit;
-    }
-
-    img {
-      max-width: 100%;
-    }
-
-    h1,
-    h2,
-    h3,
-    p,
-    li,
-    span,
-    a {
-      overflow-wrap: break-word;
-    }
-
-    .container {
-      width: min(calc(100% - clamp(2rem, 6vw, 7rem)), 1380px);
-      margin-right: auto;
-      margin-left: auto;
-    }
-
-    .section {
-      padding: clamp(6rem, 9vw, 9rem) 0;
-      scroll-margin-top: 92px;
-    }
-
-    .section-alt {
-      background: rgba(242, 240, 233, 0.56);
-      border-top: 1px solid rgba(228, 222, 212, 0.7);
-      border-bottom: 1px solid rgba(228, 222, 212, 0.7);
-    }
-
-    .eyebrow {
-      margin-bottom: 0.85rem;
-      color: var(--green-soft);
-      font-family: "DM Mono", monospace;
-      font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.19em;
-      text-transform: uppercase;
-    }
-
-    .section-heading-row {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 3rem;
-      margin-bottom: clamp(2.8rem, 5vw, 4.5rem);
-    }
-
-    .section-title {
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: clamp(3rem, 5.7vw, 5.8rem);
-      font-weight: 900;
-      letter-spacing: -0.055em;
-      line-height: 0.9;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .section-intro {
-      max-width: 510px;
-      padding-bottom: 0.35rem;
-      color: var(--text-soft);
-      font-size: 0.98rem;
-      line-height: 1.8;
-    }
-
-    /* Navigation */
-
-    .site-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 100;
-      width: 100%;
-      border-bottom: 1px solid rgba(228, 222, 212, 0.82);
-      background: rgba(250, 249, 245, 0.9);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-    }
-
-    .nav-inner {
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.8rem;
-      flex-shrink: 0;
-      text-decoration: none;
-    }
-
-    .brand-mark {
-      width: 43px;
-      height: 43px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      color: #ffffff;
-      background: var(--green-dark);
-      box-shadow: 0 10px 26px rgba(18, 56, 22, 0.22);
-      font-family: "Lato", sans-serif;
-      font-size: 0.9rem;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-    }
-
-    .brand-copy {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-    }
-
-    .brand-copy strong {
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: 0.82rem;
-      font-weight: 900;
-      letter-spacing: 0.01em;
-      text-transform: uppercase;
-    }
-
-    .brand-copy span {
-      margin-top: 0.25rem;
-      color: var(--muted);
-      font-family: "DM Mono", monospace;
-      font-size: 0.52rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 0.14rem;
-      padding: 0.25rem;
-      border: 1px solid var(--line);
-      border-radius: var(--pill);
-      background: rgba(255, 255, 255, 0.64);
-    }
-
-    .nav-links a {
-      padding:
-        clamp(0.48rem, 0.55vw, 0.58rem)
-        clamp(0.65rem, 0.9vw, 1rem);
-      border-radius: var(--pill);
-      color: var(--text-soft);
-      font-family: "DM Mono", monospace;
-      font-size: clamp(0.53rem, 0.56vw, 0.62rem);
-      letter-spacing: 0.09em;
-      text-decoration: none;
-      text-transform: uppercase;
-      white-space: nowrap;
-      transition:
-        color 0.2s ease,
-        background 0.2s ease;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: #ffffff;
-      background: var(--green-dark);
-    }
-
-    .mobile-links {
-      display: none;
-      gap: 0.85rem;
-    }
-
-    .mobile-links a {
-      color: var(--green-dark);
-      font-family: "DM Mono", monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.09em;
-      text-decoration: none;
-      text-transform: uppercase;
-    }
-
-    /* Hero */
-
-    .hero {
-      min-height: 100svh;
-      display: flex;
-      align-items: center;
-      padding-top: 76px;
-    }
-
-    .hero-grid {
-      width: 100%;
-      display: grid;
-      grid-template-columns:
-        minmax(0, 1.04fr)
-        minmax(430px, 0.96fr);
-      gap: clamp(3.5rem, 6vw, 7rem);
-      align-items: center;
-      padding:
-        clamp(4.5rem, 8vh, 6.5rem)
-        0
-        clamp(4rem, 7vh, 5.5rem);
-    }
-
-    .hero-content {
-      width: 100%;
-      max-width: 720px;
-      justify-self: end;
-    }
-
-    .hero-label {
-      margin-bottom: 1.15rem;
-      color: var(--green-soft);
-      font-family: "DM Mono", monospace;
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      line-height: 1.6;
-      text-transform: uppercase;
-    }
-
-    .hero-title {
-      margin-bottom: 1.65rem;
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: clamp(4.8rem, 7.2vw, 8.2rem);
-      font-weight: 900;
-      letter-spacing: -0.068em;
-      line-height: 0.84;
-      text-transform: uppercase;
-    }
-
-    .hero-title span {
-      display: block;
-      color: #cfc9bf;
-    }
-
-    .hero-now {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      color: var(--green);
-      transition: color 0.25s ease;
-    }
-
-    .hero-now:hover {
-      color: var(--green-dark);
-    }
-
-    .hero-now-logo {
-      width: 20px;
-      height: 20px;
-      border-radius: 5px;
-      background: var(--card);
-      object-fit: contain;
-    }
-
-    .hero-intro {
-      max-width: 680px;
-      margin-bottom: 1.5rem;
-      color: var(--text-soft);
-      font-size: clamp(1.18rem, 1.6vw, 1.48rem);
-      letter-spacing: -0.02em;
-      line-height: 1.5;
-    }
-
-    .hero-intro strong {
-      color: var(--green-dark);
-      font-weight: 700;
-    }
-
-
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 1.8rem;
-    }
-
-    .button {
-      min-height: 46px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.82rem 1.2rem;
-      border-radius: var(--pill);
-      font-family: "DM Mono", monospace;
-      font-size: 0.66rem;
-      letter-spacing: 0.1em;
-      text-decoration: none;
-      text-transform: uppercase;
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        border-color 0.2s ease;
-    }
-
-    .button:hover {
-      transform: translateY(-2px);
-    }
-
-    .button-primary {
-      color: #ffffff;
-      background: var(--green-dark);
-      box-shadow: 0 14px 32px rgba(18, 56, 22, 0.22);
-    }
-
-    .button-secondary {
-      color: var(--green-dark);
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.76);
-    }
-
-    .hero-photo-wrap {
-      width: min(100%, 560px);
-      justify-self: start;
-    }
-
-    .hero-photo-card {
-      position: relative;
-      overflow: hidden;
-      padding: 0.72rem;
-      border: 1px solid var(--line);
-      border-radius: 34px;
-      background: rgba(255, 255, 255, 0.78);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-photo-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        linear-gradient(
-          135deg,
-          rgba(18, 56, 22, 0.07),
-          transparent 36%
-        ),
-        radial-gradient(
-          circle at bottom right,
-          rgba(118, 145, 120, 0.14),
-          transparent 42%
-        );
-    }
-
-    .hero-photo {
-      width: 100%;
-      height: min(72vh, 720px);
-      min-height: 570px;
-      display: block;
-      object-fit: cover;
-      object-position: center 25%;
-      border-radius: 26px;
-      filter: saturate(0.96) contrast(1.02);
-      transition: transform 0.55s ease;
-    }
-
-    .hero-photo-card:hover .hero-photo {
-      transform: scale(1.015);
-    }
-
-    /* Project cards */
-
-    .project-list {
-      display: grid;
-      gap: 1.4rem;
-    }
-
-    .project-card {
-      position: relative;
-      overflow: hidden;
-      padding: clamp(1.7rem, 3vw, 2.6rem);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-large);
-      background: rgba(255, 255, 255, 0.79);
-      box-shadow: var(--shadow-soft);
-      transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
-    }
-
-    .project-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--line-dark);
-      box-shadow: var(--shadow);
-    }
-
-    .project-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 7px;
-      height: 100%;
-      background: var(--green-dark);
-    }
-
-    .project-header {
-      display: grid;
-      grid-template-columns: 90px minmax(0, 1fr);
-      gap: 1.5rem;
-      align-items: start;
-    }
-
-    .project-number {
-      color: var(--green-soft);
-      font-family: "DM Mono", monospace;
-      font-size: 0.66rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .project-title-row {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 2rem;
-    }
-
-    .project-title {
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: clamp(1.8rem, 3.1vw, 3.2rem);
-      font-weight: 900;
-      letter-spacing: -0.045em;
-      line-height: 1;
-      text-transform: uppercase;
-    }
-
-    .project-date {
-      flex-shrink: 0;
-      color: var(--muted);
-      font-family: "DM Mono", monospace;
-      font-size: 0.59rem;
-      letter-spacing: 0.11em;
-      text-align: right;
-      text-transform: uppercase;
-    }
-
-    .project-body {
-      display: grid;
-      grid-template-columns: minmax(0, 1.35fr) minmax(270px, 0.65fr);
-      gap: clamp(2rem, 4vw, 4rem);
-      margin-top: 1.5rem;
-      margin-left: 105px;
-    }
-
-    .project-summary {
-      color: var(--text-soft);
-      font-size: 0.98rem;
-      line-height: 1.82;
-    }
-
-    .project-points {
-      display: grid;
-      gap: 0.72rem;
-      margin-top: 1.15rem;
-      list-style: none;
-    }
-
-    .project-points li {
-      position: relative;
-      padding-left: 1.25rem;
-      color: var(--text-soft);
-      font-size: 0.88rem;
-      line-height: 1.58;
-    }
-
-    .project-points li::before {
-      content: "";
-      position: absolute;
-      top: 0.64em;
-      left: 0;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 0 4px rgba(47, 97, 53, 0.11);
-    }
-
-    .project-details {
-      display: grid;
-      gap: 0.75rem;
-      align-content: start;
-    }
-
-    .detail-row {
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .detail-row:last-child {
-      padding-bottom: 0;
-      border-bottom: 0;
-    }
-
-    .detail-label {
-      display: block;
-      margin-bottom: 0.28rem;
-      color: var(--green-soft);
-      font-family: "DM Mono", monospace;
-      font-size: 0.55rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .detail-value {
-      color: var(--text);
-      font-size: 0.84rem;
-      font-weight: 600;
-      line-height: 1.55;
-    }
-
-    /* Experience */
-
-    .experience-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1.2rem;
-    }
-
-    .experience-card {
-      display: flex;
-      flex-direction: column;
-      padding: 1.6rem;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-medium);
-      background: rgba(255, 255, 255, 0.78);
-      box-shadow: var(--shadow-soft);
-      transition:
-        transform 0.22s ease,
-        border-color 0.22s ease,
-        box-shadow 0.22s ease;
-    }
-
-    .experience-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--line-dark);
-      box-shadow: var(--shadow);
-    }
-
-    .experience-date {
-      margin-bottom: 0.75rem;
-      color: var(--green-soft);
-      font-family: "DM Mono", monospace;
-      font-size: 0.56rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .experience-role {
-      margin-bottom: 0.35rem;
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: 1.28rem;
-      font-weight: 900;
-      letter-spacing: -0.025em;
-      line-height: 1.08;
-      text-transform: uppercase;
-    }
-
-    .experience-org {
-      margin-bottom: 1rem;
-      color: var(--text);
-      font-size: 0.88rem;
-      font-weight: 700;
-      line-height: 1.5;
-    }
-
-    .experience-copy {
-      color: var(--text-soft);
-      font-size: 0.86rem;
-      line-height: 1.74;
-    }
-
-    /* Leadership */
-
-    .leadership-panel {
-      margin-top: 1.25rem;
-      padding: clamp(1.5rem, 3vw, 2.2rem);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-large);
-      background: var(--green-dark);
-      box-shadow: var(--shadow);
-    }
-
-    .leadership-heading {
-      margin-bottom: 1.3rem;
-      color: #ffffff;
-      font-family: "Lato", sans-serif;
-      font-size: clamp(1.5rem, 2.6vw, 2.3rem);
-      font-weight: 900;
-      letter-spacing: -0.035em;
-      text-transform: uppercase;
-    }
-
-    .leadership-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .leadership-item {
-      padding: 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: var(--radius-small);
-      background: rgba(255, 255, 255, 0.065);
-    }
-
-    .leadership-title {
-      margin-bottom: 0.25rem;
-      color: #ffffff;
-      font-family: "Lato", sans-serif;
-      font-size: 1rem;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-    }
-
-    .leadership-meta {
-      margin-bottom: 0.6rem;
-      color: #b8c9b9;
-      font-family: "DM Mono", monospace;
-      font-size: 0.53rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .leadership-copy {
-      color: rgba(255, 255, 255, 0.74);
-      font-size: 0.8rem;
-      line-height: 1.65;
-    }
-
-    /* Resume and links */
-
-    .resume-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .resume-card {
-      display: block;
-      padding: 1.4rem;
-      border-top: 4px solid var(--green-dark);
-      border-radius: var(--radius-small);
-      background: var(--card);
-      box-shadow: var(--shadow-soft);
-      transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
-    }
-
-    .resume-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow);
-    }
-
-    .resume-label {
-      display: block;
-      margin-bottom: 0.55rem;
-      color: var(--green-soft);
-      font-family: "DM Mono", monospace;
-      font-size: 0.55rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .resume-title {
-      margin-bottom: 0.5rem;
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: 1.02rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      word-break: break-word;
-    }
-
-    .resume-copy {
-      color: var(--text-soft);
-      font-size: 0.83rem;
-      line-height: 1.7;
-    }
-
-    .experience-logo {
-      display: inline-block;
-      width: 22px;
-      height: 22px;
-      margin-right: 0.5rem;
-      vertical-align: -0.35rem;
-      border-radius: 5px;
-      background: var(--card);
-      object-fit: contain;
-    }
-
-    .detail-value a {
-      color: var(--green);
-      border-bottom: 1px solid rgba(47, 97, 53, 0.35);
-      word-break: break-word;
-    }
-
-    .detail-value a:hover {
-      color: var(--green-dark);
-      border-bottom-color: var(--green-dark);
-    }
-
-    /* Technical toolkit */
-
-    .toolkit {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .toolkit-card {
-      padding: 1.4rem;
-      border-top: 4px solid var(--green-dark);
-      border-right: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      border-left: 1px solid var(--line);
-      border-radius: 0 0 var(--radius-medium) var(--radius-medium);
-      background: rgba(255, 255, 255, 0.78);
-    }
-
-    .toolkit-title {
-      margin-bottom: 0.7rem;
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: 1rem;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-    }
-
-    .toolkit-copy {
-      color: var(--text-soft);
-      font-size: 0.83rem;
-      line-height: 1.75;
-    }
-
-    /* Education */
-
-    .education-gpa {
-      margin-top: 0.8rem;
-      color: var(--green-dark);
-      font-family: "DM Mono", monospace;
-      font-size: 0.74rem;
-      font-weight: 500;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
-    }
-
-    .education-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.25rem;
-    }
-
-    .education-card {
-      min-height: 280px;
-      display: flex;
-      flex-direction: column;
-      padding: clamp(1.6rem, 3vw, 2.2rem);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-large);
-      background: rgba(255, 255, 255, 0.8);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .education-school {
-      margin-bottom: 0.55rem;
-      color: var(--green-soft);
-      font-family: "DM Mono", monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
-    }
-
-    .education-degree {
-      margin-bottom: 0.5rem;
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: clamp(1.5rem, 2.6vw, 2.25rem);
-      font-weight: 900;
-      letter-spacing: -0.035em;
-      line-height: 1.05;
-      text-transform: uppercase;
-    }
-
-    .education-college {
-      margin-bottom: 1.15rem;
-      color: var(--text);
-      font-size: 0.93rem;
-      font-weight: 600;
-    }
-
-    .education-copy {
-      color: var(--text-soft);
-      font-size: 0.88rem;
-      line-height: 1.78;
-    }
-
-    .education-note {
-      margin-top: auto;
-      padding-top: 1.1rem;
-      color: var(--green);
-      font-family: "DM Mono", monospace;
-      font-size: 0.61rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    /* Contact */
-
-    .contact {
-      padding:
-        clamp(6rem, 10vw, 10rem)
-        0
-        clamp(5rem, 8vw, 8rem);
-      text-align: center;
-      scroll-margin-top: 80px;
-    }
-
-    .contact-inner {
-      max-width: 820px;
-      margin: 0 auto;
-    }
-
-    .contact-title {
-      margin-bottom: 1.6rem;
-      color: var(--green-dark);
-      font-family: "Lato", sans-serif;
-      font-size: clamp(4.5rem, 11vw, 9.5rem);
-      font-weight: 900;
-      letter-spacing: -0.07em;
-      line-height: 0.84;
-      text-transform: uppercase;
-    }
-
-    .contact-copy {
-      max-width: 590px;
-      margin: 0 auto 2.2rem;
-      color: var(--text-soft);
-      font-size: 0.98rem;
-      line-height: 1.8;
-    }
-
-    .contact-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.75rem;
-    }
-
-    .contact-link {
-      padding: 0.82rem 1.05rem;
-      border: 1px solid var(--line);
-      border-radius: var(--pill);
-      color: var(--green-dark);
-      background: rgba(255, 255, 255, 0.76);
-      font-family: "DM Mono", monospace;
-      font-size: 0.63rem;
-      letter-spacing: 0.09em;
-      text-decoration: none;
-      text-transform: uppercase;
-      transition:
-        transform 0.2s ease,
-        border-color 0.2s ease,
-        background 0.2s ease;
-    }
-
-    .contact-link:hover {
-      transform: translateY(-2px);
-      border-color: var(--line-dark);
-      background: #ffffff;
-    }
-
-    /* Footer */
-
-    footer {
-      padding: 2rem 0;
-      border-top: 1px solid var(--line);
-    }
-
-    .footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      color: var(--muted);
-      font-family: "DM Mono", monospace;
-      font-size: 0.57rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    /* Reveal */
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(18px);
-      transition:
-        opacity 0.65s ease,
-        transform 0.65s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
-
-      .reveal {
-        opacity: 1;
-        transform: none;
-      }
-    }
-
-    /* Medium screens */
-
-    @media (max-width: 1120px) {
-      .container {
-        width: min(calc(100% - 3rem), 1040px);
-      }
-
-      .hero-grid {
-        grid-template-columns:
-          minmax(0, 1fr)
-          minmax(350px, 0.82fr);
-        gap: 3rem;
-      }
-
-      .hero-title {
-        font-size: clamp(4.3rem, 7.4vw, 6.7rem);
-      }
-
-      .hero-photo {
-        min-height: 520px;
-      }
-
-      .project-body {
-        grid-template-columns: 1fr;
-      }
-
-      .experience-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .experience-card:last-child {
-        grid-column: 1 / -1;
-      }
-
-      .toolkit,
-      .resume-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    /* Tablet and browser zoom */
-
-    @media (max-width: 900px) {
-      .container {
-        width: min(calc(100% - 2.5rem), 760px);
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .mobile-links {
-        display: flex;
-      }
-
-      .hero {
-        min-height: auto;
-      }
-
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-        padding-top: 5rem;
-      }
-
-      .hero-content {
-        max-width: 700px;
-        justify-self: center;
-        order: 2;
-      }
-
-      .hero-photo-wrap {
-        width: min(100%, 540px);
-        justify-self: center;
-        order: 1;
-      }
-
-      .hero-photo {
-        height: auto;
-        min-height: 0;
-        aspect-ratio: 4 / 5;
-      }
-
-      .section-heading-row {
-        display: block;
-      }
-
-      .section-intro {
-        margin-top: 1.3rem;
-      }
-
-      .section-title {
-        font-size: clamp(3rem, 10vw, 5.3rem);
-      }
-
-      .project-header {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-      }
-
-      .project-body {
-        margin-left: 0;
-      }
-
-      .project-title-row {
-        display: block;
-      }
-
-      .project-date {
-        margin-top: 0.55rem;
-        text-align: left;
-      }
-
-      .leadership-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .education-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .education-card {
-        min-height: 0;
-      }
-    }
-
-    /* Mobile */
-
-    @media (max-width: 680px) {
-      html {
-        font-size: 15px;
-      }
-
-      .container {
-        width: min(calc(100% - 1.5rem), 560px);
-      }
-
-      .brand-copy {
-        display: none;
-      }
-
-      .mobile-links {
-        gap: 0.65rem;
-      }
-
-      .hero-grid {
-        gap: 2.4rem;
-        padding-top: 4.5rem;
-      }
-
-      .hero-title {
-        font-size: clamp(3.5rem, 17vw, 5.4rem);
-      }
-
-      .hero-intro {
-        font-size: 1.08rem;
-      }
-
-      .hero-actions,
-      .contact-links {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .button,
-      .contact-link {
-        width: 100%;
-      }
-
-      .section-title {
-        font-size: clamp(2.7rem, 14vw, 4.4rem);
-      }
-
-      .experience-grid,
-      .toolkit,
-      .resume-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .experience-card:last-child {
-        grid-column: auto;
-      }
-
-      .footer-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        width: min(calc(100% - 1rem), 460px);
-      }
-
-      .nav-inner {
-        min-height: 64px;
-      }
-
-      .brand-mark {
-        width: 38px;
-        height: 38px;
-      }
-
-      .mobile-links a {
-        font-size: 0.51rem;
-      }
-
-      .hero-title {
-        font-size: clamp(3rem, 17vw, 4.4rem);
-      }
-
-
-      .section-title {
-        font-size: clamp(2.55rem, 13vw, 3.8rem);
-      }
-
-      .project-card,
-      .experience-card,
-      .education-card,
-      .toolkit-card {
-        padding: 1.2rem;
-      }
-
-      .contact-title {
-        font-size: clamp(3.4rem, 18vw, 5.2rem);
-      }
-    }
-
-    /* Wide screens */
-
-    @media (min-width: 1550px) {
-      .container {
-        width: min(calc(100% - 9rem), 1440px);
-      }
-
-      .hero-title {
-        font-size: clamp(6rem, 7vw, 8.8rem);
-      }
-
-      .hero-photo-wrap {
-        max-width: 590px;
-      }
-
-      .hero-photo {
-        height: min(74vh, 760px);
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spencer Kogoma — FPGA / RTL / Digital Hardware</title>
+<meta name="description" content="Spencer Kogoma. Computer engineering and violin performance at Northwestern. FPGA design, RTL verification, ASIC flow, and low-latency digital hardware.">
+<meta name="author" content="Spencer Kogoma">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="Spencer Kogoma — FPGA / RTL / Digital Hardware">
+<meta property="og:description" content="FPGA design, RTL verification, ASIC flow, and low-latency digital hardware.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6135'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='24' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ESK%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=0806947d">
 </head>
+<body class="has-rail">
+<div class="bar" aria-hidden="true"><span id="bar"></span></div>
+<nav class="rail" aria-label="Section progress">
+  <span class="rail-track" aria-hidden="true"><span class="rail-fill" id="rail-fill"></span></span>
+  <a href="#now"><span class="rail-t">Now</span><span class="rail-n">00</span></a>
+  <a href="#work"><span class="rail-t">Work</span><span class="rail-n">01</span></a>
+  <a href="#stack"><span class="rail-t">Stack</span><span class="rail-n">02</span></a>
+  <a href="#background"><span class="rail-t">Background</span><span class="rail-n">03</span></a>
+  <a href="#contact"><span class="rail-t">Contact</span><span class="rail-n">04</span></a>
+</nav>
 
-<body>
-  <nav class="site-nav" aria-label="Primary navigation">
-    <div class="container nav-inner">
-      <a
-        href="#home"
-        class="brand"
-        aria-label="Go to home"
-      >
-        <span class="brand-mark">SK</span>
 
-        <span class="brand-copy">
-          <strong>Spencer Kogoma</strong>
-          <span>FPGA | RTL | Hardware Engineering</span>
-        </span>
+<header class="head" id="head">
+  <div class="shell head-in">
+    <a href="#top" class="mark">SPENCER KOGOMA <i>/ SK</i></a>
+    <nav aria-label="Sections">
+      <a href="#now">00 Now</a>
+      <a href="#work">01 Work</a>
+      <a href="#stack">02 Stack</a>
+      <a href="#background">03 Background</a>
+      <a href="#contact">04 Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="shell">
+      <a class="now rv" href="#background">
+        <span class="pip" aria-hidden="true"></span>
+        <img src="amentum-logo.svg" alt="" width="18" height="18" onerror="this.remove()">
+        Digital Design Intern @ Amentum
       </a>
 
-      <div class="nav-links">
-        <a href="#home" class="active">Home</a>
-        <a href="#current">Current</a>
-        <a href="#projects">Projects</a>
-        <a href="#experience">Experience</a>
-        <a href="#skills">Skills</a>
-        <a href="#education">Education</a>
-        <a href="#resume">Resume</a>
-        <a href="#contact">Contact</a>
+      <h1 class="name">
+        <span class="ln"><span>Spencer</span></span>
+        <span class="ln dim"><span>Kogoma</span></span>
+      </h1>
+
+      <p class="rv intro">
+        Computer engineering and violin performance at Northwestern, currently
+        researching an HFT-inspired 10GbE datapath for low-latency, deterministic
+        systems.
+      </p>
+
+      <div class="band rv">
+        <span class="label">I design and verify</span>
+        <span class="rot" aria-label="FPGA hardware, RTL pipelines, and deterministic datapaths">
+          <span class="rot-i" aria-hidden="true">
+            <b data-off>FPGA hardware</b>
+            <b data-off>RTL pipelines</b>
+            <b data-off>deterministic datapaths</b>
+          </span>
+        </span>
       </div>
 
-      <div class="mobile-links">
-        <a href="#current">Current</a>
-        <a href="#projects">Projects</a>
-        <a href="#resume">Resume</a>
-        <a href="#contact">Contact</a>
+    </div>
+  </section>
+
+  <!-- ===================== 00 NOW ===================== -->
+  <section class="sec" id="now">
+    <div class="shell">
+      <div class="sec-head rv">
+        <span class="label">00</span>
+        <h2>Now</h2>
+        <span class="line"></span>
+      </div>
+
+      <article class="panel rv">
+        <div class="panel-top">
+          <h3>Digital Design Intern</h3>
+          <span class="label">Amentum / Fall 2026</span>
+        </div>
+        <p>
+          I help design, implement, and test digital logic and hardware systems,
+          assisting with PCB schematics, component selection, FPGA/VHDL logic
+          development, lab setup, functional testing, and technical status reporting
+          for the engineering team.
+        </p>
+      </article>
+
+      <article class="panel rv">
+        <div class="panel-top">
+          <h3>10GbE FPGA Tick-to-Trade Datapath</h3>
+          <span class="label">Independent research / active</span>
+        </div>
+        <p>
+          A simulation-first FPGA datapath for low-latency market-data processing and
+          order-decision logic. The trading workload is a forcing function for the real
+          subject: deterministic networking, streaming packet parsing, fixed-point decision
+          logic, and risk checks enforced in hardware rather than software.
+        </p>
+        <p>
+          A SystemVerilog pipeline runs from UDP/IP parsing through market-data decoding,
+          symbol and book state, decision logic, a hardware risk gate, and order and cancel
+          encoding. Python and cocotb drive packet generation, golden-model comparison,
+          randomized tests, and scoreboard checks. C++20 host tools handle replay, control,
+          and logging.
+        </p>
+        <p class="note">
+          <b>Status.</b> Active development. No latency has been measured, no timing closed,
+          no hardware run, and nothing connected to live trading. Self-checking tests,
+          timing reports, latency measurements, debug captures, and a hardware demo are
+          targets for this project, not results.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 01 WORK ===================== -->
+  <section class="sec" id="work">
+    <div class="shell">
+      <div class="sec-head rv">
+        <span class="label">01</span>
+        <h2>Work</h2>
+        <span class="line"></span>
+      </div>
+      <p class="lede rv wr">FPGA architecture, RTL, verification, and embedded systems. Each project has its own page.</p>
+
+      <div class="rows rv">
+        <a class="row-link" href="projects/fpga-field-oriented-control.html">
+          <span class="n">01</span>
+          <h3>FPGA-Based Field-Oriented Control</h3>
+          <span class="meta">Zynq-7000 / 2026 &mdash;</span>
+          <span class="ar" aria-hidden="true">&rarr;</span>
+        </a>
+        <a class="row-link" href="projects/tick-to-trade-datapath.html">
+          <span class="n">02</span>
+          <h3>10GbE FPGA Tick-to-Trade Datapath</h3>
+          <span class="meta">SystemVerilog / active</span>
+          <span class="ar" aria-hidden="true">&rarr;</span>
+        </a>
+        <a class="row-link" href="projects/rear-vision-system.html">
+          <span class="n">03</span>
+          <h3>Rear-Vision Camera and Display System</h3>
+          <span class="meta">Embedded Linux / 2026</span>
+          <span class="ar" aria-hidden="true">&rarr;</span>
+        </a>
       </div>
     </div>
-  </nav>
+  </section>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="container hero-grid">
-        <div class="hero-content reveal">
-          <p class="hero-label">
-            <a class="hero-now" href="#experience">
-              <img
-                src="amentum-logo.svg"
-                alt=""
-                class="hero-now-logo"
-                width="20"
-                height="20"
-                onerror="this.remove()"
-              >Digital Design Intern @ Amentum
-            </a>
-          </p>
+  <!-- ===================== 02 STACK ===================== -->
+  <section class="sec" id="stack">
+    <div class="shell">
+      <div class="sec-head rv">
+        <span class="label">02</span>
+        <h2>Stack</h2>
+        <span class="line"></span>
+      </div>
 
-          <h1 class="hero-title">
-            Spencer
-            <span>Kogoma</span>
-          </h1>
-
-          <p class="hero-intro">
-            Northwestern Computer Engineering and Violin Performance student
-            building <strong>FPGA</strong> and <strong>RTL</strong> hardware,
-            currently researching an <strong>HFT-inspired 10GbE datapath</strong>
-            for low-latency, deterministic digital systems.
-          </p>
-
-          <div class="hero-actions">
-            <a
-              href="#projects"
-              class="button button-primary"
-            >
-              View Projects
-            </a>
-
-            <a
-              href="mailto:kogomaspencer@gmail.com"
-              class="button button-secondary"
-            >
-              Contact Me
-            </a>
-          </div>
+      <div class="stack rv">
+        <div>
+          <h3>RTL and verification</h3>
+          <ul>
+            <li>SystemVerilog</li><li>Verilog</li><li>RTL design</li>
+            <li>Finite-state machines</li><li>Testbenches</li><li>cocotb</li>
+            <li>Scoreboards</li><li>Waveform debug</li>
+          </ul>
         </div>
-
-        <div class="hero-photo-wrap reveal">
-          <div class="hero-photo-card">
-            <img
-              src="headshot.jpg"
-              alt="Spencer Kogoma"
-              class="hero-photo"
-            >
-          </div>
+        <div>
+          <h3>FPGA, SoC, and ASIC flow</h3>
+          <ul>
+            <li>FPGA prototyping</li><li>Zynq-7000</li><li>AXI-Lite</li>
+            <li>Vivado</li><li>Cadence Xcelium</li><li>Genus</li>
+            <li>Innovus</li><li>SDC / setup and hold</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Hardware and embedded</h3>
+          <ul>
+            <li>Altium / PCB design</li><li>CAN and SPI</li><li>DroneCAN</li>
+            <li>MAVLink / ArduPilot</li><li>Jetson Orin Nano</li>
+            <li>Python</li><li>C++</li><li>MATLAB</li><li>Linux</li><li>Git</li>
+          </ul>
         </div>
       </div>
-    </section>
-
-    <section class="section" id="current">
-      <div class="container">
-        <div class="section-heading-row reveal">
-          <div>
-            <p class="eyebrow">Currently doing</p>
-            <h2 class="section-title">Current</h2>
-          </div>
-
-          <p class="section-intro">
-            My current independent research project. It is an FPGA and digital
-            design project first, using an HFT-style workload as the latency
-            target.
-          </p>
-        </div>
-
-        <article class="project-card reveal">
-          <div class="project-header">
-            <span class="project-number">Active project</span>
-
-            <div class="project-title-row">
-              <h3 class="project-title">
-                10GbE FPGA Tick-to-Trade Datapath
-              </h3>
-
-              <span class="project-date">
-                Current
-              </span>
-            </div>
-          </div>
-
-          <div class="project-body">
-            <div>
-              <p class="project-summary">
-                Building a simulation-first FPGA datapath for low-latency
-                market-data processing and order-decision logic. The trading
-                workload is a forcing function for the real subject:
-                deterministic networking, streaming packet parsing, fixed-point
-                decision logic, and risk checks enforced in hardware rather than
-                software.
-              </p>
-
-              <ul class="project-points">
-                <li>
-                  Define a SystemVerilog pipeline for UDP/IP parsing,
-                  market-data decoding, symbol and book state, decision logic,
-                  risk checks, and order/cancel encoding.
-                </li>
-
-                <li>
-                  Use Python and cocotb for packet generation, golden models,
-                  randomized tests, scoreboard checks, and latency analysis
-                  before hardware bring-up.
-                </li>
-
-                <li>
-                  Develop C++20 host replay, control, and logging tools to drive
-                  simulated market data and collect debug evidence for later
-                  10GbE hardware validation.
-                </li>
-
-                <li>
-                  Treat the same problems as general-purpose digital design:
-                  line-rate parsing, pipelines that cannot stall unpredictably,
-                  fixed-point math in fabric, and an interlock software cannot
-                  override.
-                </li>
-              </ul>
-            </div>
-
-            <div class="project-details">
-              <div class="detail-row">
-                <span class="detail-label">Status</span>
-                <span class="detail-value">
-                  Current independent FPGA research project
-                </span>
-              </div>
-
-              <div class="detail-row">
-                <span class="detail-label">Stack</span>
-                <span class="detail-value">
-                  SystemVerilog, Python, cocotb, C++20
-                </span>
-              </div>
-
-              <div class="detail-row">
-                <span class="detail-label">Architecture</span>
-                <span class="detail-value">
-                  10GbE, UDP/IP, streaming parsers, fixed-point pipelines,
-                  hardware risk gate
-                </span>
-              </div>
-
-              <div class="detail-row">
-                <span class="detail-label">Evidence targets (not yet achieved)</span>
-                <span class="detail-value">
-                  Self-checking tests, timing reports, latency measurements,
-                  debug captures, hardware demo
-                </span>
-              </div>
-
-              <div class="detail-row">
-                <span class="detail-label">Status note</span>
-                <span class="detail-value">
-                  No latency has been measured, no timing closed, no hardware
-                  run, and nothing connected to live trading. The items above
-                  are targets for this project, not results.
-                </span>
-              </div>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section section-alt" id="projects">
-      <div class="container">
-        <div class="section-heading-row reveal">
-          <div>
-            <p class="eyebrow">Selected engineering work</p>
-            <h2 class="section-title">Projects</h2>
-          </div>
-
-          <p class="section-intro">
-            My most relevant projects across FPGA architecture, RTL
-            development, real-time signal processing, embedded Linux, and
-            hardware validation.
-          </p>
-        </div>
-
-        <div class="project-list">
-          <article class="project-card reveal">
-            <div class="project-header">
-              <span class="project-number">Project 01</span>
-
-              <div class="project-title-row">
-                <h3 class="project-title">
-                  FPGA-Based Field-Oriented Control
-                </h3>
-
-                <span class="project-date">
-                  June 2026 to Present
-                </span>
-              </div>
-            </div>
-
-            <div class="project-body">
-              <div>
-                <p class="project-summary">
-                  Architecting a motor-control accelerator on an Arty
-                  Zynq-7000 SoC: a fully pipelined Q1.15 current loop in FPGA
-                  fabric that takes raw three-phase ADC samples to
-                  complementary center-aligned PWM, with the protection path
-                  implemented in hardware rather than software.
-                </p>
-
-                <ul class="project-points">
-                  <li>
-                    Built the current loop as a valid-chained pipeline: ADC
-                    scaling, Clarke and Park transforms, dual PI regulators on
-                    the d and q axes, inverse Park, and alpha-beta to duty
-                    conversion.
-                  </li>
-
-                  <li>
-                    Implemented the control math in Q1.15 with saturating
-                    arithmetic at every stage, so products widen to full
-                    precision, shift back by 15 fractional bits, then clamp
-                    instead of wrapping.
-                  </li>
-
-                  <li>
-                    Wrote a quarter-wave sine and cosine lookup that resolves a
-                    16-bit electrical angle from a 64-entry quarter table,
-                    deriving quadrant and mirrored index from the upper bits.
-                  </li>
-
-                  <li>
-                    Generated complementary three-phase PWM from a
-                    center-aligned counter with programmable non-overlap, plus
-                    a configuration error output that rejects any period and
-                    deadtime combination where high and low sides could overlap.
-                  </li>
-
-                  <li>
-                    Enforced safety in fabric: over-current, phase-imbalance,
-                    and voltage monitors feed a latching disable controller
-                    that gates PWM and holds the fault until an explicit clear.
-                  </li>
-
-                  <li>
-                    Verified each block with self-checking testbenches that
-                    assert on failure, including checks that high and low pairs
-                    never overlap and that inhibit truly shuts outputs off.
-                  </li>
-                </ul>
-              </div>
-
-              <div class="project-details">
-                <div class="detail-row">
-                  <span class="detail-label">Platform</span>
-                  <span class="detail-value">
-                    Arty Zynq-7000 SoC
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Languages</span>
-                  <span class="detail-value">
-                    Verilog and SystemVerilog RTL, MATLAB, Python
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Datapath</span>
-                  <span class="detail-value">
-                    12-bit ADC in, 16-bit Q1.15 signed datapath, 24-bit scale
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Protection</span>
-                  <span class="detail-value">
-                    Latched hardware disable on over-current, imbalance, or
-                    voltage fault
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Verification</span>
-                  <span class="detail-value">
-                    Per-module self-checking testbenches, MATLAB reference model
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Source</span>
-                  <span class="detail-value">
-                    <a
-                      href="https://github.com/spenchh/fpga-motors"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >github.com/spenchh/fpga-motors</a>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card reveal">
-            <div class="project-header">
-              <span class="project-number">Project 02</span>
-
-              <div class="project-title-row">
-                <h3 class="project-title">
-                  Rear-Vision Camera and Display System
-                </h3>
-
-                <span class="project-date">
-                  March 2026 to June 2026
-                </span>
-              </div>
-            </div>
-
-            <div class="project-body">
-              <div>
-                <p class="project-summary">
-                  Designed and validated a low-latency rear-vision system for
-                  Northwestern’s 2026 American Solar Challenge vehicle.
-                </p>
-
-                <ul class="project-points">
-                  <li>
-                    Built a sub-30 ms video pipeline using a Pi Camera 3 Wide
-                    and CSI-to-HDMI extension hardware.
-                  </li>
-
-                  <li>
-                    Automated headless startup and recovery with Linux, Bash,
-                    and systemd.
-                  </li>
-
-                  <li>
-                    Selected the final design through a six-candidate trade
-                    study covering latency, field of view, EMI risk,
-                    reliability, integration complexity, and cost.
-                  </li>
-                </ul>
-              </div>
-
-              <div class="project-details">
-                <div class="detail-row">
-                  <span class="detail-label">Platform</span>
-                  <span class="detail-value">
-                    Raspberry Pi and Pi Camera 3 Wide
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Performance</span>
-                  <span class="detail-value">
-                    Sub-30 ms end-to-end latency
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Software</span>
-                  <span class="detail-value">
-                    Linux, Bash, systemd
-                  </span>
-                </div>
-
-                <div class="detail-row">
-                  <span class="detail-label">Engineering process</span>
-                  <span class="detail-value">
-                    Architecture trade study and hardware validation
-                  </span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="experience">
-      <div class="container">
-        <div class="section-heading-row reveal">
-          <div>
-            <p class="eyebrow">Engineering and technical leadership</p>
-            <h2 class="section-title">Experience</h2>
-          </div>
-
-          <p class="section-intro">
-            Roles where I own hardware design, system integration, RTL
-            education, testing, and cross-functional engineering work.
-          </p>
-        </div>
-
-        <div class="experience-grid">
-          <article class="experience-card reveal">
-            <span class="experience-date">
-              Fall 2026
-            </span>
-
-            <h3 class="experience-role">
-              Digital Design Intern
-            </h3>
-
-            <p class="experience-org">
-              <img
-                src="amentum-logo.svg"
-                alt=""
-                class="experience-logo"
-                width="22"
-                height="22"
-                onerror="this.remove()"
-              >Amentum
-            </p>
-
-            <p class="experience-copy">
-              I help design, implement, and test digital logic and hardware
-              systems, assisting with PCB schematics, component selection,
-              FPGA/VHDL logic development, lab setup, functional testing, and
-              technical status reporting for the engineering team.
-            </p>
-          </article>
-
-          <article class="experience-card reveal">
-            <span class="experience-date">
-              June 2026 to Present
-            </span>
-
-            <h3 class="experience-role">
-              Undergraduate Researcher
-            </h3>
-
-            <p class="experience-org">
-              Northwestern University
-            </p>
-
-            <p class="experience-copy">
-              Develop FPGA-based field-oriented motor control on a Zynq-7000
-              SoC, including deterministic PWM generation, Hall decoding, ADC
-              sample timing, Q1.15 fixed-point control, Clarke and Park
-              transforms, PI control, AXI-Lite interfaces, and fault-latched
-              shutdown, verified with self-checking testbenches.
-            </p>
-          </article>
-
-          <article class="experience-card reveal">
-            <span class="experience-date">
-              September 2025 to Present
-            </span>
-
-            <h3 class="experience-role">
-              Low-Voltage Electrical Lead
-            </h3>
-
-            <p class="experience-org">
-              Northwestern Solar Car Team
-            </p>
-
-            <p class="experience-copy">
-              Lead low-voltage systems across power distribution, telemetry,
-              and vehicle integration. Develop FPGA-controlled relay sequencing
-              and safety interlocks, design multilayer Altium PCBs, and debug
-              CAN and SPI communication during bring-up.
-            </p>
-          </article>
-
-          <article class="experience-card reveal">
-            <span class="experience-date">
-              June 2026 to Present
-            </span>
-
-            <h3 class="experience-role">
-              Digital Design Lead
-            </h3>
-
-            <p class="experience-org">
-              Northwestern University Silicon Initiative | NU Silicats
-            </p>
-
-            <p class="experience-copy">
-              Lead RTL onboarding for new members: teach SystemVerilog, finite
-              state machines, testbench construction, and waveform debugging,
-              then walk the team through FPGA and ASIC flow fundamentals using
-              Cadence Xcelium, Genus, and Innovus from simulation to
-              place-and-route.
-            </p>
-          </article>
-        </div>
-
-        <div class="leadership-panel reveal">
-          <h3 class="leadership-heading">
-            Leadership Beyond Engineering
-          </h3>
-
-          <div class="leadership-grid">
-            <div class="leadership-item">
-              <h4 class="leadership-title">
-                Concertmaster
-              </h4>
-
-              <p class="leadership-meta">
-                Northwestern Philharmonia
-              </p>
-
-              <p class="leadership-copy">
-                Lead violinist and conductor liaison, selected through
-                competitive audition.
-              </p>
-            </div>
-
-            <div class="leadership-item">
-              <h4 class="leadership-title">
-                Private Violin Instructor
-              </h4>
-
-              <p class="leadership-meta">
-                Self-Employed
-              </p>
-
-              <p class="leadership-copy">
-                Mentor students through auditions, competitions, and long-term
-                technical development.
-              </p>
-            </div>
-
-            <div class="leadership-item">
-              <h4 class="leadership-title">
-                Eagle Scout
-              </h4>
-
-              <p class="leadership-meta">
-                Scouting America
-              </p>
-
-              <p class="leadership-copy">
-                Earned the rank after sustained service, troop leadership, and
-                completion of a community project.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-alt" id="skills">
-      <div class="container">
-        <div class="section-heading-row reveal">
-          <div>
-            <p class="eyebrow">Technical toolkit</p>
-            <h2 class="section-title">Skills</h2>
-          </div>
-
-          <p class="section-intro">
-            Tools and technical areas developed through research, team
-            engineering, coursework, and independent projects.
-          </p>
-        </div>
-
-        <div class="toolkit">
-          <div class="toolkit-card reveal">
-            <h3 class="toolkit-title">
-              RTL and Verification
-            </h3>
-
-            <p class="toolkit-copy">
-              Verilog, SystemVerilog, RTL design, digital logic, finite-state
-              machines, testbenches, cocotb, scoreboards, simulation, and
-              waveform debugging.
-            </p>
-          </div>
-
-          <div class="toolkit-card reveal">
-            <h3 class="toolkit-title">
-              FPGA and SoC
-            </h3>
-
-            <p class="toolkit-copy">
-              FPGA prototyping, Zynq-7000, AXI-Lite, ARM and FPGA partitioning,
-              fixed-point arithmetic, PWM, and real-time control.
-            </p>
-          </div>
-
-          <div class="toolkit-card reveal">
-            <h3 class="toolkit-title">
-              PCB and Embedded
-            </h3>
-
-            <p class="toolkit-copy">
-              Altium Designer, schematic capture, multilayer layout, DRC and
-              ERC, CAN, SPI, power sequencing, and hardware bring-up.
-            </p>
-          </div>
-
-          <div class="toolkit-card reveal">
-            <h3 class="toolkit-title">
-              Architecture and ASIC Flow
-            </h3>
-
-            <p class="toolkit-copy">
-              Computer architecture fundamentals, pipelining, synthesis, SDC
-              constraints, setup and hold analysis, place-and-route, and area
-              and power reporting.
-            </p>
-          </div>
-
-          <div class="toolkit-card reveal">
-            <h3 class="toolkit-title">
-              Embedded and Avionics
-            </h3>
-
-            <p class="toolkit-copy">
-              Python, Linux, CAN and DroneCAN, MAVLink, ArduPilot, JSBSim,
-              QGroundControl, Jetson Orin Nano, and Orange Cube.
-            </p>
-          </div>
-
-          <div class="toolkit-card reveal">
-            <h3 class="toolkit-title">
-              Tools and Software
-            </h3>
-
-            <p class="toolkit-copy">
-              Vivado, Cadence Xcelium, Genus, Innovus, MATLAB, Simulink,
-              Python, C++, Java, Linux, Bash, systemd, and Git.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="education">
-      <div class="container">
-        <div class="section-heading-row reveal">
-          <div>
-            <p class="eyebrow">Academic background</p>
-            <h2 class="section-title">Education</h2>
-
-            <p class="education-gpa">
-              Cumulative GPA: 3.73
-            </p>
-          </div>
-
-          <p class="section-intro">
-            A dual-degree education combining computer engineering,
-            disciplined performance, technical communication, and creative
-            problem-solving.
-          </p>
-        </div>
-
-        <div class="education-grid">
-          <article class="education-card reveal">
-            <p class="education-school">
-              Northwestern University | Expected 2028
-            </p>
-
-            <h3 class="education-degree">
-              B.S. Computer Engineering
-            </h3>
-
-            <p class="education-college">
-              McCormick School of Engineering
-            </p>
-
-            <p class="education-copy">
-              Relevant coursework includes Computer Architecture, Embedded IoT
-              Systems and Edge Computing, Advanced Digital Design, Computer
-              Engineering, Electrical Engineering, Programming, Linear
-              Algebra, and Multivariable Calculus.
-            </p>
-
-            <p class="education-note">
-              Evanston, Illinois
-            </p>
-          </article>
-
-          <article class="education-card reveal">
-            <p class="education-school">
-              Northwestern University | Expected 2028
-            </p>
-
-            <h3 class="education-degree">
-              B.M. Violin Performance
-            </h3>
-
-            <p class="education-college">
-              Bienen School of Music
-            </p>
-
-            <p class="education-copy">
-              Conservatory-level performance training centered on disciplined
-              preparation, attention to detail, musical leadership, and
-              collaboration within high-performing ensembles.
-            </p>
-
-            <p class="education-note">
-              Student of Blair Milton
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-alt" id="resume">
-      <div class="container">
-        <div class="section-heading-row reveal">
-          <div>
-            <p class="eyebrow">Documents and profiles</p>
-            <h2 class="section-title">Resume</h2>
-          </div>
-
-          <p class="section-intro">
-            The short version on paper, the long version in code, and the
-            places to reach me.
-          </p>
-        </div>
-
-        <div class="resume-grid">
-          <a
-            class="resume-card reveal"
-            href="resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span class="resume-label">PDF</span>
-            <h3 class="resume-title">Resume</h3>
-            <p class="resume-copy">
-              One-page engineering resume covering research, projects,
-              coursework, and tooling.
-            </p>
-          </a>
-
-          <a
-            class="resume-card reveal"
-            href="https://github.com/spenchh"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span class="resume-label">GitHub</span>
-            <h3 class="resume-title">github.com/spenchh</h3>
-            <p class="resume-copy">
-              RTL, verification environments, embedded tooling, and the source
-              for this site.
-            </p>
-          </a>
-
-          <a
-            class="resume-card reveal"
-            href="https://www.linkedin.com/in/spencer-kogoma"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span class="resume-label">LinkedIn</span>
-            <h3 class="resume-title">Spencer Kogoma</h3>
-            <p class="resume-copy">
-              Roles, coursework, and professional background.
-            </p>
-          </a>
-
-          <a
-            class="resume-card reveal"
-            href="mailto:kogomaspencer@gmail.com"
-          >
-            <span class="resume-label">Email</span>
-            <h3 class="resume-title">kogomaspencer@gmail.com</h3>
-            <p class="resume-copy">
-              Direct line for technical questions or project detail.
-            </p>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="contact" id="contact">
-      <div class="container">
-        <div class="contact-inner reveal">
-          <p class="eyebrow">Let’s build something</p>
-
-          <h2 class="contact-title">
-            Connect
-          </h2>
-
-          <p class="contact-copy">
-            I work on FPGA design, RTL verification, ASIC and silicon-adjacent
-            engineering, embedded systems, computer architecture, hardware
-            acceleration, and low-latency digital systems — the problems that
-            show up in semiconductor, aerospace and defense, robotics, test and
-            measurement, and trading.
-          </p>
-
-          <div class="contact-links">
-            <a
-              href="mailto:kogomaspencer@gmail.com"
-              class="contact-link"
-            >
-              kogomaspencer@gmail.com
-            </a>
-
-            <a
-              href="https://www.linkedin.com/in/spencer-kogoma"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="contact-link"
-            >
-              LinkedIn
-            </a>
-
-            <a
-              href="https://github.com/spenchh"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="contact-link"
-            >
-              GitHub
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-inner">
-      <span>
-        &copy; 2026 Spencer Kogoma
-      </span>
-
-      <span>
-        FPGA | RTL | Embedded Systems | Hardware Design
-      </span>
     </div>
-  </footer>
+  </section>
 
-  <script>
-    const navLinks = document.querySelectorAll(".nav-links a");
-    const sections = document.querySelectorAll("main section[id]");
+  <!-- ===================== 03 BACKGROUND ===================== -->
+  <section class="sec" id="background">
+    <div class="shell">
+      <div class="sec-head rv">
+        <span class="label">03</span>
+        <h2>Background</h2>
+        <span class="line"></span>
+      </div>
 
-    function updateActiveNavigation() {
-      const scrollPosition = window.scrollY + 190;
-      let currentSection = "home";
+      <ul class="hist rv">
+        <li>
+          <span class="when">Fall 2026</span>
+          <div>
+            <h3>Digital Design Intern</h3>
+            <p class="org">Amentum</p>
+            <p>Help design, implement, and test digital logic and hardware systems, assisting with PCB schematics, component selection, FPGA/VHDL logic development, lab setup, functional testing, and technical status reporting for the engineering team.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when">2026 —</span>
+          <div>
+            <h3>Undergraduate Researcher</h3>
+            <p class="org">Northwestern University</p>
+            <p>FPGA-based field-oriented motor control on a Zynq-7000 SoC: deterministic PWM, Hall decoding, ADC sample timing, Q1.15 fixed-point control, Clarke and Park transforms, PI control, AXI-Lite, and fault-latched shutdown, verified with self-checking testbenches.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when">2026 —</span>
+          <div>
+            <h3>Digital Design Lead</h3>
+            <p class="org">NU Silicon Initiative / NU Silicats</p>
+            <p>Lead RTL onboarding: SystemVerilog, finite-state machines, testbench construction, waveform debugging, and FPGA and ASIC flow fundamentals using Cadence Xcelium, Genus, and Innovus from simulation to place-and-route.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when">2025 —</span>
+          <div>
+            <h3>Low-Voltage Electrical Lead</h3>
+            <p class="org">Northwestern Solar Car Team</p>
+            <p>Low-voltage systems across power distribution, telemetry, and vehicle integration. FPGA-controlled relay sequencing and safety interlocks, multilayer Altium PCBs, and CAN and SPI debugging during bring-up.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when">Expected 2028</span>
+          <div>
+            <h3>B.S. Computer Engineering &amp; B.M. Violin Performance</h3>
+            <p class="org">Northwestern University — McCormick &amp; Bienen</p>
+            <p>Cumulative GPA 3.73. Coursework in computer architecture, advanced digital design, embedded IoT systems and edge computing, linear algebra, and multivariable calculus. Concertmaster, Northwestern Philharmonia. Student of Blair Milton.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
 
-      sections.forEach((section) => {
-        if (section.offsetTop <= scrollPosition) {
-          currentSection = section.id;
-        }
-      });
+  <!-- ===================== 04 CONTACT ===================== -->
+  <section class="contact" id="contact">
+    <div class="shell">
+      <div class="rv">
+        <span class="label">04 / Contact</span>
+        <h2 style="margin-top:20px">Contact</h2>
+        <p class="wr">
+          I work on FPGA design, RTL verification, ASIC and silicon-adjacent engineering,
+          embedded systems, computer architecture, and low-latency digital systems — the
+          problems that show up in semiconductor, aerospace and defense, robotics, test
+          and measurement, and trading.
+        </p>
+      </div>
 
-      navLinks.forEach((link) => {
-        const target = link
-          .getAttribute("href")
-          .replace("#", "");
+      <nav class="big-links rv" aria-label="Contact links">
+        <a class="big-link" href="mailto:kogomaspencer@gmail.com">
+          <span class="bl-mask">
+            <span class="bl-a">Email</span>
+            <span class="bl-b" aria-hidden="true">Email</span>
+          </span>
+          <span class="bl-ar" aria-hidden="true">&rarr;</span>
+        </a>
 
-        link.classList.toggle(
-          "active",
-          target === currentSection
-        );
-      });
-    }
+        <a class="big-link" href="https://github.com/spenchh" target="_blank" rel="noopener noreferrer">
+          <span class="bl-mask">
+            <span class="bl-a">GitHub</span>
+            <span class="bl-b" aria-hidden="true">GitHub</span>
+          </span>
+          <span class="bl-ar" aria-hidden="true">&#8599;</span>
+        </a>
 
-    window.addEventListener(
-      "scroll",
-      updateActiveNavigation
-    );
+        <a class="big-link" href="https://www.linkedin.com/in/spencer-kogoma" target="_blank" rel="noopener noreferrer">
+          <span class="bl-mask">
+            <span class="bl-a">LinkedIn</span>
+            <span class="bl-b" aria-hidden="true">LinkedIn</span>
+          </span>
+          <span class="bl-ar" aria-hidden="true">&#8599;</span>
+        </a>
+      </nav>
 
-    window.addEventListener(
-      "load",
-      updateActiveNavigation
-    );
+    </div>
+  </section>
+</main>
 
-    const revealElements =
-      document.querySelectorAll(".reveal");
+<footer>
+  <div class="shell foot">
+    <span>&copy; 2026 Spencer Kogoma</span>
+    <span>FPGA / RTL / Digital hardware</span>
+    <span>San Ramon, CA</span>
+  </div>
+</footer>
 
-    if ("IntersectionObserver" in window) {
-      const revealObserver =
-        new IntersectionObserver(
-          (entries, observer) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          {
-            threshold: 0.08
-          }
-        );
-
-      revealElements.forEach((element) => {
-        revealObserver.observe(element);
-      });
-    } else {
-      revealElements.forEach((element) => {
-        element.classList.add("visible");
-      });
-    }
-  </script>
+<script src="assets/site.js?v=58736d6b"></script>
 </body>
 </html>

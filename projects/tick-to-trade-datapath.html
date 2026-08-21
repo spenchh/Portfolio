@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10GbE FPGA Tick-to-Trade Datapath &mdash; Spencer Kogoma</title>
+<meta name="description" content="A simulation-first FPGA datapath studying deterministic networking, streaming packet parsing, fixed-point decision logic, and hardware-enforced risk checks.">
+<meta name="author" content="Spencer Kogoma">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="10GbE FPGA Tick-to-Trade Datapath">
+<meta property="og:description" content="A simulation-first FPGA datapath studying deterministic networking, streaming packet parsing, fixed-point decision logic, and hardware-enforced risk checks.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6135'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='24' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ESK%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css?v=0806947d">
+</head>
+<body>
+<div class="bar" aria-hidden="true"><span id="bar"></span></div>
+
+<header class="head" id="head">
+  <div class="shell head-in">
+    <a href="../index.html" class="mark">SPENCER KOGOMA <i>/ SK</i></a>
+    <nav aria-label="Sections">
+      <a href="../index.html#work">Work</a>
+      <a href="../index.html#stack">Stack</a>
+      <a href="../index.html#background">Background</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="ph">
+    <div class="shell">
+      <a class="back" href="../index.html#work">&larr; All work</a>
+      <span class="label">Project 02 / SystemVerilog / Active</span>
+      <h1>10GbE FPGA<br>Tick-to-Trade Datapath</h1>
+      <p class="sub">A simulation-first FPGA datapath for low-latency market-data processing and order-decision logic. The trading workload is a forcing function for the real subject: deterministic networking, streaming packet parsing, fixed-point decision logic, and risk checks enforced in hardware rather than software.</p>
+      <dl class="facts">
+        <div><dt>Stack</dt><dd>SystemVerilog, Python, cocotb, C++20</dd></div>
+        <div><dt>Focus</dt><dd>10GbE, UDP/IP, streaming parsers, risk gating</dd></div>
+        <div><dt>Method</dt><dd>Simulation-first, reference model and scoreboard</dd></div>
+        <div><dt>Status</dt><dd>Active development</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sec sec-flush">
+    <div class="shell">
+      <div class="prose">
+        <div class="callout">
+          <p>
+            <strong>Status.</strong> This project is in active development. No latency
+            has been measured, no timing has been closed, nothing has run on hardware,
+            and nothing is connected to any live or production trading system. The
+            evidence listed at the bottom of this page consists of <strong>targets</strong>,
+            not results.
+          </p>
+        </div>
+
+        <h2>Why this workload</h2>
+        <p>
+          Market data is one of the most demanding latency targets available to study,
+          which makes it a useful forcing function. The engineering problems underneath
+          are general: parse a protocol at line rate, keep a pipeline from stalling
+          unpredictably, do arithmetic in fixed point inside fabric, and enforce an
+          interlock that software cannot override. The same problems appear in radar and
+          avionics front ends, robotics, industrial control, and network equipment.
+        </p>
+
+        <h2>The pipeline</h2>
+        <ul>
+          <li><strong>10GbE ingress.</strong> MAC and stream interface, framing.</li>
+          <li><strong>UDP/IP parse.</strong> Header strip, filtering, checksum.</li>
+          <li><strong>Market-data decode.</strong> Message framing and field extraction.</li>
+          <li><strong>Symbol and book state.</strong> Per-symbol tracking with deterministic update behavior.</li>
+          <li><strong>Decision logic.</strong> Fixed-point evaluation.</li>
+          <li><strong>Risk gate.</strong> Hardware-enforced checks that no order may bypass.</li>
+          <li><strong>Order and cancel encode.</strong> Message build and TX egress.</li>
+        </ul>
+        <p>
+          Stages are streaming and back-pressure aware. The structural rule is that no
+          path reaches egress without passing the risk gate.
+        </p>
+
+        <h2>Verification</h2>
+        <p>
+          Python and cocotb drive the environment: packet generation for synthetic
+          market data, golden-model comparison against a Python reference, randomized
+          and constrained stimulus, scoreboard checking, and a harness for cycle-level
+          latency accounting across stages.
+        </p>
+
+        <h2>Host tooling</h2>
+        <p>
+          C++20 tools handle replay, control, and logging, driving simulated market data
+          into the design, configuring risk parameters, and collecting structured debug
+          evidence from runs.
+        </p>
+
+        <h2>Evidence targets</h2>
+        <p>Artifacts I am working toward, stated so the goalposts are explicit:</p>
+        <ul>
+          <li>Self-checking test suite across the parse, decode, decision, and risk stages.</li>
+          <li>Synthesis and implementation timing reports.</li>
+          <li>Cycle-level tick-to-trade latency accounting, first in simulation.</li>
+          <li>Waveform and packet captures documenting correct and fault-path behavior.</li>
+          <li>Directed tests proving no order reaches egress while a risk condition is asserted.</li>
+          <li>Eventual bring-up on an FPGA with a 10GbE interface.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="shell">
+    <div class="pager">
+      <a class="back" href="../index.html#work">&larr; All work</a>
+      <a class="out" href="rear-vision-system.html">Next: Rear-vision system &rarr;</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="shell foot">
+    <span>&copy; 2026 Spencer Kogoma</span>
+    <span>FPGA / RTL / Digital hardware</span>
+    <span>San Ramon, CA</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js?v=58736d6b"></script>
+</body>
+</html>

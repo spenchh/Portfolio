@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FPGA-Based Field-Oriented Control &mdash; Spencer Kogoma</title>
+<meta name="description" content="A pipelined Q1.15 field-oriented motor control loop in FPGA fabric on an Arty Zynq-7000 SoC, with the protection path enforced in hardware.">
+<meta name="author" content="Spencer Kogoma">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="FPGA-Based Field-Oriented Control">
+<meta property="og:description" content="A pipelined Q1.15 field-oriented motor control loop in FPGA fabric on an Arty Zynq-7000 SoC, with the protection path enforced in hardware.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6135'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='24' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ESK%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css?v=0806947d">
+</head>
+<body>
+<div class="bar" aria-hidden="true"><span id="bar"></span></div>
+
+<header class="head" id="head">
+  <div class="shell head-in">
+    <a href="../index.html" class="mark">SPENCER KOGOMA <i>/ SK</i></a>
+    <nav aria-label="Sections">
+      <a href="../index.html#work">Work</a>
+      <a href="../index.html#stack">Stack</a>
+      <a href="../index.html#background">Background</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="ph">
+    <div class="shell">
+      <a class="back" href="../index.html#work">&larr; All work</a>
+      <span class="label">Project 01 / Zynq-7000 / 2026 &mdash;</span>
+      <h1>FPGA-Based<br>Field-Oriented Control</h1>
+      <p class="sub">A motor-control accelerator on an Arty Zynq-7000 SoC: a fully pipelined Q1.15 current loop in FPGA fabric that takes raw three-phase ADC samples to complementary center-aligned PWM, with the protection path implemented in hardware rather than software.</p>
+      <dl class="facts">
+        <div><dt>Platform</dt><dd>Arty Zynq-7000 SoC</dd></div>
+        <div><dt>Languages</dt><dd>Verilog and SystemVerilog RTL, MATLAB, Python</dd></div>
+        <div><dt>Datapath</dt><dd>12-bit ADC in, 16-bit Q1.15 signed, 24-bit scale</dd></div>
+        <div><dt>Status</dt><dd>Active research</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sec sec-flush">
+    <div class="shell">
+      <div class="prose">
+        <h2>The control loop</h2>
+        <p>
+          The current loop is a valid-chained pipeline. Each stage carries its own
+          <code>*_valid</code> strobe, so a sample propagates through the datapath
+          without a central scheduler and every stage knows precisely when its input
+          is real.
+        </p>
+        <ul>
+          <li>ADC scaling converts raw counts to signed current, with per-phase offset subtraction and a 24-bit scale coefficient.</li>
+          <li>Clarke and Park transforms take three-phase currents into the rotating d-q frame.</li>
+          <li>Two PI regulators, one per axis, with clamped integrators for anti-windup.</li>
+          <li>Inverse Park returns the voltage command to the stationary frame.</li>
+          <li>Alpha-beta to duty conversion produces the three phase duties.</li>
+        </ul>
+
+        <h2>Fixed-point arithmetic</h2>
+        <p>
+          Everything runs in Q1.15. At each multiply the product widens to full
+          precision, shifts back by fifteen fractional bits, and then clamps to the
+          16-bit range rather than wrapping. Wrapping in a motor controller means a
+          sign flip in a torque command, so saturation is a safety property, not a
+          numerical nicety.
+        </p>
+
+        <figure class="code">
+          <figcaption>
+            <span>pi_controller_q15.sv</span>
+            <span>Q1.15 saturation</span>
+          </figcaption>
+          <pre><code>function signed [DATA_WIDTH-1:0] clamp_data;
+    input signed [PRODUCT_WIDTH-1:0] value;
+    input signed [DATA_WIDTH-1:0] lo;
+    input signed [DATA_WIDTH-1:0] hi;
+    logic signed [PRODUCT_WIDTH-1:0] lo_ext;
+    logic signed [PRODUCT_WIDTH-1:0] hi_ext;
+    begin
+        lo_ext = {{(PRODUCT_WIDTH-DATA_WIDTH){lo[DATA_WIDTH-1]}}, lo};
+        hi_ext = {{(PRODUCT_WIDTH-DATA_WIDTH){hi[DATA_WIDTH-1]}}, hi};
+
+        if (value &gt; hi_ext)
+            clamp_data = hi;
+        else if (value &lt; lo_ext)
+            clamp_data = lo;
+        else
+            clamp_data = value[DATA_WIDTH-1:0];
+    end
+endfunction</code></pre>
+        </figure>
+
+        <p>
+          The bounds are sign-extended to the product width before comparison, so a
+          value that overflows 16 bits is compared honestly rather than after it has
+          already wrapped. Every stage in the loop clamps this way.
+        </p>
+
+        <h2>Angle resolution</h2>
+        <p>
+          Sine and cosine come from a quarter-wave lookup table. A 16-bit electrical
+          angle is split so the top two bits select the quadrant and the next six
+          index a 64-entry quarter table; the cosine is read from the same table using
+          a mirrored index. One quarter period of storage covers the full circle.
+        </p>
+
+        <h2>Modulation and deadtime</h2>
+        <p>
+          A center-aligned counter drives complementary high and low outputs on each
+          phase, separated by a programmable non-overlap interval. The module exposes a
+          <code>configuration_error</code> output that rejects any period and deadtime
+          combination where the high and low sides could conduct simultaneously. The
+          design refuses to run a configuration that could shoot through.
+        </p>
+
+        <figure class="code">
+          <figcaption>
+            <span>pwm_3phase_center_aligned.v</span>
+            <span>Shoot-through guard</span>
+          </figcaption>
+          <pre><code>wire [COUNTER_WIDTH:0] two_nonoverlap_shadow_ext =
+    {1'b0, nonoverlap_shadow} &lt;&lt; 1;
+
+wire shadow_config_valid =
+    (period_shadow != {COUNTER_WIDTH{1'b0}}) &amp;&amp;
+    (nonoverlap_shadow &lt; period_shadow)      &amp;&amp;
+    (two_nonoverlap_shadow_ext &lt; period_shadow_ext) &amp;&amp;
+    (duty_a_shadow &lt;= period_shadow) &amp;&amp;
+    (duty_b_shadow &lt;= period_shadow) &amp;&amp;
+    (duty_c_shadow &lt;= period_shadow);
+
+wire active = enable &amp;&amp; !pwm_inhibit &amp;&amp; !configuration_error;
+
+wire hi_a_next = active &amp;&amp; ((counter_ext + nonoverlap_ext) &lt; duty_a_ext);
+wire lo_a_next = active &amp;&amp; (counter_ext &gt; (duty_a_ext + nonoverlap_ext));</code></pre>
+        </figure>
+
+        <p>
+          Two deadtimes have to fit inside one period, or the high and low sides of a
+          leg could conduct together. That condition gates <code>active</code>, so an
+          invalid configuration cannot drive the outputs at all &mdash; the check is
+          structural, not a runtime warning.
+        </p>
+
+        <h2>Protection in fabric</h2>
+        <p>
+          Over-current, phase-imbalance, and bus and phase voltage monitors feed a
+          latching disable controller. When any monitor trips, PWM is gated immediately
+          and the fault is held until an explicit clear, with a status code identifying
+          the cause. The protection path does not depend on software being alive.
+        </p>
+
+        <h2>Verification</h2>
+        <p>
+          Each block has a self-checking testbench that asserts on failure rather than
+          printing waveforms for a human to read. Directed tests confirm that high and
+          low pairs never overlap, that an inhibit truly shuts the outputs off, and that
+          an invalid duty raises the configuration error. A MATLAB fixed-point model
+          serves as the numerical reference.
+        </p>
+
+        <div class="callout">
+          <p>
+            <strong>Source.</strong> Thirteen RTL modules under <code>fpga/rtl/</code>,
+            with self-checking testbenches alongside them, plus the MATLAB fixed-point
+            models and the PCB work.
+          </p>
+          <a class="gh" href="https://github.com/spenchh/fpga-motors" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+            spenchh/fpga-motors
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="shell">
+    <div class="pager">
+      <a class="back" href="../index.html#work">&larr; All work</a>
+      <a class="out" href="tick-to-trade-datapath.html">Next: Tick-to-trade datapath &rarr;</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="shell foot">
+    <span>&copy; 2026 Spencer Kogoma</span>
+    <span>FPGA / RTL / Digital hardware</span>
+    <span>San Ramon, CA</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js?v=58736d6b"></script>
+</body>
+</html>
