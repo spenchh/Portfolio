@@ -996,8 +996,13 @@ html.snapping{scroll-snap-type:y mandatory;scroll-behavior:smooth}
    the bottom of the first screen.
    ============================================================ */
 .hero{
-  height:100svh;
-  padding-block:clamp(3.2rem,6.5vh,4.5rem) 0;
+  /* the sticky header sits in the flow above this, so a full 100svh
+     would end one header-height below the fold and take the waveform
+     with it */
+  height:calc(100vh - var(--head-h));
+  height:calc(100svh - var(--head-h));
+  min-height:0;
+  padding-block:clamp(1.2rem,3.5vh,2.6rem) 0;
   justify-content:space-between;
 }
 .hero > .shell{flex:1 1 auto;min-height:0;justify-content:center}
@@ -1017,5 +1022,9 @@ html.snapping{scroll-snap-type:y mandatory;scroll-behavior:smooth}
 .wave{flex:none;margin-top:clamp(.7rem,2vh,1.6rem)}
 .wave canvas{height:clamp(3.2rem,8vh,5.5rem)}
 @media(max-height:38rem){
-  .hero{height:auto;min-height:0;padding-block:clamp(3rem,8vh,4.5rem)}
+  .hero{height:auto;min-height:0;padding-block:clamp(2rem,6vh,3.5rem)}
+}
+.snap:not(.hero){
+  min-height:calc(100vh - var(--head-h));
+  min-height:calc(100svh - var(--head-h));
 }
