@@ -1145,3 +1145,6 @@ html:not(.snapping) body{padding-top:var(--head-h)}
 /* the conveyor points at where the tools are actually used */
 .see-wrap{text-align:center;margin-top:clamp(1.2rem,3.5vh,2.2rem)}
 .see-wrap .out{margin-top:0}
+
+/* the chip also carries stroke-drawn icons, not just filled marks */
+.gh svg[stroke]{fill:none;stroke:currentColor}
