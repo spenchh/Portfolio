@@ -1178,3 +1178,7 @@ html:not(.snapping) body{padding-top:var(--head-h)}
   content:"";position:absolute;left:0;top:.42em;width:.75rem;height:.75rem;
   border:1px solid var(--line-strong);border-radius:.2rem;background:none;
 }
+
+/* org mark beside a panel heading */
+.panel-org{display:flex;align-items:center;justify-content:center;gap:.55rem;flex-wrap:wrap}
+.panel-mark{height:clamp(1.1rem,2.6vw,1.45rem);width:auto;display:block}
