@@ -1211,3 +1211,32 @@ html:not(.snapping) body{padding-top:var(--head-h)}
 }
 .row-state.is-active{color:var(--green);border-color:rgba(47,97,53,.32)}
 .row-state.is-active::before{background:var(--green)}
+
+/* ============================================================
+   COURSEWORK IN COLUMNS
+   One row per course wasted the width. These flow into columns and
+   each still opens in place.
+   ============================================================ */
+.drops.cols{
+  border-top:0;
+  display:grid;gap:0 clamp(1.4rem,4vw,3rem);
+}
+@media(min-width:40rem){.drops.cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:68rem){.drops.cols{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.drops.cols .drop{
+  border-top:1px solid var(--line);border-bottom:0;
+  align-self:start;
+}
+.drops.cols summary{
+  padding:.7rem 0;gap:.5rem;align-items:baseline;
+}
+.drops.cols summary:hover{padding-left:.4rem}
+.drops.cols .drop-t{
+  font-size:clamp(.76rem,1.3vw,.9rem);
+  letter-spacing:-.015em;line-height:1.25;white-space:normal;
+}
+.drops.cols .drop-s{font-size:.8rem}
+.drops.cols .drop-body{padding-bottom:.85rem}
+.drops.cols .drop-body p{
+  font-size:.8rem;line-height:1.6;max-width:none;
+}
