@@ -147,10 +147,8 @@
   var heads = document.querySelectorAll('.sec-head');
   if ('IntersectionObserver' in window) {
     var ho = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('in'); ho.unobserve(e.target); }
-      });
-    }, { threshold: 0.4 });
+      es.forEach(function (e) { e.target.classList.toggle('in', e.isIntersecting); });
+    }, { threshold: 0.35 });
     Array.prototype.forEach.call(heads, function (h) { ho.observe(h); });
   } else {
     Array.prototype.forEach.call(heads, function (h) { h.classList.add('in'); });
@@ -161,11 +159,11 @@
   if (reduce || !('IntersectionObserver' in window)) {
     Array.prototype.forEach.call(items, function (el) { el.classList.add('in'); });
   } else {
+    /* kept observed rather than unobserved, so landing on a snapped
+       section replays its entrance */
     var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
+      es.forEach(function (e) { e.target.classList.toggle('in', e.isIntersecting); });
+    }, { rootMargin: '-8% 0px -8% 0px', threshold: 0.04 });
     Array.prototype.forEach.call(items, function (el) { io.observe(el); });
   }
 

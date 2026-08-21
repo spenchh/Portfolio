@@ -3,66 +3,91 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Spencer Kogoma — FPGA / RTL / Digital Hardware</title>
+<title>Spencer Kogoma &mdash; FPGA / RTL / Digital Hardware</title>
 <meta name="description" content="Spencer Kogoma. Computer engineering and violin performance at Northwestern. FPGA design, RTL verification, ASIC flow, and low-latency digital hardware.">
 <meta name="author" content="Spencer Kogoma">
 <meta name="theme-color" content="#ffffff">
-<meta property="og:title" content="Spencer Kogoma — FPGA / RTL / Digital Hardware">
+<meta property="og:title" content="Spencer Kogoma &mdash; FPGA / RTL / Digital Hardware">
 <meta property="og:description" content="FPGA design, RTL verification, ASIC flow, and low-latency digital hardware.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6135'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='24' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ESK%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=534310eb">
+<link rel="stylesheet" href="assets/site.css?v=98ddd8f3">
 </head>
-<body class="has-rail">
+<body class="has-rail snapping">
 <div class="bar" aria-hidden="true"><span id="bar"></span></div>
+
 <nav class="rail" aria-label="Section progress">
   <span class="rail-track" aria-hidden="true"><span class="rail-fill" id="rail-fill"></span></span>
-  <a href="#now"><span class="rail-t">Now</span><span class="rail-n">00</span></a>
-  <a href="#work"><span class="rail-t">Work</span><span class="rail-n">01</span></a>
-  <a href="#stack"><span class="rail-t">Stack</span><span class="rail-n">02</span></a>
-  <a href="#background"><span class="rail-t">Background</span><span class="rail-n">03</span></a>
-  <a href="#contact"><span class="rail-t">Contact</span><span class="rail-n">04</span></a>
+  <a href="#home"><span class="rail-t">Home</span><span class="rail-n">00</span></a>
+  <a href="#focus"><span class="rail-t">Focus</span><span class="rail-n">01</span></a>
+  <a href="#now"><span class="rail-t">Now</span><span class="rail-n">02</span></a>
+  <a href="#work"><span class="rail-t">Work</span><span class="rail-n">03</span></a>
+  <a href="#stack"><span class="rail-t">Stack</span><span class="rail-n">04</span></a>
+  <a href="#background"><span class="rail-t">Background</span><span class="rail-n">05</span></a>
 </nav>
-
 
 <header class="head" id="head">
   <div class="shell head-in">
-    <a href="#top" class="mark">SPENCER KOGOMA <i>/ SK</i></a>
+    <a href="#home" class="mark">SPENCER KOGOMA <i>/ SK</i></a>
     <nav aria-label="Sections">
-      <a href="#now">00 Now</a>
-      <a href="#work">01 Work</a>
-      <a href="#stack">02 Stack</a>
-      <a href="#background">03 Background</a>
-      <a href="#contact">04 Contact</a>
+      <a href="#focus">Focus</a>
+      <a href="#now">Now</a>
+      <a href="#work">Work</a>
+      <a href="#stack">Stack</a>
+      <a href="#background">Background</a>
     </nav>
   </div>
 </header>
 
-<main id="top">
+<main>
 
-  <!-- ===================== HERO ===================== -->
-  <section class="hero">
+  <section class="snap hero" id="home">
     <div class="shell">
-      <a class="now rv" href="#background">
-        <span class="pip" aria-hidden="true"></span>
-        <img src="amentum-logo.svg" alt="" width="18" height="18" onerror="this.remove()">
-        Digital Design Intern @ Amentum
-      </a>
-
       <h1 class="name">
         <span class="ln"><span>Spencer</span></span>
         <span class="ln dim"><span>Kogoma</span></span>
       </h1>
 
       <p class="rv intro">
-        Computer engineering and violin performance at Northwestern, currently
-        researching an HFT-inspired 10GbE datapath for low-latency, deterministic
-        systems.
+        Computer engineering and violin performance at Northwestern.
       </p>
 
+      <a class="at rv" href="#now">
+        <img class="at-mark" src="assets/amentum.webp" alt="" width="256" height="173">
+        <span class="at-text">Digital Design Intern, Amentum</span>
+      </a>
+
+      <nav class="big-links rv" aria-label="Contact">
+        <a class="big-link" href="mailto:kogomaspencer@gmail.com">
+          <span class="bl-mask">
+            <span class="bl-a">Email</span>
+            <span class="bl-b" aria-hidden="true">Email</span>
+          </span>
+          <span class="bl-ar" aria-hidden="true">&rarr;</span>
+        </a>
+        <a class="big-link" href="https://github.com/spenchh" target="_blank" rel="noopener noreferrer">
+          <span class="bl-mask">
+            <span class="bl-a">GitHub</span>
+            <span class="bl-b" aria-hidden="true">GitHub</span>
+          </span>
+          <span class="bl-ar" aria-hidden="true">&#8599;</span>
+        </a>
+        <a class="big-link" href="https://www.linkedin.com/in/spencer-kogoma" target="_blank" rel="noopener noreferrer">
+          <span class="bl-mask">
+            <span class="bl-a">LinkedIn</span>
+            <span class="bl-b" aria-hidden="true">LinkedIn</span>
+          </span>
+          <span class="bl-ar" aria-hidden="true">&#8599;</span>
+        </a>
+      </nav>
+    </div>
+  </section>
+
+  <section class="snap focus" id="focus">
+    <div class="shell">
       <div class="band rv">
         <span class="label">I design and verify</span>
         <span class="rot" aria-label="FPGA hardware, RTL pipelines, and deterministic datapaths">
@@ -77,98 +102,90 @@
       <div class="wave rv" aria-hidden="true">
         <canvas id="wave"></canvas>
       </div>
-
     </div>
   </section>
 
-  <!-- ===================== 00 NOW ===================== -->
-  <section class="sec" id="now">
+  <section class="snap sec" id="now">
     <div class="shell">
       <div class="sec-head rv">
-        <span class="label">00</span>
+        <span class="label">02</span>
         <h2>Now</h2>
         <span class="line"></span>
       </div>
 
-      <article class="panel rv">
-        <div class="panel-top">
-          <h3>Digital Design Intern</h3>
-          <span class="label">Amentum / Fall 2026</span>
-        </div>
-        <p>
-          I help design, implement, and test digital logic and hardware systems,
-          assisting with PCB schematics, component selection, FPGA/VHDL logic
-          development, lab setup, functional testing, and technical status reporting
-          for the engineering team.
-        </p>
-      </article>
+      <div class="now-grid">
+        <article class="panel rv">
+          <div class="panel-top">
+            <h3>Digital Design Intern</h3>
+            <span class="label">Amentum &middot; Fall 2026</span>
+          </div>
+          <p>
+            Designing, implementing, and testing digital logic and hardware systems.
+            PCB schematics, component selection, FPGA and VHDL development, lab setup,
+            and functional testing.
+          </p>
+        </article>
 
-      <article class="panel rv">
-        <div class="panel-top">
-          <h3>10GbE FPGA Tick-to-Trade Datapath</h3>
-          <span class="label">Independent research / active</span>
-        </div>
-        <p>
-          A simulation-first FPGA datapath for low-latency market-data processing and
-          order-decision logic. The trading workload is a forcing function for the real
-          subject: deterministic networking, streaming packet parsing, fixed-point decision
-          logic, and risk checks enforced in hardware rather than software.
-        </p>
-        <p>
-          A SystemVerilog pipeline runs from UDP/IP parsing through market-data decoding,
-          symbol and book state, decision logic, a hardware risk gate, and order and cancel
-          encoding. Python and cocotb drive packet generation, golden-model comparison,
-          randomized tests, and scoreboard checks. C++20 host tools handle replay, control,
-          and logging.
-        </p>
-        <p class="note">
-          <b>Status.</b> Active development. No latency has been measured, no timing closed,
-          no hardware run, and nothing connected to live trading. Self-checking tests,
-          timing reports, latency measurements, debug captures, and a hardware demo are
-          targets for this project, not results.
-        </p>
-      </article>
+        <article class="panel rv">
+          <div class="panel-top">
+            <h3>10GbE Tick-to-Trade Datapath</h3>
+            <span class="label">Independent &middot; Active</span>
+          </div>
+          <p>
+            A simulation-first FPGA datapath. The trading workload is a forcing function
+            for deterministic networking, streaming packet parsing, and risk checks
+            enforced in hardware.
+          </p>
+          <p class="note">
+            <b>Status.</b> Nothing measured, closed, or run on hardware yet. Those are
+            targets, not results.
+          </p>
+        </article>
+      </div>
     </div>
   </section>
 
-  <!-- ===================== 01 WORK ===================== -->
-  <section class="sec" id="work">
+  <section class="snap sec" id="work">
     <div class="shell">
       <div class="sec-head rv">
-        <span class="label">01</span>
+        <span class="label">03</span>
         <h2>Work</h2>
         <span class="line"></span>
       </div>
-      <p class="lede rv wr">FPGA architecture, RTL, verification, and embedded systems. Each project has its own page.</p>
 
       <div class="rows rv">
         <a class="row-link" href="projects/fpga-field-oriented-control.html">
           <span class="n">01</span>
-          <h3>FPGA-Based Field-Oriented Control</h3>
-          <span class="meta">Zynq-7000 / 2026 &mdash;</span>
+          <span class="row-body">
+            <span class="row-title">FPGA-Based Field-Oriented Control</span>
+            <span class="row-desc">A pipelined Q1.15 current loop on a Zynq-7000, with protection enforced in fabric.</span>
+          </span>
           <span class="ar" aria-hidden="true">&rarr;</span>
         </a>
         <a class="row-link" href="projects/tick-to-trade-datapath.html">
           <span class="n">02</span>
-          <h3>10GbE FPGA Tick-to-Trade Datapath</h3>
-          <span class="meta">SystemVerilog / active</span>
+          <span class="row-body">
+            <span class="row-title">10GbE FPGA Tick-to-Trade Datapath</span>
+            <span class="row-desc">Streaming packet parsing, deterministic pipelines, and a hardware risk gate.</span>
+          </span>
           <span class="ar" aria-hidden="true">&rarr;</span>
         </a>
         <a class="row-link" href="projects/rear-vision-system.html">
           <span class="n">03</span>
-          <h3>Rear-Vision Camera and Display System</h3>
-          <span class="meta">Embedded Linux / 2026</span>
+          <span class="row-body">
+            <span class="row-title">Rear-Vision Camera and Display</span>
+            <span class="row-desc">A sub-30 ms video pipeline for a solar race vehicle, chosen by trade study.</span>
+          </span>
           <span class="ar" aria-hidden="true">&rarr;</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ===================== 02 STACK ===================== -->
-  <section class="sec" id="stack">
+  <section class="snap sec" id="stack">
     <div class="shell">
       <div class="sec-head rv">
-        <span class="label">02</span>
+        <span class="label">04</span>
         <h2>Stack</h2>
         <span class="line"></span>
       </div>
@@ -177,36 +194,44 @@
         <div>
           <h3>RTL and verification</h3>
           <ul>
-            <li>SystemVerilog</li><li>Verilog</li><li>RTL design</li>
-            <li>Finite-state machines</li><li>Testbenches</li><li>cocotb</li>
-            <li>Scoreboards</li><li>Waveform debug</li>
+            <li>SystemVerilog</li>
+            <li>Verilog</li>
+            <li>RTL design</li>
+            <li>Testbenches</li>
+            <li>cocotb</li>
+            <li>Waveform debug</li>
           </ul>
         </div>
         <div>
-          <h3>FPGA, SoC, and ASIC flow</h3>
+          <h3>FPGA, SoC, ASIC flow</h3>
           <ul>
-            <li>FPGA prototyping</li><li>Zynq-7000</li><li>AXI-Lite</li>
-            <li>Vivado</li><li>Cadence Xcelium</li><li>Genus</li>
-            <li>Innovus</li><li>SDC / setup and hold</li>
+            <li>Zynq-7000</li>
+            <li>AXI-Lite</li>
+            <li>Vivado</li>
+            <li>Xcelium</li>
+            <li>Genus</li>
+            <li>Innovus</li>
           </ul>
         </div>
         <div>
           <h3>Hardware and embedded</h3>
           <ul>
-            <li>Altium / PCB design</li><li>CAN and SPI</li><li>DroneCAN</li>
-            <li>MAVLink / ArduPilot</li><li>Jetson Orin Nano</li>
-            <li>Python</li><li>C++</li><li>MATLAB</li><li>Linux</li><li>Git</li>
+            <li>Altium / PCB</li>
+            <li>CAN and SPI</li>
+            <li>DroneCAN</li>
+            <li>Python</li>
+            <li>C++</li>
+            <li>Linux</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== 03 BACKGROUND ===================== -->
-  <section class="sec" id="background">
+  <section class="snap sec" id="background">
     <div class="shell">
       <div class="sec-head rv">
-        <span class="label">03</span>
+        <span class="label">05</span>
         <h2>Background</h2>
         <span class="line"></span>
       </div>
@@ -217,89 +242,43 @@
           <div>
             <h3>Digital Design Intern</h3>
             <p class="org">Amentum</p>
-            <p>Help design, implement, and test digital logic and hardware systems, assisting with PCB schematics, component selection, FPGA/VHDL logic development, lab setup, functional testing, and technical status reporting for the engineering team.</p>
+            <p>Digital logic and hardware systems: PCB schematics, component selection, FPGA and VHDL development, lab bring-up, and functional testing.</p>
           </div>
         </li>
         <li>
-          <span class="when">2026 —</span>
+          <span class="when">2026 &mdash;</span>
           <div>
             <h3>Undergraduate Researcher</h3>
             <p class="org">Northwestern University</p>
-            <p>FPGA-based field-oriented motor control on a Zynq-7000 SoC: deterministic PWM, Hall decoding, ADC sample timing, Q1.15 fixed-point control, Clarke and Park transforms, PI control, AXI-Lite, and fault-latched shutdown, verified with self-checking testbenches.</p>
+            <p>FPGA field-oriented motor control on a Zynq-7000. Q1.15 fixed-point control, deterministic PWM, and fault-latched shutdown.</p>
           </div>
         </li>
         <li>
-          <span class="when">2026 —</span>
+          <span class="when">2026 &mdash;</span>
           <div>
             <h3>Digital Design Lead</h3>
-            <p class="org">NU Silicon Initiative / NU Silicats</p>
-            <p>Lead RTL onboarding: SystemVerilog, finite-state machines, testbench construction, waveform debugging, and FPGA and ASIC flow fundamentals using Cadence Xcelium, Genus, and Innovus from simulation to place-and-route.</p>
-            <a class="gh gh-sm" href="https://github.com/Northwestern-Silicats/digital-design-onboarding" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-              Onboarding curriculum
-            </a>
+            <p class="org">NU Silicon Initiative</p>
+            <p>Teach SystemVerilog, finite-state machines, testbenches, and the Cadence flow from simulation to place-and-route.</p>
+            <a class="gh gh-sm" href="https://github.com/Northwestern-Silicats/digital-design-onboarding" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg> Curriculum</a>
           </div>
         </li>
         <li>
-          <span class="when">2025 —</span>
+          <span class="when">2025 &mdash;</span>
           <div>
             <h3>Low-Voltage Electrical Lead</h3>
-            <p class="org">Northwestern Solar Car Team</p>
-            <p>Low-voltage systems across power distribution, telemetry, and vehicle integration. FPGA-controlled relay sequencing and safety interlocks, multilayer Altium PCBs, and CAN and SPI debugging during bring-up.</p>
+            <p class="org">Northwestern Solar Car</p>
+            <p>Power distribution, telemetry, and vehicle integration. Multilayer Altium PCBs, relay sequencing, and CAN and SPI debugging.</p>
           </div>
         </li>
         <li>
-          <span class="when">Expected 2028</span>
+          <span class="when">2028</span>
           <div>
             <h3>B.S. Computer Engineering &amp; B.M. Violin Performance</h3>
-            <p class="org">Northwestern University — McCormick &amp; Bienen</p>
-            <p>Cumulative GPA 3.73. Coursework in computer architecture, advanced digital design, embedded IoT systems and edge computing, linear algebra, and multivariable calculus. Concertmaster, Northwestern Philharmonia. Student of Blair Milton.</p>
+            <p class="org">Northwestern &mdash; McCormick &amp; Bienen</p>
+            <p>Cumulative GPA 3.73. Computer architecture, advanced digital design, and embedded systems. Concertmaster, Northwestern Philharmonia.</p>
           </div>
         </li>
       </ul>
-    </div>
-  </section>
-
-  <!-- ===================== 04 CONTACT ===================== -->
-  <section class="contact" id="contact">
-    <div class="shell">
-      <div class="rv">
-        <span class="label">04 / Contact</span>
-        <h2 style="margin-top:20px">Contact</h2>
-        <p class="wr">
-          I work on FPGA design, RTL verification, ASIC and silicon-adjacent engineering,
-          embedded systems, computer architecture, and low-latency digital systems — the
-          problems that show up in semiconductor, aerospace and defense, robotics, test
-          and measurement, and trading.
-        </p>
-      </div>
-
-      <nav class="big-links rv" aria-label="Contact links">
-        <a class="big-link" href="mailto:kogomaspencer@gmail.com">
-          <span class="bl-mask">
-            <span class="bl-a">Email</span>
-            <span class="bl-b" aria-hidden="true">Email</span>
-          </span>
-          <span class="bl-ar" aria-hidden="true">&rarr;</span>
-        </a>
-
-        <a class="big-link" href="https://github.com/spenchh" target="_blank" rel="noopener noreferrer">
-          <span class="bl-mask">
-            <span class="bl-a">GitHub</span>
-            <span class="bl-b" aria-hidden="true">GitHub</span>
-          </span>
-          <span class="bl-ar" aria-hidden="true">&#8599;</span>
-        </a>
-
-        <a class="big-link" href="https://www.linkedin.com/in/spencer-kogoma" target="_blank" rel="noopener noreferrer">
-          <span class="bl-mask">
-            <span class="bl-a">LinkedIn</span>
-            <span class="bl-b" aria-hidden="true">LinkedIn</span>
-          </span>
-          <span class="bl-ar" aria-hidden="true">&#8599;</span>
-        </a>
-      </nav>
-
     </div>
   </section>
 </main>
@@ -312,6 +291,6 @@
   </div>
 </footer>
 
-<script src="assets/site.js?v=58e7dd6c"></script>
+<script src="assets/site.js?v=41b72683"></script>
 </body>
 </html>
