@@ -678,3 +678,11 @@ footer{padding-block:2rem;border-top:1px solid var(--line)}
 .code .tn{color:var(--green-deep);font-weight:500}
 .code .tp{color:var(--text-dim)}
 .code .tc{color:var(--text-dim);font-style:italic}
+
+/* smaller GitHub chip, for use inside list entries */
+.gh-sm{
+  margin-top:.9rem;padding:.45rem .85rem;
+  font-size:.6rem;letter-spacing:.11em;
+  border-color:var(--line);
+}
+.hist .gh-sm{margin-inline:auto}
