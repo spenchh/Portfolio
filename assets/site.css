@@ -796,3 +796,47 @@ html{scroll-padding-top:var(--head-h)}
   .hist li{grid-template-columns:minmax(5.5rem,7rem) minmax(0,1fr);align-items:baseline}
   .hist .when{margin-bottom:0}
 }
+
+/* ============================================================
+   HERO AT SCALE
+   The opening screen was reading small on phones, where the type was
+   leaning on rem while the viewport did the shrinking. These sizes
+   lead with vw so the hero grows to fill a small screen too.
+   ============================================================ */
+.hero{padding-block:clamp(4.5rem,9vh,6rem) 0;justify-content:space-between}
+.hero > .shell{flex:1;display:flex;flex-direction:column;justify-content:center}
+
+.name{
+  font-size:clamp(3.4rem,15vw,7.4rem);
+  letter-spacing:-.055em;line-height:.88;
+}
+.hero .intro{
+  font-size:clamp(.95rem,3.4vw,1.15rem);
+  max-width:34ch;margin-inline:auto;
+}
+.hero .band{
+  margin-top:clamp(1.6rem,5vh,2.6rem);
+  border:0;padding-block:0;
+}
+.hero .band .label{
+  font-size:clamp(.62rem,2.2vw,.72rem);
+  margin-bottom:clamp(.35rem,1.4vw,.7rem);
+}
+.hero .rot{
+  font-size:clamp(1.85rem,8.4vw,4rem);
+  font-weight:700;letter-spacing:-.045em;
+}
+.at{margin-top:clamp(1.5rem,4vh,2.2rem)}
+.at-mark{height:clamp(1.3rem,4.4vw,1.7rem)}
+.at-text{font-size:clamp(.66rem,2.4vw,.78rem)}
+.hero .big-links{margin-top:clamp(1.8rem,5vh,3rem)}
+.hero .big-link{font-size:clamp(1.05rem,4.4vw,1.6rem)}
+
+/* waveform runs edge to edge at the foot of the hero */
+.wave{
+  width:100vw;margin-left:calc(50% - 50vw);
+  margin-top:clamp(1.6rem,4vh,2.6rem);
+  border-bottom:0;
+  padding-block:clamp(.5rem,1.6vh,1rem);
+}
+.wave canvas{height:clamp(5rem,13vh,8rem)}
