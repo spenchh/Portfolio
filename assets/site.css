@@ -1098,3 +1098,35 @@ html.snapping{scroll-snap-type:y mandatory;scroll-behavior:smooth}
 .snap .sec-head{margin-bottom:clamp(1.2rem,3vh,2rem)}
 .sec .belt{margin-top:clamp(.8rem,2.5vh,1.6rem)}
 .snap .lede{margin-bottom:clamp(1.2rem,3vh,2rem)}
+
+/* ============================================================
+   SNAP GEOMETRY, CORRECTED
+   The header was sticky, so it occupied flow space and every section
+   started one header-height down. Snap points drifted by that amount:
+   the previous section's foot stayed visible and the next section's
+   content sat low. Taking the header out of flow makes each section
+   exactly one viewport, so a snap point is a clean screen.
+   ============================================================ */
+.head{position:fixed;top:0;left:0;right:0}
+html{scroll-padding-top:0}
+
+.snap,.snap:not(.hero){
+  height:100vh;
+  height:100svh;
+  min-height:0;
+  padding-block:calc(var(--head-h) + clamp(.6rem,2vh,1.4rem)) clamp(1rem,3vh,2rem);
+  justify-content:center;
+}
+.hero{
+  padding-block:calc(var(--head-h) + clamp(.4rem,1.5vh,1rem)) 0;
+  justify-content:space-between;
+}
+@media(max-height:38rem){
+  .snap,.snap:not(.hero),.hero{
+    height:auto;min-height:0;
+    padding-block:calc(var(--head-h) + 1.5rem) 2.5rem;
+  }
+}
+
+/* pages that do not snap still need clearance under the fixed header */
+html:not(.snapping) body{padding-top:var(--head-h)}

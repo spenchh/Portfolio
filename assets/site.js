@@ -196,6 +196,7 @@
     var ctx = wave.getContext('2d');
     var W = 0, H = 0, dpr = 1;
     var CYCLE = 38;
+    var PAD = 24;      /* keeps the labels off the screen edge */
     var LABEL = 58;
     var NAMES = ['CLK', 'VALID', 'DATA'];
     var visible = true;
@@ -227,20 +228,22 @@
       ctx.font = '600 9px Inter, system-ui, -apple-system, sans-serif';
       ctx.textBaseline = 'middle';
       ctx.fillStyle = 'rgba(154,157,162,1)';
+      var inset = Math.max(PAD, Math.min(W * 0.045, 56));
       for (var r = 0; r < rows; r++) {
-        ctx.fillText(NAMES[r], 0, pad + rowH * r + rowH / 2);
+        ctx.fillText(NAMES[r], inset, pad + rowH * r + rowH / 2);
       }
 
       ctx.save();
       ctx.beginPath();
-      ctx.rect(LABEL, 0, Math.max(0, W - LABEL), H);
+      var startX = inset + LABEL;
+      ctx.rect(startX, 0, Math.max(0, W - startX), H);
       ctx.clip();
       ctx.lineWidth = 1.4;
       ctx.lineJoin = 'round';
 
       var c0 = Math.floor(offset / CYCLE);
-      var xoff = LABEL - (offset % CYCLE);
-      var count = Math.ceil((W - LABEL) / CYCLE) + 2;
+      var xoff = startX - (offset % CYCLE);
+      var count = Math.ceil((W - startX) / CYCLE) + 2;
 
       for (var row = 0; row < rows; row++) {
         var mid = pad + rowH * row + rowH / 2;
