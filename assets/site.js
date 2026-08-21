@@ -165,6 +165,12 @@
       es.forEach(function (e) { e.target.classList.toggle('in', e.isIntersecting); });
     }, { rootMargin: '-8% 0px -8% 0px', threshold: 0.04 });
     Array.prototype.forEach.call(items, function (el) { io.observe(el); });
+
+    /* anything already on the first screen shows immediately; the
+       observer's inset can otherwise miss elements sitting on the fold */
+    Array.prototype.forEach.call(document.querySelectorAll('.hero .rv'), function (el) {
+      el.classList.add('in');
+    });
   }
 
   /* ---------- active section in header ---------- */
