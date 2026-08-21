@@ -933,3 +933,11 @@ html{scroll-padding-top:var(--head-h)}
 
 /* the band now closes the Technical screen, under the conveyor */
 .sec .belt + .shell .band{margin-top:clamp(1.4rem,4vh,2.4rem);margin-bottom:0}
+
+/* ============================================================
+   HIDE THE NATIVE SCROLLBAR
+   The rail already reports position, so the browser's own bar is
+   redundant. Scrolling itself is untouched.
+   ============================================================ */
+html{scrollbar-width:none;-ms-overflow-style:none}
+html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0;display:none}
