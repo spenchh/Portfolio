@@ -36,12 +36,16 @@
       <a class="back" href="../index.html#work">&larr; All work</a>
       <span class="label">Project 02 / Zynq-7000 / June &ndash; Aug 2026</span>
       <h1>FPGA-Based<br>Field-Oriented Control</h1>
-      <p class="sub">A motor-control accelerator on an Arty Zynq-7000 SoC: a fully pipelined Q1.15 current loop in FPGA fabric that takes raw three-phase ADC samples to complementary center-aligned PWM, with the protection path implemented in hardware rather than software.</p>
+      <p class="sub">A Zynq-based FPGA motor-control pipeline for a three-phase electric-vehicle
+        motor controller. Fixed-point SystemVerilog RTL for current scaling, Clarke and Park
+        transforms, PI current control, inverse Park, duty generation, protection gating, and
+        center-aligned PWM &mdash; with the protection path in fabric rather than software.</p>
       <dl class="facts">
         <div><dt>Platform</dt><dd>Arty Zynq-7000 SoC</dd></div>
-        <div><dt>Languages</dt><dd>Verilog and SystemVerilog RTL, MATLAB, Python</dd></div>
+        <div><dt>Languages</dt><dd>SystemVerilog, Verilog, MATLAB and Simulink, Python</dd></div>
+        <div><dt>Role</dt><dd>FPGA and motor-control RTL</dd></div>
         <div><dt>Datapath</dt><dd>12-bit ADC in, 16-bit Q1.15 signed, 24-bit scale</dd></div>
-        <div><dt>Status</dt><dd>Concluded August 2026</dd></div>
+        <div><dt>Status</dt><dd>Concluded August 2026 &mdash; RTL and simulation, no hardware bring-up</dd></div>
       </dl>
     </div>
   </section>
@@ -49,6 +53,15 @@
   <section class="sec sec-flush">
     <div class="shell">
       <div class="prose">
+        <h2>Scope of the work</h2>
+        <ul>
+          <li>A modular Q1.15 RTL pipeline for the current loop: ADC current scaling, d and q current regulation, alpha/beta voltage reconstruction, and three-phase duty generation.</li>
+          <li>PCB-aware control logic driven by measured A, B, and C phase currents, with voltage-range inhibit, active-high driver disable, and defined PWM shutdown conditions.</li>
+          <li>Vivado-ready SystemVerilog modules and a testbench structure for block-level simulation ahead of hardware bring-up and FPGA-in-the-loop testing.</li>
+          <li>Mapped the RTL interface requirements onto the Altium motor-driver board: PWM driver inputs, current sense, voltage sense, Hall and angle feedback, and disable behaviour.</li>
+          <li>Divided responsibilities across the Zynq PS and PL, keeping timing-critical control and protection in fabric.</li>
+        </ul>
+
         <h2>The control loop</h2>
         <p>
           The current loop is a valid-chained pipeline. Each stage carries its own
