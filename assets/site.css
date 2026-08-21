@@ -740,17 +740,6 @@ html{scroll-padding-top:var(--head-h)}
 .hero .name{margin-top:0}
 .hero .intro{margin-top:clamp(1.1rem,2.5vw,1.6rem)}
 
-.at{
-  display:inline-flex;align-items:center;gap:.6rem;
-  margin-top:clamp(1.3rem,3vw,2rem);
-  color:var(--text-soft);
-  transition:color .4s var(--ease),transform .5s var(--spring);
-}
-.at:hover{color:var(--text);transform:translateY(-.1rem)}
-.at-mark{width:auto;height:1.5rem;display:block}
-.at-text{
-  font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-}
 
 /* ---------- focus ---------- */
 .focus .band{border:0;padding-block:0;margin-top:0}
@@ -826,9 +815,6 @@ html{scroll-padding-top:var(--head-h)}
   font-size:clamp(1.85rem,8.4vw,4rem);
   font-weight:700;letter-spacing:-.045em;
 }
-.at{margin-top:clamp(1.5rem,4vh,2.2rem)}
-.at-mark{height:clamp(1.3rem,4.4vw,1.7rem)}
-.at-text{font-size:clamp(.66rem,2.4vw,.78rem)}
 .hero .big-links{margin-top:clamp(1.8rem,5vh,3rem)}
 .hero .big-link{font-size:clamp(1.05rem,4.4vw,1.6rem)}
 
@@ -1014,9 +1000,6 @@ html.snapping{scroll-snap-type:y mandatory;scroll-behavior:smooth}
   font-size:clamp(.9rem,min(3.4vw,2vh),1.1rem);
   margin-top:clamp(.7rem,1.8vh,1.3rem);
 }
-.at{margin-top:clamp(.9rem,2.4vh,1.7rem)}
-.at-mark{height:clamp(1.15rem,min(4.4vw,2.6vh),1.6rem)}
-.at-text{font-size:clamp(.62rem,min(2.4vw,1.5vh),.76rem)}
 .hero .big-links{margin-top:clamp(1rem,3vh,2.2rem);gap:clamp(.35rem,1.1vh,.7rem)}
 .hero .big-link{font-size:clamp(.95rem,min(4.2vw,2.7vh),1.5rem)}
 .wave{flex:none;margin-top:clamp(.7rem,2vh,1.6rem)}
