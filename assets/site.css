@@ -941,3 +941,40 @@ html{scroll-padding-top:var(--head-h)}
    ============================================================ */
 html{scrollbar-width:none;-ms-overflow-style:none}
 html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0;display:none}
+
+/* ============================================================
+   FLAT PANELS
+   The rounded, shadowed card is a template tell. These are separated
+   by a rule and by space instead.
+   ============================================================ */
+.panel{
+  border:0;border-top:1px solid var(--line);border-radius:0;
+  background:none;box-shadow:none;
+  padding:clamp(1.4rem,3.5vw,2.2rem) 0 0;
+  overflow:visible;
+}
+.panel:hover{transform:none;box-shadow:none;border-color:var(--line)}
+.panel::before{display:none}
+.panel + .panel{margin-top:clamp(1.6rem,4vw,2.4rem)}
+.now-grid{gap:clamp(1.6rem,4vw,3rem)}
+@media(min-width:56rem){.now-grid{gap:clamp(2rem,4vw,3.4rem)}}
+.panel-top{margin-bottom:.9rem}
+.note{border-top:0;padding-top:.9rem;margin-top:1rem}
+
+/* the Northwestern cards lose their frame for the same reason */
+.edu-grid{
+  background:none;border:0;border-top:1px solid var(--line);border-radius:0;
+  gap:0;
+}
+.edu-card{
+  background:none;
+  padding:clamp(1.1rem,2.6vw,1.5rem) 0;
+  border-bottom:1px solid var(--line);
+}
+@media(min-width:36rem){
+  .edu-grid{column-gap:clamp(1.5rem,4vw,3rem)}
+}
+
+/* the band, opening a sub-page */
+.page-intro{padding-block:clamp(1.5rem,5vh,2.5rem) 0}
+.page-intro .band{border:0;padding-block:0;margin:0}
