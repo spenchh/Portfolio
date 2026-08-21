@@ -840,3 +840,57 @@ html{scroll-padding-top:var(--head-h)}
   padding-block:clamp(.5rem,1.6vh,1rem);
 }
 .wave canvas{height:clamp(5rem,13vh,8rem)}
+
+/* ============================================================
+   TECHNICAL CONVEYOR
+   Two identical rows translate as one track; at -50% the second row
+   sits exactly where the first began, so the loop has no seam.
+   ============================================================ */
+.belt{
+  width:100vw;margin-left:calc(50% - 50vw);
+  margin-top:clamp(1.6rem,4vh,2.6rem);
+  overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+}
+.belt-track{display:flex;width:max-content;animation:belt 46s linear infinite}
+.belt:hover .belt-track{animation-play-state:paused}
+@keyframes belt{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.belt-row{display:flex;align-items:center}
+.belt-item{
+  display:flex;align-items:center;gap:.65rem;
+  padding-inline:clamp(.9rem,2.2vw,1.7rem);
+}
+.belt-ico{
+  flex:none;display:grid;place-items:center;
+  width:2.35rem;height:2.35rem;border-radius:.7rem;
+  border:1px solid var(--line);background:var(--bg);
+  transition:border-color .4s var(--ease),transform .5s var(--spring);
+}
+.belt-item:hover .belt-ico{border-color:var(--green);transform:translateY(-.15rem)}
+.belt-ico svg{width:1.2rem;height:1.2rem;fill:var(--green)}
+.belt-ico span{
+  font-size:.66rem;font-weight:700;letter-spacing:.01em;color:var(--green);
+  text-transform:uppercase;
+}
+.belt-name{
+  font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text-soft);white-space:nowrap;
+}
+@media(prefers-reduced-motion:reduce){
+  .belt{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
+  .belt-track{animation:none}
+  .belt-row + .belt-row{display:none}
+}
+
+/* Northwestern, as a link */
+.uni{
+  color:var(--text);font-weight:600;
+  border-bottom:1px solid var(--green);
+  transition:color .35s var(--ease),border-color .35s var(--ease);
+}
+.uni:hover{color:var(--green)}
+
+/* sub-pages: no snapping, room to breathe */
+.page-sec{padding-block:clamp(1.5rem,5vh,2.5rem) 0;text-align:center}
+.sec-flush{padding-top:clamp(1.5rem,4vh,2.5rem)}
