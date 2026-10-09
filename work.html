@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=479d6048">
+<link rel="stylesheet" href="assets/site.css?v=20261009">
 </head>
 <body>
 <div class="bar" aria-hidden="true"><span id="bar"></span></div>
@@ -62,7 +62,7 @@
           <span class="row-body">
             <span class="row-title">10GbE FPGA Tick-to-Trade Datapath
               <span class="row-state is-active">Active</span></span>
-            <span class="row-desc">Streaming packet parsing, deterministic pipelines, and a hardware risk gate.</span>
+            <span class="row-desc">Packet generator and decoder interface; implementing the first Cocotb checks.</span>
           </span>
           <span class="ar" aria-hidden="true">&rarr;</span>
         </a>
@@ -70,8 +70,8 @@
           <span class="n">02</span>
           <span class="row-body">
             <span class="row-title">FPGA-Based Field-Oriented Control
-              <span class="row-state is-done">Completed</span></span>
-            <span class="row-desc">A pipelined Q1.15 current loop on a Zynq-7000, with protection enforced in fabric.</span>
+              <span class="row-state is-done">RTL verified</span></span>
+            <span class="row-desc">Q1.15 motor-control RTL targeting Cora Z7; 13 self-checking testbenches passing.</span>
           </span>
           <span class="ar" aria-hidden="true">&rarr;</span>
         </a>
@@ -84,6 +84,16 @@
           </span>
           <span class="ar" aria-hidden="true">&rarr;</span>
         </a>
+        <a class="row-link" href="projects/systolic-mac-array.html">
+          <span class="n">04</span><span class="row-body">
+          <span class="row-title">3&times;3 Systolic MAC Array<span class="row-state is-done">RTL to layout</span></span>
+          <span class="row-desc">Nine PEs, signed arithmetic, and routed 45 nm layout meeting a 500 MHz constraint.</span>
+          </span><span class="ar" aria-hidden="true">&rarr;</span></a>
+        <a class="row-link" href="projects/median-pixel-filter.html">
+          <span class="n">05</span><span class="row-body">
+          <span class="row-title">Streaming RGB Median Filter<span class="row-state is-done">RTL + testbench</span></span>
+          <span class="row-desc">A 2&times;2 pixel filter with CSV reference checks for the NU Silicon Initiative.</span>
+          </span><span class="ar" aria-hidden="true">&rarr;</span></a>
       </div>
     </div>
     <div class="shell">

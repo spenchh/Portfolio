@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=479d6048">
+<link rel="stylesheet" href="assets/site.css?v=20261009">
 </head>
 <body>
 <div class="bar" aria-hidden="true"><span id="bar"></span></div>
@@ -45,16 +45,22 @@
         <article class="panel rv">
           <div class="panel-top">
             <h3 class="panel-org">
-              <img class="panel-mark" src="assets/amentum.webp" alt="" width="256" height="173">
-              Digital Design Intern @ Amentum
+              <span class="experience-logos">
+                <img class="nasa-mark" src="assets/nasa.png" alt="NASA" width="110" height="92">
+                <img class="panel-mark" src="assets/amentum.webp" alt="Amentum" width="256" height="173">
+              </span>
+              Digital Design Intern at Amentum
             </h3>
-            <span class="label">Huntsville, AL &middot; Fall 2026</span>
+            <span class="label">NASA Marshall Space Flight Center &middot; August 2026 &ndash; Present</span>
           </div>
           <p>
-            I work alongside NASA engineers on FPGA and hardware development, helping with
-            schematic and PCB work, FPGA logic, component selection, lab setup, and
-            functional testing.
+            At NASA Marshall Space Flight Center, I developed a Basys 3 FPGA power-telemetry
+            system to capture sub-millisecond voltage and current transients for
+            power-delivery diagnostics.
           </p>
+          <p>I implemented VHDL for XADC acquisition and transient tracking, verified
+            the RTL with Python/Cocotb, and designed and fabricated a custom sensing PCB.
+            Hardware testing covered analog measurements and FPGA interfaces.</p>
         </article>
 
         <article class="panel rv">
@@ -68,9 +74,9 @@
             <span class="label">Independent research &middot; Active</span>
           </div>
           <p>
-            A simulation-first FPGA datapath. The trading workload is a forcing function
-            for deterministic networking, streaming packet parsing, and risk checks
-            enforced in hardware.
+            I am building the first decoder for a simulation-first FPGA networking project.
+            The repository currently has a Python packet generator, a SystemVerilog
+            decoder interface, and a Cocotb reset testbench in progress.
           </p>
           <a class="out" href="projects/tick-to-trade-datapath.html">Read more &rarr;</a>
         </article>

@@ -1240,3 +1240,11 @@ html:not(.snapping) body{padding-top:var(--head-h)}
 .drops.cols .drop-body p{
   font-size:.8rem;line-height:1.6;max-width:none;
 }
+
+/* Experience marks retain their original proportions and colors. */
+.experience-note{display:flex;align-items:center;gap:1rem;width:fit-content;margin:1.8rem auto 0;text-align:left;font-size:.9rem;color:var(--text-soft)}
+.experience-note>img{width:3.4rem;height:auto;flex:none}
+.experience-location{display:block;margin-top:.25rem;font-size:.75rem;line-height:1.5}
+.experience-logos{display:flex;align-items:center;gap:1rem;padding:.5rem 0}
+.nasa-mark{width:3.5rem;height:auto;display:block}
+@media(max-width:35rem){.experience-note{font-size:.8rem;gap:.75rem}.experience-note>img{width:2.9rem}.experience-location{font-size:.7rem}}

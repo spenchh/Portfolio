@@ -4,17 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FPGA-Based Field-Oriented Control / Spencer Kogoma</title>
-<meta name="description" content="A pipelined Q1.15 field-oriented motor control loop in FPGA fabric on an Arty Zynq-7000 SoC, with the protection path enforced in hardware.">
+<meta name="description" content="A pipelined Q1.15 field-oriented motor control loop in SystemVerilog targeting an Cora Z7 (Zynq-7000 SoC), with the protection path enforced in hardware.">
 <meta name="author" content="Spencer Kogoma">
 <meta name="theme-color" content="#ffffff">
 <meta property="og:title" content="FPGA-Based Field-Oriented Control">
-<meta property="og:description" content="A pipelined Q1.15 field-oriented motor control loop in FPGA fabric on an Arty Zynq-7000 SoC, with the protection path enforced in hardware.">
+<meta property="og:description" content="A pipelined Q1.15 field-oriented motor control loop in SystemVerilog targeting an Cora Z7 (Zynq-7000 SoC), with the protection path enforced in hardware.">
 <meta property="og:type" content="article">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6135'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='24' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ESK%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/site.css?v=479d6048">
+<link rel="stylesheet" href="../assets/site.css?v=20261009">
 </head>
 <body>
 <div class="bar" aria-hidden="true"><span id="bar"></span></div>
@@ -33,24 +33,24 @@
 <main>
   <section class="ph">
     <div class="shell">
-      <a class="back" href="../index.html#work">&larr; All work</a>
-      <span class="label">Project 02 / Zynq-7000 / Completed Aug 2026</span>
+      <a class="back" href="../work.html">&larr; All work</a>
+      <span class="label">Project 02 / Cora Z7 / RTL verified</span>
       <h1>FPGA-Based<br>Field-Oriented Control</h1>
       <p class="sub">A Zynq-based FPGA motor-control pipeline for a three-phase electric-vehicle
         motor controller. Fixed-point SystemVerilog RTL for current scaling, Clarke and Park
         transforms, PI current control, inverse Park, duty generation, protection gating, and
         center-aligned PWM, with the protection path in fabric rather than software.</p>
       <dl class="facts">
-        <div><dt>Platform</dt><dd>Arty Zynq-7000 SoC</dd></div>
-        <div><dt>Languages</dt><dd>SystemVerilog, Verilog, MATLAB and Simulink, Python</dd></div>
+        <div><dt>Target platform</dt><dd>Cora Z7 (Zynq-7000 SoC)</dd></div>
+        <div><dt>Languages</dt><dd>SystemVerilog, Vivado, Icarus Verilog, Python</dd></div>
         <div><dt>Role</dt><dd>FPGA and motor-control RTL</dd></div>
         <div><dt>Datapath</dt><dd>12-bit ADC in, 16-bit Q1.15 signed, 24-bit scale</dd></div>
       </dl>
 
       <div class="ph-cta">
-          <a class="gh" href="https://github.com/spenchh/fpga-motors" target="_blank" rel="noopener noreferrer">
+          <a class="gh" href="https://github.com/spenchh/FPGA-foc-motor-control" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-          spenchh/fpga-motors
+          spenchh/FPGA-foc-motor-control
           </a>
       </div>
     </div>
@@ -59,6 +59,10 @@
   <section class="sec sec-flush">
     <div class="shell">
       <div class="prose">
+        <div class="callout"><p><strong>Verified in simulation.</strong> The current repository
+          contains 13 design modules, 13 passing testbenches, and a synthesis wrapper.
+          Board and motor bring-up remain separate hardware milestones.</p></div>
+
         <h2>Scope of the work</h2>
         <ul>
           <li>A modular Q1.15 RTL pipeline for the current loop: ADC current scaling, d and q current regulation, alpha/beta voltage reconstruction, and three-phase duty generation.</li>
@@ -142,7 +146,7 @@
 
         <figure class="code">
           <figcaption>
-            <span>pwm_3phase_center_aligned.v</span>
+            <span>pwm_3phase_center_aligned.sv</span>
             <span>Shoot-through guard</span>
           </figcaption>
           <pre><code><span class="tk">wire</span> <span class="tp">[</span>COUNTER_WIDTH<span class="tp">:</span><span class="tn">0</span><span class="tp">]</span> two_nonoverlap_shadow_ext <span class="tp">=</span>
@@ -178,20 +182,33 @@
 
         <h2>Verification</h2>
         <p>
-          Each block has a self-checking testbench that asserts on failure rather than
-          printing waveforms for a human to read. Directed tests confirm that high and
-          low pairs never overlap, that an inhibit truly shuts the outputs off, and that
-          an invalid duty raises the configuration error. A MATLAB fixed-point model
-          serves as the numerical reference.
+          All 13 directed SystemVerilog testbenches pass with Icarus Verilog. They cover
+          the arithmetic blocks, Hall decoding, current and voltage monitors, fault
+          latching, PWM non-overlap and configuration checks, and the integrated FOC loop.
+          Each test fails with a nonzero exit status on a mismatch or timeout.
         </p>
 
+        <h2>Implementation timing</h2>
+        <p>In the Vivado implementation wrapper, pipelining PI control and protection logic
+          resolved a 100 MHz timing failure: post-route WNS improved from &minus;0.335 ns
+          to +0.557 ns. That result applies to the wrapper build, while Cora Z7 board
+          bring-up remains a separate milestone.</p>
+
+        <h2>Repository</h2>
+        <ul>
+          <li><a href="https://github.com/spenchh/FPGA-foc-motor-control/tree/main/rtl/design">rtl/design/</a> &mdash; SystemVerilog design modules</li>
+          <li><a href="https://github.com/spenchh/FPGA-foc-motor-control/tree/main/rtl/verif">rtl/verif/</a> &mdash; self-checking testbenches</li>
+          <li><a href="https://github.com/spenchh/FPGA-foc-motor-control/tree/main/rtl/sim">rtl/sim/</a> &mdash; portable simulation runner</li>
+          <li><a href="https://github.com/spenchh/FPGA-foc-motor-control/tree/main/synth">synth/</a> &mdash; synthesis wrapper</li>
+        </ul>
+        <figure class="code"><figcaption>Run all 13 testbenches</figcaption><pre><code>python rtl/sim/run_tests.py</code></pre></figure>
       </div>
     </div>
   </section>
 
   <div class="shell">
     <div class="pager">
-      <a class="back" href="../index.html#work">&larr; All work</a>
+      <a class="back" href="../work.html">&larr; All work</a>
       <a class="out" href="rear-vision-system.html">Next: Rear-vision system &rarr;</a>
     </div>
   </div>
