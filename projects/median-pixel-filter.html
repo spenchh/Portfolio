@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/site.css?v=20261009">
+<link rel="stylesheet" href="../assets/site.css?v=20261014">
 </head>
 <body>
 <div class="bar" aria-hidden="true"><span id="bar"></span></div>
@@ -44,15 +44,25 @@ SystemVerilog testbench that compares output pixels against reference CSV data.<
 target="_blank" rel="noopener noreferrer">View RTL and testbench &nearr;</a></div>
 </div></section>
 <section class="sec sec-flush"><div class="shell"><div class="prose">
+<figure class="project-visual"><a href="../assets/projects/onboarding-pixel-window.png" data-image-viewer><img src="../assets/projects/onboarding-pixel-window.png" alt="NU Silicats onboarding slide introducing the streaming RGB median filter and its first valid spatial window" width="1920" height="1080"></a><figcaption>Project introduction from the Digital Design Onboarding training &middot; slide 21</figcaption></figure>
 <h2>Design and verification</h2><p>I implemented the streaming pixel filter in
 SystemVerilog and built a testbench to check output pixels against reference data.
 The repository includes the filter, pixel package, testbench, and CSV test vectors.</p>
+<p>The filter uses a line buffer and row/column counters to assemble a spatial 2&times;2
+window. Each RGB channel is sorted separately; the two middle values are averaged
+with rounding up. Input gaps hold the pixel position and stored history, and the
+output-valid flag marks each registered result.</p>
+<figure class="project-visual"><a href="../assets/projects/onboarding-spatial-window.png" data-image-viewer><img src="../assets/projects/onboarding-spatial-window.png" alt="Onboarding slide showing the 2 by 2 spatial window ending at pixel P12 with P01, P02, P11, and P12" width="1920" height="1080" loading="lazy"></a><figcaption>Spatial buffering: the window ending at P12 &middot; onboarding slide 22</figcaption></figure>
 <h2>Teaching digital design</h2><p>As Digital Design Lead for the NU Silicon Initiative,
-I built a curriculum for more than 20 members, combining hardware fundamentals
-with SystemVerilog coding exercises to prepare them for RTL projects and verification.</p>
+I develop onboarding material that combines hardware fundamentals
+with SystemVerilog coding exercises to prepare new members for RTL projects and verification.</p>
+<p>The onboarding material covers modules, signal widths, combinational and sequential
+logic, reset behavior, timing, finite-state machines, memory, and valid signals. The
+pixel-filter exercise connects those concepts to a complete streaming design.</p>
+<figure class="project-visual"><a href="../assets/projects/onboarding-two-process-fsm.png" data-image-viewer><img src="../assets/projects/onboarding-two-process-fsm.png" alt="NU Silicats training slide with combinational next-state logic and a separate clocked state register" width="1920" height="1080" loading="lazy"></a><figcaption>Two-process FSM example from the onboarding material &middot; slide 16</figcaption></figure>
 </div></div></section>
 <div class="shell"><div class="pager"><a class="back" href="../work.html">&larr; All work</a></div></div>
 </main>
-<script src="../assets/site.js?v=e14a26b7"></script>
+<script src="../assets/site.js?v=20261014"></script>
 </body>
 </html>

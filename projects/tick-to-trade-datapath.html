@@ -3,161 +3,84 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>10GbE FPGA Tick-to-Trade Datapath / Spencer Kogoma</title>
-<meta name="description" content="An FPGA networking project in development: synthetic quote generation, a SystemVerilog decoder interface, and Cocotb verification in progress.">
+<title>Stateful FPGA Datapath Research / Spencer Kogoma</title>
+<meta name="description" content="Research exploration of performance-guided on-chip fuzzing and live state relocation between FPGA memory banks.">
 <meta name="author" content="Spencer Kogoma">
 <meta name="theme-color" content="#ffffff">
-<meta property="og:title" content="10GbE FPGA Tick-to-Trade Datapath">
-<meta property="og:description" content="An FPGA networking project in development: synthetic quote generation, a SystemVerilog decoder interface, and Cocotb verification in progress.">
-<meta property="og:type" content="article">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6135'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='24' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ESK%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="Stateful FPGA Datapath Research">
+<meta property="og:description" content="Exploring feedback-driven testing and memory contention in stateful FPGA datapaths.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/site.css?v=20261009">
+<link rel="stylesheet" href="../assets/site.css?v=20261014">
 </head>
 <body>
 <div class="bar" aria-hidden="true"><span id="bar"></span></div>
-
-<header class="head" id="head">
-  <div class="shell head-in">
-    <a href="../index.html" class="mark">SPENCER KOGOMA <i>/ SK</i></a>
-    <nav aria-label="Sections">
-      <a href="../index.html#home">Home</a>
-      <a href="../index.html#technical">Technical</a>
-      <a href="../index.html#more">More</a>
-    </nav>
-  </div>
-</header>
-
+<header class="head" id="head"><div class="shell head-in">
+  <a href="../index.html" class="mark">SPENCER KOGOMA <i>/ SK</i></a>
+  <nav aria-label="Sections"><a href="../index.html#home">Home</a><a href="../work.html">Work</a><a href="../current.html">Current</a></nav>
+</div></header>
 <main>
-  <section class="ph">
-    <div class="shell">
-      <a class="back" href="../work.html">&larr; All work</a>
-      <span class="label">Project 01 / SystemVerilog / Active</span>
-      <h1>10GbE FPGA<br>Tick-to-Trade Datapath</h1>
-      <p class="sub">An FPGA networking project using synthetic market-data quotes as its
-        workload. I am implementing the first registered decoder and its Cocotb tests;
-        the longer-term goal is a measured 10GbE packet-processing pipeline.</p>
-      <dl class="facts">
-        <div><dt>Stack</dt><dd>SystemVerilog, Python, cocotb</dd></div>
-        <div><dt>Target hardware</dt><dd>Kria KR260, SFP+ 10G</dd></div>
-        <div><dt>Method</dt><dd>Simulation-first, then hardware bring-up</dd></div>
-        <div><dt>Status</dt><dd>Decoder implementation in progress</dd></div>
-      </dl>
-
-      <div class="ph-cta">
-          <a class="gh" href="https://github.com/spenchh/10GbE-FPGA-Datapath" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-          spenchh/10GbE-FPGA-Datapath
-          </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec sec-flush">
-    <div class="shell">
-      <div class="prose">
-        <div class="callout">
-          <p>
-            <strong>Status.</strong> The current repository contains a Python generator for a 31-byte quote,
-            a SystemVerilog decoder interface, and an unfinished Cocotb reset testbench.
-            The first milestone is decoder behavior and a passing regression. The
-            networking pipeline below is planned; hardware throughput and latency
-            measurements remain future milestones.
-          </p>
-        </div>
-
-        <h2>Why this workload</h2>
-        <p>
-          Market data is one of the most demanding latency targets available to study, which
-          makes it a useful forcing function. The engineering problems underneath are general:
-          parse a protocol at line rate, keep a pipeline from stalling unpredictably, do
-          arithmetic in fixed point inside fabric, and enforce an interlock that software
-          cannot override. The same problems appear in radar and avionics front ends,
-          robotics, industrial control, and network equipment.
-        </p>
-
-        <h2>Scope discipline</h2>
-        <p>
-          The plan is deliberately narrow. No reinforcement learning, no full exchange
-          protocol coverage, and no TCP stack. Each of those would widen the surface area
-          faster than it could be verified, and an unfocused system is easier to dismiss than
-          a small one that is measured end to end. The target is a clean, verified,
-          hardware-tested networking datapath.
-        </p>
-
-        <h2>The datapath</h2>
-        <p>
-          I plan to write the packet decoder, bounded quote state, decision logic, and risk
-          checks in RTL. Ethernet MAC/PCS integration is a separate board and IP decision.
-        </p>
-        <ul>
-          <li><strong>10G ingress.</strong> SFP+ path into a MAC and streaming interface.</li>
-          <li><strong>UDP/IP parse.</strong> Header strip, filtering, checksum, framing.</li>
-          <li><strong>Market-data decode.</strong> Message framing and field extraction.</li>
-          <li><strong>Quote state.</strong> Bounded per-symbol storage of synthetic bid and ask updates.</li>
-          <li><strong>Decision logic.</strong> Fixed-point evaluation in the datapath.</li>
-          <li><strong>Risk gate.</strong> Hardware-enforced checks that no order may bypass.</li>
-          <li><strong>Order encode.</strong> Message build and TX egress.</li>
-          <li><strong>Latency counters.</strong> Cycle stamps at each stage boundary, for accounting rather than estimation.</li>
-        </ul>
-
-        <h2>Target hardware</h2>
-        <p>
-          A Kria KR260 is the intended board: it carries an SFP+ cage alongside four RJ45
-          ports at a price that makes a personal project realistic. Alveo-class cards are
-          closer to production trading hardware and correspondingly far more expensive; the
-          engineering being demonstrated does not depend on the price of the board.
-        </p>
-
-        <h2>Verification</h2>
-        <p>
-          The verification plan uses Python and Cocotb. Planned checks include:
-        </p>
-        <ul>
-          <li>Randomized packet streams compared against a Python golden model.</li>
-          <li>Malformed packets, truncated frames, and bad checksums.</li>
-          <li>Sequence gaps, so recovery behaviour is defined rather than discovered.</li>
-          <li>Reset behaviour mid-stream.</li>
-          <li>Back-pressure, so a stalled downstream cannot corrupt book state.</li>
-        </ul>
-
-        <h2>Host tooling</h2>
-        <p>
-          Planned C++ host-side tools include packet replay, control register access, risk
-          parameter configuration, structured logging, and a simulated exchange and order
-          sink so the egress path has somewhere to land.
-        </p>
-
-        <h2>Learning guide</h2>
-        <p>The interactive packet explorer, research sources, and implementation roadmap
-          live in a separate repository: <a href="https://github.com/spenchh/fpga-packet-lab">FPGA Packet Lab</a>.</p>
-
-        <h2>Artifacts</h2>
-        <p>Artifacts the project is working toward, none of them yet produced:</p>
-        <ul>
-          <li>Synthesis and implementation timing reports at the target clock.</li>
-          <li>Resource utilisation reports.</li>
-          <li>Waveform captures from simulation, and ILA captures from hardware.</li>
-          <li>Packet-to-decision latency in both cycles and nanoseconds.</li>
-          <li>A technical write-up covering architecture, the latency breakdown, verification
-              strategy, limitations, and next steps.</li>
-        </ul>
-
-      </div>
-    </div>
-  </section>
-
-  <div class="shell">
-    <div class="pager">
-      <a class="back" href="../work.html">&larr; All work</a>
-      <a class="out" href="fpga-field-oriented-control.html">Next: Field-oriented control &rarr;</a>
-    </div>
-  </div>
+<section class="ph"><div class="shell">
+  <a class="back" href="../work.html">&larr; All work</a>
+  <span class="label">Research exploration / SystemVerilog / October 2026</span>
+  <h1>Stateful FPGA<br>Datapath Research</h1>
+  <p class="sub">I am researching how to discover and reduce latency in stateful FPGA
+  datapaths with a collaborator. We are evaluating two potential directions:
+  performance-guided on-chip fuzzing and live relocation of symbol state between memory banks.</p>
+  <dl class="facts">
+    <div><dt>Status</dt><dd>Research scoping and contribution definition</dd></div>
+    <div><dt>Implementation approach</dt><dd>SystemVerilog hardware, simulation, FPGA evaluation</dd></div>
+    <div><dt>Focus</dt><dd>Latency, stalls, memory contention, ordering</dd></div>
+    <div><dt>Prior project</dt><dd>10GbE datapath development paused</dd></div>
+  </dl>
+</div></section>
+<section class="sec sec-flush"><div class="shell"><div class="prose">
+  <div class="callout"><p><strong>Current stage.</strong> We are reviewing existing work,
+  identifying a specific contribution, and choosing an experimental workload. Both
+  topics are candidates; neither has a demonstrated research result yet.</p></div>
+  <h2>Performance-guided on-chip fuzzing</h2>
+  <p>I am exploring a hardware tester that generates valid event sequences, observes
+  a datapath's queues and stalls, and changes its inputs to search for unusually high
+  latency. The question is which feedback signals and mutation methods discover
+  difficult cases most effectively within a limited hardware budget.</p>
+  <p>One candidate comparison is dependency-stall feedback versus queue-occupancy
+  feedback alone. We would compare against random testing and existing feedback
+  approaches under matched traffic constraints, measuring discovered latency,
+  search effort, and tester resource usage.</p>
+  <p>On-chip fuzzing already exists. The contribution would need to be a particular
+  search mechanism with a measured benefit over those baselines.</p>
+  <h2>Live relocation of symbol state</h2>
+  <p>The second direction is an FPGA state engine that detects memory-bank contention
+  and moves selected symbols' data to less busy banks while updates continue arriving.
+  I am investigating how a migration protocol and decision policy could preserve
+  update order while reducing latency enough to repay the migration overhead.</p>
+  <p>We would measure buffering requirements, migration cost, FPGA resources, timing,
+  and latency against static banking and simpler alternatives. Before committing,
+  we need a workload with a meaningful memory bottleneck and a limitation that
+  existing approaches handle poorly.</p>
+  <h2>Experimental questions</h2>
+  <div class="table-scroll"><table class="research-table">
+    <thead><tr><th scope="col">Direction</th><th scope="col">What changes</th><th scope="col">Proposed comparison</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Q1: Fuzzing</th><td>The inputs used to discover performance problems</td><td>Random, occupancy-guided, and stall-guided search under the same traffic constraints</td></tr>
+      <tr><th scope="row">Q2: State relocation</th><td>The memory organization used to address performance problems</td><td>Static banking, simpler balancing policies, and migration with ordering preserved</td></tr>
+    </tbody>
+  </table></div>
+  <h2>Development foundation</h2>
+  <p>I have paused the original tick-to-trade build while we establish the research
+  question. The earlier repository contains synthetic quote generation and initial
+  decoder work. My separate stream stress tester currently implements a synchronous
+  FIFO with an initial cocotb write/read check; traffic generation and fault injection
+  are planned. These are development foundations for exploring stateful streaming hardware.</p>
+  <ul>
+    <li><a href="https://github.com/spenchh/10GbE-FPGA-Datapath" target="_blank" rel="noopener noreferrer">Earlier 10GbE datapath source &nearr;</a></li>
+    <li><a href="stream-stress-tester.html">FPGA Stream Stress Tester</a></li>
+    <li><a href="https://github.com/spenchh/fpga-packet-lab" target="_blank" rel="noopener noreferrer">Packet-processing learning guide &nearr;</a></li>
+  </ul>
+</div></div></section>
+<div class="shell"><div class="pager"><a class="back" href="../work.html">&larr; All work</a><a class="out" href="stream-stress-tester.html">Next: Stream stress tester &rarr;</a></div></div>
 </main>
-
-
-<script src="../assets/site.js?v=e14a26b7"></script>
+<script src="../assets/site.js?v=20261014"></script>
 </body>
 </html>

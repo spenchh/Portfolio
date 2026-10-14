@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/site.css?v=20261009">
+<link rel="stylesheet" href="../assets/site.css?v=20261014">
 </head>
 <body>
 <div class="bar" aria-hidden="true"><span id="bar"></span></div>
@@ -42,18 +42,42 @@ RTL verification, synthesis, and place-and-route.</p>
 <div><dt>Technology</dt><dd>Nangate 45 nm</dd></div>
 <div><dt>Timing constraint</dt><dd>500 MHz</dd></div>
 <div><dt>Post-route setup slack</dt><dd>+0.241 ns</dd></div></dl>
+<figure class="project-visual lead-visual">
+  <a href="../assets/projects/mac-routed-layout.png" data-image-viewer>
+    <img src="../assets/projects/mac-routed-layout.png" alt="Original Innovus screenshot of the routed 3 by 3 MAC array" width="768" height="710">
+  </a>
+  <figcaption>Routed Innovus layout from my ECE 303 Lab 3 report. Die dimensions: 95.19 &times; 93.8 &micro;m.</figcaption>
+</figure>
 </div></section>
 <section class="sec sec-flush"><div class="shell"><div class="prose">
 <h2>Architecture</h2><p>Nine processing elements form the 3&times;3 systolic array.
-Signed 8-bit input operands feed multiply-accumulate operations with 20-bit accumulators.</p>
-<h2>Verification</h2><p>I verified all matrix outputs in RTL and gate-level simulation.</p>
+Signed 8-bit input operands feed multiply-accumulate operations with 20-bit accumulators.
+Inputs move horizontally and weights move vertically through registered delays. The lab
+test accumulates for 12 active cycles, then holds all nine outputs while inputs continue changing.</p>
+<h2>RTL and gate-level simulation</h2><p>I checked the same signed test vectors in RTL and
+gate-level simulation. All nine final outputs matched the reference values in both runs:
+&minus;21, 638, 20, &minus;57, &minus;572, 45, 135, 46, and &minus;99.</p>
+<figure class="project-visual"><a href="../assets/projects/mac-rtl-waveform.png" data-image-viewer><img src="../assets/projects/mac-rtl-waveform.png" alt="Xcelium waveform supplied in the RTL and gate-level sections of the Lab 3 report" width="966" height="431" loading="lazy"></a><figcaption>Waveform from Lab 3, pages 1 and 3. The report embeds this same capture in both simulation sections; the separate output tables record matching values.</figcaption></figure>
 <h2>Physical implementation</h2><p>I completed synthesis in Genus and place-and-route
 in Innovus. The routed design met the 500 MHz timing constraint with +0.241 ns setup
-slack and zero reported setup, hold, or DRC violations.</p>
+slack and zero reported setup or hold violating paths. The implementation report lists
+3,398 instances, 6,018.782 &micro;m&sup2; of cell area, and 73.894% density.</p>
+<div class="evidence-grid">
+  <figure class="project-visual"><a href="../assets/projects/mac-setup-timing.png" data-image-viewer><img src="../assets/projects/mac-setup-timing.png" alt="Innovus setup timing summary reporting 0.241 ns WNS, zero TNS, and zero violating paths" width="639" height="648" loading="lazy"></a><figcaption>Post-route setup timing &middot; Lab 3, page 13</figcaption></figure>
+  <figure class="project-visual"><a href="../assets/projects/mac-hold-timing.png" data-image-viewer><img src="../assets/projects/mac-hold-timing.png" alt="Innovus hold timing summary reporting zero violating paths and 0.082 ns register-to-register WNS" width="542" height="431" loading="lazy"></a><figcaption>Post-route hold timing &middot; Lab 3, page 14</figcaption></figure>
+</div>
+<figure class="project-visual"><a href="../assets/projects/mac-area.png" data-image-viewer><img src="../assets/projects/mac-area.png" alt="Innovus area report showing 3398 instances and 6018.782 square micrometers" width="772" height="194" loading="lazy"></a><figcaption>Cell-area report &middot; Lab 3, page 14</figcaption></figure>
+<h2>Layout checks</h2><p>DRC completed with zero violations. The separate connectivity
+check reported one VSS dangling-wire violation and zero warnings; that issue remains
+documented in the submitted lab report.</p>
+<div class="evidence-grid">
+  <figure class="project-visual"><a href="../assets/projects/mac-drc.png" data-image-viewer><img src="../assets/projects/mac-drc.png" alt="Innovus verify_drc output reporting verification complete with zero violations" width="787" height="447" loading="lazy"></a><figcaption>DRC: 0 violations &middot; Lab 3, page 15</figcaption></figure>
+  <figure class="project-visual"><a href="../assets/projects/mac-connectivity.png" data-image-viewer><img src="../assets/projects/mac-connectivity.png" alt="Innovus connectivity report identifying one dangling wire on the VSS net" width="613" height="470" loading="lazy"></a><figcaption>Connectivity: 1 VSS dangling wire &middot; Lab 3, page 16</figcaption></figure>
+</div>
 </div></div></section>
 <div class="shell"><div class="pager"><a class="back" href="../work.html">&larr; All work</a>
 <a class="out" href="median-pixel-filter.html">Next: Median pixel filter &rarr;</a></div></div>
 </main>
-<script src="../assets/site.js?v=e14a26b7"></script>
+<script src="../assets/site.js?v=20261014"></script>
 </body>
 </html>

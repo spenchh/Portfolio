@@ -3,6 +3,42 @@
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  var captures = document.querySelectorAll('[data-image-viewer]');
+  if (captures.length && typeof HTMLDialogElement !== 'undefined') {
+    var viewer = document.createElement('dialog');
+    viewer.className = 'image-dialog';
+    viewer.setAttribute('aria-label', 'Project screenshot');
+    var viewerHeader = document.createElement('div');
+    viewerHeader.className = 'image-dialog-header';
+    var viewerCaption = document.createElement('p');
+    var closeViewer = document.createElement('button');
+    closeViewer.type = 'button';
+    closeViewer.textContent = 'Close';
+    var viewerImage = document.createElement('img');
+    viewerHeader.append(viewerCaption, closeViewer);
+    viewer.append(viewerHeader, viewerImage);
+    document.body.appendChild(viewer);
+    closeViewer.addEventListener('click', function () { viewer.close(); });
+    viewer.addEventListener('click', function (event) {
+      if (event.target !== viewer) return;
+      var bounds = viewer.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right ||
+          event.clientY < bounds.top || event.clientY > bounds.bottom) viewer.close();
+    });
+    Array.prototype.forEach.call(captures, function (capture) {
+      capture.addEventListener('click', function (event) {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        var original = capture.querySelector('img');
+        var caption = capture.closest('figure').querySelector('figcaption');
+        viewerImage.src = capture.href;
+        viewerImage.alt = original.alt;
+        viewerCaption.textContent = caption ? caption.textContent : original.alt;
+        viewer.showModal();
+      });
+    });
+  }
+
   /* ---------- cursor glow + particle trail ----------
      Fine pointers only. The native cursor is left alone; this layers
      underneath it, the way the reference site does. */

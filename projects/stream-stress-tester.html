@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FPGA Stream Stress Tester / Spencer Kogoma</title>
+<meta name="description" content="A SystemVerilog streaming-hardware test project with an implemented synchronous FIFO and initial Python/cocotb verification.">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css?v=20261014">
+</head>
+<body>
+<div class="bar" aria-hidden="true"><span id="bar"></span></div>
+<header class="head" id="head"><div class="shell head-in">
+  <a href="../index.html" class="mark">SPENCER KOGOMA <i>/ SK</i></a>
+  <nav aria-label="Sections"><a href="../index.html#home">Home</a><a href="../work.html">Work</a><a href="../current.html">Current</a></nav>
+</div></header>
+<main>
+<section class="ph"><div class="shell">
+  <a class="back" href="../work.html">&larr; All work</a>
+  <span class="label">Project / Streaming hardware / In development</span>
+  <h1>FPGA Stream<br>Stress Tester</h1>
+  <p class="sub">I am building a programmable test system for bursts, backpressure,
+  missing records, and corrupted data. The first milestone is synchronous FIFO buffering
+  and Python/cocotb verification.</p>
+  <dl class="facts">
+    <div><dt>Stack</dt><dd>SystemVerilog, Python, cocotb, Verilator</dd></div>
+    <div><dt>FIFO configuration</dt><dd>64-bit words, 16 entries</dd></div>
+    <div><dt>Implemented</dt><dd>Synchronous FIFO and initial write/read test</dd></div>
+    <div><dt>Next milestone</dt><dd>Boundary, ordering, and randomized checks</dd></div>
+  </dl>
+  <div class="ph-cta"><a class="gh" href="https://github.com/spenchh/FPGA-Stream-Stress-Tester" target="_blank" rel="noopener noreferrer">View RTL and cocotb test &nearr;</a></div>
+</div></section>
+<section class="sec sec-flush"><div class="shell"><div class="prose">
+  <h2>Current implementation</h2>
+  <p>The FIFO tracks read and write pointers and occupancy in one clock domain. Writes
+  are accepted when space is available; reads are accepted when data is available.
+  Simultaneous accepted operations leave occupancy unchanged. The output register
+  holds the last accepted read.</p>
+  <p>The initial cocotb test checks reset, one write, and one read with a data comparison.
+  Full/empty boundaries, pointer wraparound, multi-word ordering, and randomized traffic
+  are the next verification steps.</p>
+  <h2>Planned test system</h2>
+  <ul>
+    <li>A configurable traffic generator for numbered records, bursts, and gaps.</li>
+    <li>A fault injector for dropped records and selected payload-bit corruption.</li>
+    <li>A programmable sink for receiver stalls and an independent scoreboard.</li>
+    <li>Statistics and host control for repeatable experiments.</li>
+    <li>An asynchronous FIFO and FPGA demonstration after the single-clock version is verified.</li>
+  </ul>
+  <h2>Connection to research</h2>
+  <p>This project develops the buffering and verification skills behind my research
+  exploration of stateful FPGA datapaths. Feedback-driven search is a candidate research
+  extension; the current tester is at its initial functional milestone.</p>
+  <a class="out" href="tick-to-trade-datapath.html">Read the research directions &rarr;</a>
+</div></div></section>
+<div class="shell"><div class="pager"><a class="back" href="../work.html">&larr; All work</a><a class="out" href="fpga-field-oriented-control.html">Next: Field-oriented control &rarr;</a></div></div>
+</main>
+<script src="../assets/site.js?v=20261014"></script>
+</body>
+</html>
