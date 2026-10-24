@@ -1292,3 +1292,10 @@ body:has(.image-dialog[open]){overflow:hidden}
   .image-dialog{padding:.65rem}
 }
 @media(max-height:46rem){.home-work-previews img{height:5rem}.home-work-previews{margin-top:1rem}}
+
+
+/* Vehicle photos keep their full frame, with an expandable view. */
+.camera-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem;margin:2rem 0 3rem}
+.camera-gallery .project-visual:first-child{grid-column:1/-1;max-width:46rem;justify-self:center;width:100%}
+.camera-gallery img{max-height:34rem;object-fit:contain;background:#f5f6f7}
+@media(max-width:40rem){.camera-gallery{grid-template-columns:1fr}.camera-gallery .project-visual:first-child{grid-column:auto}}

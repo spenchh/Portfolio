@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FPGA Power Telemetry / Spencer Kogoma</title>
+<meta name="description" content="Ongoing NASA power-telemetry development: analog sensing, Basys 3 VHDL, PCB layout, UART control, and cocotb with NVC.">
+<meta name="author" content="Spencer Kogoma">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="FPGA Power Telemetry">
+<meta property="og:description" content="Ongoing NASA power-telemetry development: analog sensing, Basys 3 VHDL, PCB layout, UART control, and cocotb with NVC.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css?v=20261024">
+</head>
+<body>
+<div class="bar" aria-hidden="true"><span id="bar"></span></div>
+<header class="head" id="head"><div class="shell head-in">
+  <a href="../index.html" class="mark">SPENCER KOGOMA <i>/ SK</i></a>
+  <nav aria-label="Sections"><a href="../index.html#home">Home</a><a href="../work.html">Work</a><a href="../current.html">Current</a></nav>
+</div></header>
+<main>
+<section class="ph"><div class="shell">
+  <a class="back" href="../work.html">&larr; All work</a>
+  <span class="label">NASA / Mixed-signal hardware / In development</span>
+  <h1>FPGA Power<br>Telemetry</h1>
+  <p class="sub">An analog sensing and FPGA acquisition system for investigating
+  voltage and current transients in power delivery.</p>
+  <dl class="facts">
+    <div><dt>Platform</dt><dd>Basys 3 / XADC</dd></div>
+    <div><dt>Hardware</dt><dd>Schematic complete; PCB layout underway</dd></div>
+    <div><dt>RTL</dt><dd>VHDL / UART interface in progress</dd></div>
+    <div><dt>Verification</dt><dd>Python, cocotb, NVC</dd></div>
+  </dl>
+</div></section>
+<section class="sec sec-flush"><div class="shell"><div class="prose">
+  <h2>From analog sensing to FPGA acquisition</h2>
+  <p>I am developing the voltage and current sensing hardware alongside the VHDL
+  acquisition and display interfaces. The system targets the Basys 3 XADC, with a
+  1 MSPS acquisition goal for observing short power transients.</p>
+  <h2>Current work</h2>
+  <p>The schematic is complete, and I am working on PCB layout. On the FPGA side,
+  I am finishing the UART interface used to switch between voltage and current
+  modes. I am using cocotb with the NVC VHDL simulator for verification.</p>
+  <h2>Integration ahead</h2>
+  <p>Next steps include completing layout, integrating the sensing hardware with
+  the FPGA, and checking the acquisition path against lab measurements. Sampling
+  performance and transient-capture results will be reported after that testing.</p>
+</div></div></section>
+<div class="shell"><div class="pager"><a class="back" href="../work.html">&larr; All work</a><a class="out" href="../current.html#sr1">More NASA work: SR-1 NEA VHDL &rarr;</a></div></div>
+</main>
+<script src="../assets/site.js?v=20261024"></script>
+</body>
+</html>

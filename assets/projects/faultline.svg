@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
+<title id="title">FAULTLINE</title><desc id="desc">Speculative 100GbE FPGA Engine. VCU118 research into link errors, speculative work, and commit or cancel decisions.</desc>
+<defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#b9cfbd" stroke-opacity=".09"/></pattern></defs>
+<rect width="960" height="600" fill="#14251c"/><rect width="960" height="600" fill="url(#grid)"/>
+<g font-family="Arial, sans-serif"><text x="70" y="82" fill="#b2cbb8" font-size="18" letter-spacing="3">VCU118 / RESEARCH IN PROGRESS</text>
+<text x="65" y="190" fill="#f2f6f0" font-size="84" font-weight="700" letter-spacing="-3">FAULTLINE</text>
+<text x="70" y="238" fill="#c7d8ca" font-size="27">Speculative 100GbE FPGA Engine</text>
+<path d="M70 310H890" stroke="#60846b"/><g fill="none" stroke="#a5c4ad" stroke-width="3"><path d="M70 397h25v-32h48v32h48v-32h24v56h24v-24h43"/><path d="M305 397h40m-9-8 9 8-9 8M567 397h38m-9-8 9 8-9 8"/></g>
+<rect x="358" y="350" width="200" height="94" rx="8" fill="#294735" stroke="#60846b"/><text x="458" y="390" text-anchor="middle" fill="#f2f6f0" font-size="21">Speculative</text><text x="458" y="419" text-anchor="middle" fill="#f2f6f0" font-size="21">processing</text>
+<rect x="620" y="350" width="270" height="94" rx="8" fill="#294735" stroke="#60846b"/><text x="755" y="390" text-anchor="middle" fill="#f2f6f0" font-size="21">Commit / cancel</text><text x="755" y="419" text-anchor="middle" fill="#b2cbb8" font-size="18">Buffering + integrity</text>
+<text x="70" y="471" fill="#b2cbb8" font-size="18">Link errors</text><text x="70" y="546" fill="#c7d8ca" font-size="19" letter-spacing="2">LATENCY / DATA INTEGRITY</text></g></svg>

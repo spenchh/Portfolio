@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FPGA Stream Stress Tester / Spencer Kogoma</title>
-<meta name="description" content="A SystemVerilog streaming-hardware test project with an implemented synchronous FIFO and initial Python/cocotb verification.">
+<meta name="description" content="A SystemVerilog streaming-hardware test project with an implemented synchronous FIFO and Python/cocotb verification.">
 <meta name="theme-color" content="#ffffff">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/site.css?v=20261014">
+<link rel="stylesheet" href="../assets/site.css?v=20261024">
 </head>
 <body>
 <div class="bar" aria-hidden="true"><span id="bar"></span></div>
@@ -28,8 +28,8 @@
   <dl class="facts">
     <div><dt>Stack</dt><dd>SystemVerilog, Python, cocotb, Verilator</dd></div>
     <div><dt>FIFO configuration</dt><dd>64-bit words, 16 entries</dd></div>
-    <div><dt>Implemented</dt><dd>Synchronous FIFO and initial write/read test</dd></div>
-    <div><dt>Next milestone</dt><dd>Boundary, ordering, and randomized checks</dd></div>
+    <div><dt>Implemented</dt><dd>Synchronous FIFO and cocotb tests</dd></div>
+    <div><dt>Next milestone</dt><dd>Programmable traffic generator</dd></div>
   </dl>
   <div class="ph-cta"><a class="gh" href="https://github.com/spenchh/FPGA-Stream-Stress-Tester" target="_blank" rel="noopener noreferrer">View RTL and cocotb test &nearr;</a></div>
 </div></section>
@@ -39,9 +39,9 @@
   are accepted when space is available; reads are accepted when data is available.
   Simultaneous accepted operations leave occupancy unchanged. The output register
   holds the last accepted read.</p>
-  <p>The initial cocotb test checks reset, one write, and one read with a data comparison.
-  Full/empty boundaries, pointer wraparound, multi-word ordering, and randomized traffic
-  are the next verification steps.</p>
+  <p>I have written directed cocotb checks for reset, ordering, full/empty behavior,
+  simultaneous reads and writes, and pointer wraparound. The next module is the traffic
+  generator; randomized system-level checks will follow as the source and sink are integrated.</p>
   <h2>Planned test system</h2>
   <ul>
     <li>A configurable traffic generator for numbered records, bursts, and gaps.</li>
@@ -51,13 +51,15 @@
     <li>An asynchronous FIFO and FPGA demonstration after the single-clock version is verified.</li>
   </ul>
   <h2>Connection to research</h2>
-  <p>This project develops the buffering and verification skills behind my research
-  exploration of stateful FPGA datapaths. Feedback-driven search is a candidate research
-  extension; the current tester is at its initial functional milestone.</p>
-  <a class="out" href="tick-to-trade-datapath.html">Read the research directions &rarr;</a>
+  <p>This project builds the buffering, traffic-generation, and fault-injection skills
+  used in FAULTLINE, my VCU118 research into speculative processing and data integrity.
+  The tester is a separate project, with the synchronous FIFO implemented and traffic
+  generation next.</p>
+  <a class="out" href="faultline.html">Read about FAULTLINE &rarr;</a>
 </div></div></section>
 <div class="shell"><div class="pager"><a class="back" href="../work.html">&larr; All work</a><a class="out" href="fpga-field-oriented-control.html">Next: Field-oriented control &rarr;</a></div></div>
 </main>
-<script src="../assets/site.js?v=20261014"></script>
+<script src="../assets/site.js?v=20261024"></script>
 </body>
 </html>
+

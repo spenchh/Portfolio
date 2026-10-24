@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=20261014">
+<link rel="stylesheet" href="assets/site.css?v=20261024">
 </head>
 <body>
 <div class="bar" aria-hidden="true"><span id="bar"></span></div>
@@ -47,20 +47,17 @@
             <h3 class="panel-org">
               <span class="experience-logos">
                 <img class="nasa-mark" src="assets/nasa.png" alt="NASA" width="110" height="92">
-                <img class="panel-mark" src="assets/amentum.webp" alt="Amentum" width="256" height="173">
               </span>
-              Digital Design Intern at Amentum
+              Digital Design Intern at NASA
             </h3>
             <span class="label">NASA Marshall Space Flight Center &middot; August 2026 &ndash; Present</span>
           </div>
-          <p>
-            At NASA Marshall Space Flight Center, I developed a Basys 3 FPGA power-telemetry
-            system to capture sub-millisecond voltage and current transients for
-            power-delivery diagnostics.
-          </p>
-          <p>I implemented VHDL for XADC acquisition and transient tracking, verified
-            the RTL with Python/Cocotb, and designed and fabricated a custom sensing PCB.
-            Hardware testing covered analog measurements and FPGA interfaces.</p>
+          <p>I am developing a Basys 3 FPGA power-telemetry system for voltage and
+            current measurements, combining analog sensing, a custom PCB, and VHDL.</p>
+          <p>The schematic is complete and PCB layout is underway. I am finishing the
+            UART interface to switch between voltage and current, and using cocotb
+            with NVC for VHDL verification.</p>
+          <a class="out" href="projects/power-telemetry.html">Read more &rarr;</a>
         </article>
 
         <article class="panel rv">
@@ -69,27 +66,37 @@
               <svg class="panel-mark panel-glyph" viewBox="0 0 26 16" aria-hidden="true">
                 <path d="M1 12h3.5V4h5.5v8h5.5V4h5.5v8H26"/>
               </svg>
-              Stateful FPGA Datapath Research
+              FAULTLINE: Speculative 100GbE FPGA Engine
             </h3>
-            <span class="label">Research exploration &middot; With a collaborator</span>
+            <span class="label">VCU118 &middot; Research in progress</span>
           </div>
-          <p>
-            I am researching performance-guided on-chip fuzzing and live relocation
-            of symbol state between FPGA memory banks. We are defining a specific
-            contribution and evaluation plan before choosing a direction.
-          </p>
-          <p>The original 10GbE tick-to-trade build is paused. Both potential topics
-            would use SystemVerilog hardware and measure latency, correctness,
-            and resource tradeoffs against established baselines.</p>
-          <a class="out" href="projects/tick-to-trade-datapath.html">Read more &rarr;</a>
+          <p>I am researching how physical-link errors affect speculative packet
+            processing, and how buffering and commit/cancel policies trade latency
+            against data integrity.</p>
+          <p>The work is at an early stage, starting with error observability and
+            capture feasibility. The hardware target is the VCU118, with single-lane
+            validation before a 100GbE implementation.</p>
+          <a class="out" href="projects/faultline.html">Read more &rarr;</a>
         </article>
 
         <article class="panel rv">
           <div class="panel-top"><h3>FPGA Stream Stress Tester</h3><span class="label">Independent project &middot; In development</span></div>
-          <p>I have implemented the first synchronous FIFO and an initial cocotb
-            write/read check. Next I am extending verification to ordering, full/empty
-            boundaries, and randomized traffic before integrating a programmable source and sink.</p>
+          <p>I have implemented a synchronous FIFO in SystemVerilog and written
+            cocotb tests. The next module is a programmable traffic generator for
+            numbered records, bursts, and gaps, followed by fault injection and backpressure.</p>
           <a class="out" href="projects/stream-stress-tester.html">Read more &rarr;</a>
+        </article>
+        <article class="panel rv" id="sr1">
+          <div class="panel-top"><h3>SR-1 NEA VHDL</h3><span class="label">NASA &middot; In progress</span></div>
+          <p>Alongside the telemetry system, I am helping write VHDL for the SR-1
+            NEA actuator-control work. This is ongoing development within my NASA internship.</p>
+        </article>
+        <article class="panel rv">
+          <div class="panel-top"><h3>Digital Design Onboarding</h3><span class="label">Northwestern &middot; Digital Design Lead</span></div>
+          <p>I lead SystemVerilog onboarding for more than 20 members of Northwestern's
+            chip-design club, with six weeks of design and two weeks of verification.
+            I develop slides, RTL exercises, and checkpoints, and help members debug their designs.</p>
+          <a class="out" href="https://github.com/Northwestern-Silicats/digital-design-onboarding" target="_blank" rel="noopener noreferrer">View the curriculum &nearr;</a>
         </article>
       </div>
     </div>
@@ -97,6 +104,7 @@
 </main>
 
 
-<script src="assets/site.js?v=20261014"></script>
+<script src="assets/site.js?v=20261024"></script>
 </body>
 </html>
+

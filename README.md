@@ -15,8 +15,7 @@ Open http://localhost:8000.
 
 The NASA insignia in `assets/nasa.png` is sourced from NASA's official website:
 https://www.nasa.gov/wp-content/themes/nasa/assets/images/nasa-logo@2x.png
-It identifies the NASA Marshall Space Flight Center work location in the Amentum
-experience entry. Amentum is the employer.
+It identifies the NASA Marshall Space Flight Center internship entry.
 
 Project images in `assets/projects/` are original captures extracted from Spencer's
 ECE 303 Lab 3 report and exported from the supplied Digital Design Onboarding
@@ -28,6 +27,12 @@ the gallery includes it once and identifies that source limitation in its captio
 The MAC page preserves the report's separate DRC and connectivity outcomes:
 zero DRC violations and one VSS dangling-wire connectivity violation.
 
-The original 10GbE project URL is retained for existing links. Its page now describes
-research exploration of on-chip performance fuzzing and live memory-bank state
-relocation, with both directions still being scoped. The original build is paused.
+FAULTLINE is the current VCU118 research project. Its page distinguishes early
+research from the 100GbE implementation and measurements still ahead. The legacy
+tick-to-trade URL redirects to `projects/faultline.html`.
+
+The two featured projects on Home and Work are FAULTLINE and the 3x3 MAC array.
+The FAULTLINE SVG is an overview of the research scope, not a measured result.
+Camera photographs were supplied by Spencer and converted to WebP for the web.
+NASA telemetry status: schematic complete, PCB layout and UART interface underway,
+with cocotb and NVC used for VHDL verification.
