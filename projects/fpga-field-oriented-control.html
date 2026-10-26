@@ -69,31 +69,25 @@
           <li>PCB-aware control logic driven by measured A, B, and C phase currents, with voltage-range inhibit, active-high driver disable, and defined PWM shutdown conditions.</li>
           <li>Vivado-ready SystemVerilog modules and a testbench structure for block-level simulation ahead of hardware bring-up and FPGA-in-the-loop testing.</li>
           <li>Mapped the RTL interface requirements onto the Altium motor-driver board: PWM driver inputs, current sense, voltage sense, Hall and angle feedback, and disable behaviour.</li>
-          <li>Divided responsibilities across the Zynq PS and PL, keeping timing-critical control and protection in fabric.</li>
+          <li>Defined the Zynq PS/PL partition, implementing control and protection in PL while leaving supervisory firmware and AXI integration as further work.</li>
         </ul>
 
         <h2>The control loop</h2>
         <p>
           The current loop is a valid-chained pipeline. Each stage carries its own
-          <code>*_valid</code> strobe, so a sample propagates through the datapath
-          without a central scheduler and every stage knows precisely when its input
-          is real.
+          <code>*_valid</code> strobe to mark completed results. The current top uses delayed handoffs and a latest-held angle; transaction-matched current and angle data still need additional alignment work for arbitrary changing samples.
         </p>
         <ul>
           <li>ADC scaling converts raw counts to signed current, with per-phase offset subtraction and a 24-bit scale coefficient.</li>
           <li>Clarke and Park transforms take three-phase currents into the rotating d-q frame.</li>
           <li>Two PI regulators, one per axis, with clamped integrators for anti-windup.</li>
           <li>Inverse Park returns the voltage command to the stationary frame.</li>
-          <li>Alpha-beta to duty conversion produces the three phase duties.</li>
+          <li>Alpha-beta to duty conversion produces the three phase duties using sinusoidal phase reconstruction. Space-vector PWM remains an alternative modulation method.</li>
         </ul>
 
         <h2>Fixed-point arithmetic</h2>
         <p>
-          Everything runs in Q1.15. At each multiply the product widens to full
-          precision, shifts back by fifteen fractional bits, and then clamps to the
-          16-bit range rather than wrapping. Wrapping in a motor controller means a
-          sign flip in a torque command, so saturation is a safety property, not a
-          numerical nicety.
+          The main current and control values use signed 16-bit Q1.15. Wider intermediate products are rescaled with arithmetic shifts, and the core arithmetic clamps results before narrowing. ADC codes, angle codes, calibration coefficients and PWM counts have their own representations. Overflow wrapping can reverse the sign of a command. Saturation bounds that result before it is narrowed.
         </p>
 
         <figure class="code">
@@ -124,24 +118,22 @@
         <p>
           The bounds are sign-extended to the product width before comparison, so a
           value that overflows 16 bits is compared honestly rather than after it has
-          already wrapped. Every stage in the loop clamps this way.
+          already wrapped. The PI clamp compares the full-width value before selecting an in-range result or a configured bound. The phase-magnitude monitor still needs explicit handling of the most-negative signed input.
         </p>
 
         <h2>Angle resolution</h2>
         <p>
           Sine and cosine come from a quarter-wave lookup table. A 16-bit electrical
           angle is split so the top two bits select the quadrant and the next six
-          index a 64-entry quarter table; the cosine is read from the same table using
-          a mirrored index. One quarter period of storage covers the full circle.
+          index a quarter-wave table with 65 stored values including its endpoint; the cosine is read from the same table using
+          a mirrored index. One quarter period of storage covers the full circle. Only the upper eight angle bits affect the result, giving 256 electrical positions, or 1.40625 degrees per step.
         </p>
 
         <h2>Modulation and deadtime</h2>
         <p>
           A center-aligned counter drives complementary high and low outputs on each
           phase, separated by a programmable non-overlap interval. The module exposes a
-          <code>configuration_error</code> output that rejects any period and deadtime
-          combination where the high and low sides could conduct simultaneously. The
-          design refuses to run a configuration that could shoot through.
+          <code>configuration_error</code> output that rejects zero period, excessive count-domain non-overlap, or duty counts above the period. The output commands include a non-overlap window; actual transistor switching also depends on the gate driver and power stage.
         </p>
 
         <figure class="code">
@@ -167,17 +159,12 @@
         </figure>
 
         <p>
-          Two deadtimes have to fit inside one period, or the high and low sides of a
-          leg could conduct together. That condition gates <code>active</code>, so an
-          invalid configuration cannot drive the outputs at all. The check is structural, not a runtime warning.
+          The configuration check requires twice the programmed non-overlap count to be smaller than the period. Invalid settings inhibit the active PWM comparisons. The count window is not a measured gate deadtime, and this guard alone does not establish physical shoot-through protection.
         </p>
 
         <h2>Protection in fabric</h2>
         <p>
-          Over-current, phase-imbalance, and bus and phase voltage monitors feed a
-          latching disable controller. When any monitor trips, PWM is gated immediately
-          and the fault is held until an explicit clear, with a status code identifying
-          the cause. The protection path does not depend on software being alive.
+          Per-phase overcurrent and phase-current imbalance feed a latching disable controller. The top accepts voltage-range and external-inhibit flags from outside the loop. Current-derived faults and PWM outputs are registered, so shutdown has clocked latency. The fault remains latched until its source clears and an explicit clear is accepted. Current and balance trips share the current-fault status code.
         </p>
 
         <h2>Verification</h2>
@@ -194,6 +181,16 @@
           to +0.557 ns. That result applies to the wrapper build, while Cora Z7 board
           bring-up remains a separate milestone.</p>
 
+        <h2>Learn or recreate the project</h2>
+        <p>The companion handbook starts with motor, inverter and FPGA basics, then walks through actual integer values, annotated source, design tradeoffs and verification evidence. It includes a setup guide and study checkpoints.</p>
+        <ul>
+          <li><a href="https://spenchh.github.io/fpga-motor-control-lab/#/start">Start from zero</a></li>
+          <li><a href="https://spenchh.github.io/fpga-motor-control-lab/#/reproduce">Run the tests and inspect waveforms</a></li>
+          <li><a href="https://spenchh.github.io/fpga-motor-control-lab/#/walkthrough">Follow one numerical example through the loop</a></li>
+          <li><a href="https://spenchh.github.io/fpga-motor-control-lab/#/decisions">Understand the design decisions</a></li>
+          <li><a href="https://spenchh.github.io/fpga-motor-control-lab/#/history">Project history and current status</a></li>
+        </ul>
+        <p>The Drive review distinguishes the original high-voltage research goal, later simulation and low-voltage directions, and the current RTL. Higher switching frequency and FPGA clock rate alone do not establish a measured efficiency or cost advantage.</p>
         <h2>Repository</h2>
         <ul>
           <li><a href="https://github.com/spenchh/FPGA-foc-motor-control/tree/main/rtl/design">rtl/design/</a> &mdash; SystemVerilog design modules</li>
@@ -201,7 +198,8 @@
           <li><a href="https://github.com/spenchh/FPGA-foc-motor-control/tree/main/rtl/sim">rtl/sim/</a> &mdash; portable simulation runner</li>
           <li><a href="https://github.com/spenchh/FPGA-foc-motor-control/tree/main/synth">synth/</a> &mdash; synthesis wrapper</li>
         </ul>
-        <figure class="code"><figcaption>Run all 13 testbenches</figcaption><pre><code>python rtl/sim/run_tests.py</code></pre></figure>
+        <figure class="code"><figcaption>Run all 13 testbenches</figcaption><pre><code>python3 rtl/sim/run_tests.py
+python3 rtl/sim/trace_test.py tb_pi_controller_q15</code></pre></figure>
       </div>
     </div>
   </section>
@@ -218,4 +216,5 @@
 <script src="../assets/site.js?v=20261024"></script>
 </body>
 </html>
+
 
