@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FPGA Power Telemetry / Spencer Kogoma</title>
+<title>Server Power Telemetry / Spencer Kogoma</title>
 <meta name="description" content="Ongoing NASA power-telemetry development: analog sensing, Basys 3 VHDL, PCB layout, UART control, and cocotb with NVC.">
 <meta name="author" content="Spencer Kogoma">
 <meta name="theme-color" content="#ffffff">
-<meta property="og:title" content="FPGA Power Telemetry">
+<meta property="og:title" content="Server Power Telemetry">
 <meta property="og:description" content="Ongoing NASA power-telemetry development: analog sensing, Basys 3 VHDL, PCB layout, UART control, and cocotb with NVC.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,12 +24,12 @@
 <section class="ph"><div class="shell">
   <a class="back" href="../work.html">&larr; All work</a>
   <span class="label">NASA / Mixed-signal hardware / In development</span>
-  <h1>FPGA Power<br>Telemetry</h1>
+  <h1>Server Power<br>Telemetry</h1>
   <p class="sub">An analog sensing and FPGA acquisition system for investigating
-  voltage and current transients in power delivery.</p>
+  voltage and current transients in server power delivery.</p>
   <dl class="facts">
     <div><dt>Platform</dt><dd>Basys 3 / XADC</dd></div>
-    <div><dt>Hardware</dt><dd>Schematic complete; PCB layout underway</dd></div>
+    <div><dt>Hardware</dt><dd>Schematic complete; placement and routing in progress</dd></div>
     <div><dt>RTL</dt><dd>VHDL / UART interface in progress</dd></div>
     <div><dt>Verification</dt><dd>Python, cocotb, NVC</dd></div>
   </dl>
@@ -39,10 +39,25 @@
   <p>I am developing the voltage and current sensing hardware alongside the VHDL
   acquisition and display interfaces. The system targets the Basys 3 XADC, with a
   1 MSPS acquisition goal for observing short power transients.</p>
-  <h2>Current work</h2>
-  <p>The schematic is complete, and I am working on PCB layout. On the FPGA side,
-  I am finishing the UART interface used to switch between voltage and current
-  modes. I am using cocotb with the NVC VHDL simulator for verification.</p>
+  <h2>Sensing hardware and PCB development</h2>
+  <p>The schematic combines a shunt-based current-sensing path, voltage scaling
+  and buffering, and a transistor gate driver for an FPGA-controlled MOSFET load
+  switch. The conditioned voltage and current signals are intended for the XADC
+  inputs, while a separate digital output controls load pulses.</p>
+  <p>The schematic is complete. PCB placement and routing are in progress in
+  Xpedition; the placement capture below shows components and unrouted connections.</p>
+  <div class="camera-gallery">
+    <figure class="project-visual"><a href="../assets/projects/telemetry-sensing.webp" data-image-viewer><img src="../assets/projects/telemetry-sensing.webp" alt="Server telemetry schematic showing voltage and current sensing, the FPGA connector, and the MOSFET gate driver." width="1638" height="1014" loading="lazy"></a><figcaption>Voltage and current sensing paths, FPGA interface, and load-switch driver.</figcaption></figure>
+    <figure class="project-visual"><a href="../assets/projects/telemetry-schematic.webp" data-image-viewer><img src="../assets/projects/telemetry-schematic.webp" alt="Full drawing sheet for the server power telemetry schematic." width="2027" height="1128" loading="lazy"></a><figcaption>Full telemetry schematic drawing.</figcaption></figure>
+    <figure class="project-visual"><a href="../assets/projects/telemetry-placement.webp" data-image-viewer><img src="../assets/projects/telemetry-placement.webp" alt="Xpedition PCB placement in progress, with board outline, through-hole footprints, and unrouted connections." width="1584" height="1065" loading="lazy"></a><figcaption>PCB placement in progress. Unrouted connections show the remaining routing work.</figcaption></figure>
+  </div>
+  <h2>VHDL control and display</h2>
+  <p>I have written UART receive and transmit modules and a multiplexed four-digit
+  seven-segment display driver. The telemetry top level uses received
+  <code>v</code> and <code>i</code> commands to select voltage or current display modes.</p>
+  <p>The current display uses fixed placeholder values while the acquisition path
+  is developed. UART response-message sequencing is still in progress. My verification
+  workflow uses cocotb with NVC; full-system acquisition validation is still ahead.</p>
   <h2>Integration ahead</h2>
   <p>Next steps include completing layout, integrating the sensing hardware with
   the FPGA, and checking the acquisition path against lab measurements. Sampling
@@ -53,3 +68,4 @@
 <script src="../assets/site.js?v=20261024"></script>
 </body>
 </html>
+
