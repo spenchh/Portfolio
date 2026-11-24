@@ -52,12 +52,9 @@
             </h3>
             <span class="label">NASA Marshall Space Flight Center &middot; August 2026 &ndash; Present</span>
           </div>
-          <p>I am developing a Basys 3 FPGA server power-telemetry system for voltage and
-            current measurements, combining analog sensing, a custom PCB, and VHDL.</p>
-          <p>The schematic, PCB layout, and routing are complete.
-            The VHDL top level selects voltage or current display modes over UART
-            using placeholder values while acquisition is developed. I am also
-            developing UART responses and using cocotb with NVC for verification.</p>
+          <a class="project-visual" href="projects/power-telemetry.html"><img src="assets/projects/telemetry-routed-layout.webp" alt="Completed server telemetry PCB routing" width="1363" height="913" loading="lazy"></a>
+          <p>Building FPGA power telemetry for short voltage and current transients.
+            PCB layout and routing complete. VHDL acquisition and UART integration underway.</p>
           <a class="out" href="projects/power-telemetry.html">Read more &rarr;</a>
         </article>
 
@@ -67,40 +64,27 @@
               <svg class="panel-mark panel-glyph" viewBox="0 0 26 16" aria-hidden="true">
                 <path d="M1 12h3.5V4h5.5v8h5.5V4h5.5v8H26"/>
               </svg>
-              FAULTLINE: Speculative 100GbE FPGA Engine
+              10GbE Market-Data Datapath
             </h3>
-            <span class="label">VCU118 &middot; Research in progress</span>
+            <span class="label">UltraScale+ &middot; In development</span>
           </div>
-          <p>I am researching how physical-link errors affect speculative packet
-            processing, and how buffering and commit/cancel policies trade latency
-            against data integrity.</p>
-          <p>The work is at an early stage, starting with error observability and
-            capture feasibility. The hardware target is the VCU118, with single-lane
-            validation before a 100GbE implementation.</p>
-          <a class="out" href="projects/faultline.html">Read more &rarr;</a>
+          <a class="project-visual" href="projects/faultline.html"><img src="assets/projects/faultline.svg?v=20261124" alt="10GbE market-data datapath architecture" width="960" height="600" loading="lazy"></a>
+          <p>Building a 10GbE market-data pipeline in SystemVerilog, from packet
+            capture to quote processing. Capture and readback tested in simulation.</p>
+          <a class="out" href="projects/faultline.html">Explore &rarr;</a>
+          <a class="out" href="https://github.com/spenchh/10GbE-FPGA-Datapath" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a>
         </article>
 
-        <article class="panel rv">
-          <div class="panel-top"><h3>FPGA Stream Stress Tester</h3><span class="label">Independent project &middot; In development</span></div>
-          <p>I have implemented a synchronous FIFO in SystemVerilog and written
-            cocotb tests. The next module is a programmable traffic generator for
-            numbered records, bursts, and gaps, followed by fault injection and backpressure.</p>
-          <a class="out" href="projects/stream-stress-tester.html">Read more &rarr;</a>
-        </article>
         <article class="panel rv" id="sr1">
           <div class="panel-top"><h3>SR-1 NEA VHDL</h3><span class="label">NASA &middot; In progress</span></div>
-          <p>I am writing VHDL to arm and disable SR-1 NEAs, targeting the
-            Microchip PolarFire FPGA Evaluation Kit (MPF300-EVAL-KIT).</p>
-          <p>The planned design includes an NEA control module and an ADC wrapper
-            that passes current-sensing data to the controller. That feedback will
-            support confirmation of NEA actuation. Development is ongoing.</p>
+          <p>Writing VHDL to arm and disable NEAs, with ADC current feedback for
+            actuation confirmation.</p>
           <a class="out" href="https://www.microchip.com/en-us/development-tool/MPF300-EVAL-KIT" target="_blank" rel="noopener noreferrer">View the FPGA platform &nearr;</a>
         </article>
         <article class="panel rv">
           <div class="panel-top"><h3>Digital Design Onboarding</h3><span class="label">Northwestern &middot; Digital Design Lead</span></div>
-          <p>I lead SystemVerilog onboarding for more than 20 members of Northwestern's
-            chip-design club, with six weeks of design and two weeks of verification.
-            I develop slides, RTL exercises, and checkpoints, and help members debug their designs.</p>
+          <p>Teaching SystemVerilog through RTL exercises, design reviews,
+            and a six-week digital design curriculum.</p>
           <a class="out" href="https://github.com/Northwestern-Silicats/digital-design-onboarding" target="_blank" rel="noopener noreferrer">View the curriculum &nearr;</a>
         </article>
       </div>

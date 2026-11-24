@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FAULTLINE: Speculative 100GbE FPGA Engine / Spencer Kogoma</title>
-<meta name="description" content="Ongoing VCU118 research into physical-link errors, speculative packet processing, and the tradeoff between latency and data integrity.">
+<title>10GbE Market-Data Datapath / Spencer Kogoma</title>
+<meta name="description" content="SystemVerilog 10GbE market-data datapath targeting UltraScale+: packet capture, quote decoding, and hardware pipeline development.">
 <meta name="author" content="Spencer Kogoma">
 <meta name="theme-color" content="#ffffff">
-<meta property="og:title" content="FAULTLINE: Speculative 100GbE FPGA Engine">
-<meta property="og:description" content="Ongoing VCU118 research into physical-link errors, speculative packet processing, and the tradeoff between latency and data integrity.">
+<meta property="og:title" content="10GbE Market-Data Datapath">
+<meta property="og:description" content="SystemVerilog 10GbE market-data datapath targeting UltraScale+: packet capture, quote decoding, and hardware pipeline development.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@700;900&display=swap" rel="stylesheet">
@@ -23,55 +23,22 @@
 <main>
 <section class="ph"><div class="shell">
   <a class="back" href="../work.html">&larr; All work</a>
-  <span class="label">Research / VCU118 / In progress</span>
-  <h1>FAULTLINE</h1>
-  <p class="sub">Speculative 100GbE FPGA Engine. I am researching how physical-link
-  errors affect speculative packet processing, and how commit/cancel architectures
-  trade latency against data integrity.</p>
-  <dl class="facts">
-    <div><dt>Platform</dt><dd>VCU118 / Virtex UltraScale+</dd></div>
-    <div><dt>Target</dt><dd>100GbE, with single-lane validation first</dd></div>
-    <div><dt>Current stage</dt><dd>Early research and capture-feasibility study</dd></div>
-    <div><dt>Focus</dt><dd>Link errors, buffering, commit/cancel timing</dd></div>
-  </dl>
-  <figure class="project-visual lead-visual"><img src="../assets/projects/faultline.svg" alt="FAULTLINE: physical-link errors, speculative processing, and commit or cancel, studied on VCU118" width="960" height="600"><figcaption>Research scope. Hardware implementation and measurements are ahead.</figcaption></figure>
+  <span class="label">SystemVerilog / UltraScale+ / In development</span>
+  <h1>10GbE Market-Data<br>Datapath</h1>
+  <p class="sub">Building the hardware path from Ethernet packets to quote processing
+  and simulated order decisions.</p>
+  <div class="ph-cta"><a class="gh" href="https://github.com/spenchh/10GbE-FPGA-Datapath" target="_blank" rel="noopener noreferrer">View project on GitHub &nearr;</a></div>
+  <figure class="project-visual lead-visual"><a href="../assets/projects/faultline.svg?v=20261124" data-image-viewer><img src="../assets/projects/faultline.svg?v=20261124" alt="10GbE datapath: packet capture and readback tested in simulation; parsing, quote state, and risk checks planned." width="960" height="600"></a><figcaption>Current blocks and planned integration.</figcaption></figure>
 </div></section>
 <section class="sec sec-flush"><div class="shell"><div class="prose">
-  <h2>The question</h2>
-  <p>A packet processor can begin work before the whole packet has been validated.
-  That saves time, but a late error can invalidate work already in flight. FAULTLINE
-  investigates how error patterns and the point at which a decision becomes irreversible
-  affect that tradeoff in an FPGA market-data path.</p>
-  <p>At the same bit-error rate, do measured link-error patterns produce different
-  incorrect speculative decisions than independent random errors? How much can
-  buffering and commit/cancel policies change the outcome, and what do they cost in latency and memory?</p>
-  <h2>First milestone: useful error capture</h2>
-  <p>I am starting by establishing which error events can be observed and captured
-  with enough context for meaningful replay. This feasibility gate comes before
-  using measured traces to make claims about speculative processing.</p>
-  <p>The intended progression is a controlled single-lane setup, followed by GTY and
-  CMAC integration toward a 100GbE path. The work includes transceiver clocks,
-  equalization, PCS behavior, buffering, and clock-domain and reset handling.</p>
-  <h2>Experimental approach</h2>
-  <div class="table-scroll"><table class="research-table">
-    <thead><tr><th scope="col">Stage</th><th scope="col">Evaluation</th></tr></thead>
-    <tbody>
-      <tr><th scope="row">Observe</th><td>Establish error visibility, trace context, capture limits, and repeatability.</td></tr>
-      <tr><th scope="row">Replay</th><td>Compare captured error patterns with independent injection at matched bit-error rates.</td></tr>
-      <tr><th scope="row">Commit or cancel</th><td>Compare a validated baseline with bounded speculative policies, tracking incorrect decisions and cancellation deadlines.</td></tr>
-      <tr><th scope="row">Implement</th><td>Measure latency distributions, buffering requirements, FPGA resources, and timing in Vivado.</td></tr>
-    </tbody>
-  </table></div>
-  <h2>Hardware and verification</h2>
-  <p>The intended architecture uses trace buffering and pending-state or journal memory
-  to keep speculative work separate from committed state. Simulation and controlled
-  fault injection will check ordering, backpressure, cancellation, and reset behavior
-  before the hardware experiments.</p>
-  <p>This is research in progress. The 100GbE engine and policy comparisons are targets,
-  and I am not reporting measured link performance or research results yet.</p>
-  <a class="out" href="stream-stress-tester.html">Related work: FPGA Stream Stress Tester &rarr;</a>
+  <h2>From capture to decisions</h2>
+  <p>Frame capture and readback work in directed RTL simulation. A standalone quote
+  decoder and FIFO support the next stages: Ethernet/UDP parsing, per-symbol quote
+  state, and risk-gated simulated order intents.</p>
+  <p>Next: Ethernet bring-up, pipeline integration, and throughput and latency
+  measurements. 10GbE line rate remains the target.</p>
 </div></div></section>
-<div class="shell"><div class="pager"><a class="back" href="../work.html">&larr; All work</a><a class="out" href="systolic-mac-array.html">Next: 3&times;3 Systolic MAC Array &rarr;</a></div></div>
+<div class="shell"><div class="pager"><a class="back" href="../work.html">&larr; All work</a><a class="out" href="https://github.com/spenchh/10GbE-FPGA-Datapath" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a></div></div>
 </main>
 <script src="../assets/site.js?v=20261024"></script>
 </body>
